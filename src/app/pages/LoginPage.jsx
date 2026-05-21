@@ -17,6 +17,10 @@ export function LoginPage() {
               ResearchHub
             </span>
           </Link>
+          <h1 className="text-3xl mb-2 text-gray-900">Welcome Back</h1>
+          <p className="text-gray-600">
+            Sign in to continue your research journey
+          </p>
         </div>
       </div>
     </div>
