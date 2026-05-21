@@ -20,13 +20,6 @@ export function LoginPage() {
           <p className="text-gray-600">
             Sign in to continue your research journey
           </p>
-
-          <Link
-            to="/register"
-            className="text-[#0ea5e9] hover:underline font-medium"
-          >
-            Sign up
-          </Link>
         </div>
       </div>
     </div>
