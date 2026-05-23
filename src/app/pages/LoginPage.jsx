@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Sparkles, Mail } from "lucide-react";
+import { Sparkles, Mail, Lock } from "lucide-react";
 
 export function LoginPage() {
   return (
@@ -23,7 +23,7 @@ export function LoginPage() {
         </div>
         <div className="rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-xl p-8 shadow-xl">
           <form className="space-y-5">
-            <div>
+            <div className="form-1">
               <label className="block mb-2 text-sm text-gray-700">Email</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -32,6 +32,19 @@ export function LoginPage() {
                   placeholder="your.email@example.com"
                   className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
                 />
+              </div>
+              <div className="form-2">
+                <label className="block mb-2 text-sm text-gray-700">
+                  Password
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="password"
+                    placeholder="Enter your password"
+                    className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
+                  />
+                </div>
               </div>
             </div>
           </form>
