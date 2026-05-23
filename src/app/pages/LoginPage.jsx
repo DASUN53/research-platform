@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Mail } from "lucide-react";
 
 export function LoginPage() {
   return (
