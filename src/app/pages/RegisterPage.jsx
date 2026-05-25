@@ -82,6 +82,11 @@ export function RegisterPage() {
               Create Account
             </Link>
           </form>
+          <div className="my-6 flex items-center gap-4">
+            <div className="flex-1 h-px bg-gray-200" />
+            <span className="text-sm text-gray-500">Or sign up with</span>
+            <div className="flex-1 h-px bg-gray-200" />
+          </div>
         </div>
       </div>
     </div>
