@@ -22,6 +22,23 @@ export function RegisterPage() {
             Join the collaborative research community
           </p>
         </div>
+        <div className="rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-xl p-8 shadow-xl">
+          <form className="space-y-5">
+            <div>
+              <label className="block mb-2 text-sm text-gray-700">
+                Full Name
+              </label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="John Doe"
+                  className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
