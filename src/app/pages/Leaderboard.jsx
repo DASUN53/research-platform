@@ -1,6 +1,8 @@
+import { Trophy, TrendingUp, Award, Zap } from "lucide-react";
+import { useState } from "react";
+
 export function Leaderboard() {
-  const [timeframe, setTimeframe] =
-    (useState < "week") | "month" | ("all" > "week");
+  const [timeframe, setTimeframe] = useState("week");
   const topUsers = [
     {
       rank: 1,
@@ -58,4 +60,14 @@ export function Leaderboard() {
       trend: "+10%",
     },
   ];
+  const getBadgeColor = (badge) => {
+    const colors = {
+      Expert: "from-[#a855f7] to-[#0ea5e9]",
+      Mentor: "from-[#f59e0b] to-[#0ea5e9]",
+      Collaborator: "from-[#0ea5e9] to-[#a855f7]",
+      "Problem Solver": "from-[#06b6d4] to-[#10b981]",
+    };
+    return colors[badge] || "from-[#0ea5e9] to-[#06b6d4]";
+  };
+  
 }
