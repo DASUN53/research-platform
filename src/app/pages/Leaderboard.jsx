@@ -14,7 +14,7 @@ export function Leaderboard() {
       badge: "Expert",
       level: 28,
       trend: "+12%",
-    },
+    }, 
     {
       rank: 2,
       name: "Alex Rivera",

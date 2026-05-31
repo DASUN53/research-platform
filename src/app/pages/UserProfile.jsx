@@ -1,3 +1,7 @@
+import { useParams } from "react-router";
+
 export function UserProfile() {
-  return <div className="min-h-screen p-8">User Profile</div>;
+  const { username } = useParams();
+  const [activeTab, setActiveTab] =
+    (useState < "activity") | "solutions" | ("badges" > "activity");
 }
