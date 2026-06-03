@@ -202,6 +202,35 @@ export function Leaderboard() {
                 </th>
               </tr>
             </thead>
+            <tbody>
+              {topUsers.map((user, i) => (
+                <tr
+                  key={user.rank}
+                  key={user.rank}
+                  className={`border-b border-gray-100 hover:bg-gray-50 transition-colors ${
+                    user.username === "johndoe" ? "bg-blue-50/50" : ""
+                  }`}
+                >
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-2">
+                      {i < 3 ? (
+                        <Trophy
+                          className={`w-5 h-5 ${
+                            i === 0
+                              ? "text-yellow-500"
+                              : i === 1
+                                ? "text-gray-400"
+                                : "text-orange-500"
+                          }`}
+                        />
+                      ) : (
+                        <span className="text-gray-600">#{user.rank}</span>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       </div>
