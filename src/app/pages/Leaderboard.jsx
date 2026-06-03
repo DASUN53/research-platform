@@ -127,51 +127,7 @@ export function Leaderboard() {
                   ? "border-gray-300 bg-gradient-to-br from-gray-50 to-gray-100"
                   : "border-orange-300 bg-gradient-to-br from-orange-50 to-red-50"
             }`}
-          >
-            <div
-              className={`h-2 ${
-                i === 0
-                  ? "bg-gradient-to-r from-yellow-400 to-orange-500"
-                  : i === 1
-                    ? "bg-gradient-to-r from-gray-300 to-gray-400"
-                    : "bg-gradient-to-r from-orange-400 to-red-400"
-              }`}
-            />
-            <div className="p-6 text-center">
-              <div className="relative inline-block mb-4">
-                <img
-                  src={user.avatar}
-                  alt={user.name}
-                  className="w-20 h-20 rounded-full ring-4 ring-white"
-                />
-                <div
-                  className={`absolute -top-2 -right-2 w-8 h-8 rounded-full ${
-                    i === 0
-                      ? "bg-gradient-to-br from-yellow-400 to-orange-500"
-                      : i === 1
-                        ? "bg-gradient-to-br from-gray-300 to-gray-400"
-                        : "bg-gradient-to-br from-orange-400 to-red-400"
-                  } flex items-center justify-center text-white shadow-lg`}
-                >
-                  {i === 0 ? <Trophy className="w-4 h-4" /> : i + 1}
-                </div>
-              </div>
-              <h3 className="text-xl mb-1 text-gray-900">{user.name}</h3>
-              <p className="text-sm text-gray-600 mb-3">@{user.username}</p>
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <span
-                  className={`px-3 py-1 rounded-full text-xs bg-gradient-to-r ${getBadgeColor(user.badge)} text-white shadow-sm`}
-                >
-                  {user.badge}
-                </span>
-                <span className="text-sm text-gray-600">
-                  Level {user.level}
-                </span>
-              </div>
-              <h3 className="text-xl mb-1 text-gray-900">{user.name}</h3>
-              <p className="text-sm text-gray-600 mb-3">@{user.username}</p>
-            </div>
-          </div>
+          ></div>
         ))}
       </div>
     </div>
