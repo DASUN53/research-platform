@@ -90,7 +90,28 @@ export function Leaderboard() {
           >
             This week
           </button>
+          <button
+            onClick={() => setTimeframe("month")}
+            className={`px-4 py-2 rounded-lg transition-all ${
+              timeframe === "month"
+                ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border border-[#0ea5e9] text-[#0ea5e9] shadow-sm"
+                : "border border-gray-200 text-gray-700 hover:bg-gray-100"
+            }`}
+          >
+            This Month
+          </button>
+          <button
+            onClick={() => setTimeframe("all")}
+            className={`px-4 py-2 rounded-lg transition-all ${
+              timeframe === "all"
+                ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border border-[#0ea5e9] text-[#0ea5e9] shadow-sm"
+                : "border border-gray-200 text-gray-700 hover:bg-gray-100"
+            }`}
+          >
+            All Time 
+          </button>
         </div>
+        
       </div>
     </div>
   );
