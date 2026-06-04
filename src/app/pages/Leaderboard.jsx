@@ -230,6 +230,21 @@ export function Leaderboard() {
                       )}
                     </div>
                   </td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={user.avatar}
+                        alt={user.name}
+                        className="w-10 h-10 rounded-full ring-2 ring-gray-200"
+                      />
+                      <div>
+                        <div className="text-gray-900">{user.name}</div>
+                        <div className="text-sm text-gray-500">
+                          @{user.username}
+                        </div>
+                      </div>
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
