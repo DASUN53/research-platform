@@ -230,11 +230,69 @@ export function Leaderboard() {
                       )}
                     </div>
                   </td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={user.avatar}
+                        alt={user.name}
+                        className="w-10 h-10 rounded-full ring-2 ring-gray-200"
+                      />
+                      <div>
+                        <div className="text-gray-900">{user.name}</div>
+                        <div className="text-sm text-gray-500">
+                          @{user.username}
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span
+                      className={`inline-block px-3 py-1 rounded-full text-xs bg-gradient-to-r ${getBadgeColor(user.badge)} text-white shadow-sm`}
+                    >
+                      {user.badge}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <span className="text-[#0ea5e9] font-medium">
+                      Level {user.level}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <span className="bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] bg-clip-text text-transparent font-medium">
+                      {user.reputation.toLocaleString()}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-right text-gray-900">
+                    {user.solutions}
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <span className="flex items-center justify-end gap-1 text-green-600 font-medium">
+                      <TrendingUp className="w-4 h-4" />
+                      {user.trend}
+                    </span>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+      </div>
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#0ea5e9] to-[#06b6d4] flex items-center justify-center shadow-lg shadow-blue-500/20">
+              <Zap className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h3 className="text-gray-900">Most Active</h3>
+              <p className="text-sm text-gray-600">Dr. Emily Watson</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm"></div>
+
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm"></div>
       </div>
     </div>
   );
