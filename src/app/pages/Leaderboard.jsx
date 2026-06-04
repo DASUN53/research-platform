@@ -278,7 +278,17 @@ export function Leaderboard() {
         </div>
       </div>
       <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm"></div>
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#0ea5e9] to-[#06b6d4] flex items-center justify-center shadow-lg shadow-blue-500/20">
+              <Zap className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h3 className="text-gray-900">Most Active</h3>
+              <p className="text-sm text-gray-600">Dr. Emily Watson</p>
+            </div>
+          </div>
+        </div>
 
         <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm"></div>
 
