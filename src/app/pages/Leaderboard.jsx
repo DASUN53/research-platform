@@ -257,6 +257,20 @@ export function Leaderboard() {
                       Level {user.level}
                     </span>
                   </td>
+                  <td className="px-6 py-4 text-right">
+                    <span className="bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] bg-clip-text text-transparent font-medium">
+                      {user.reputation.toLocaleString()}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-right text-gray-900">
+                    {user.solutions}
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <span className="flex items-center justify-end gap-1 text-green-600 font-medium">
+                      <TrendingUp className="w-4 h-4" />
+                      {user.trend}
+                    </span>
+                  </td>
                 </tr>
               ))}
             </tbody>
