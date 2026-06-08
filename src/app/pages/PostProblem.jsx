@@ -69,3 +69,19 @@ return (
             Tip: Include code snippets, datasets, or research papers for better context
           </p>
         </div>
+        
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+          <label className="block mb-4 text-gray-900">Attachments</label>
+          <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-400 transition-colors cursor-pointer bg-gray-50">
+            <Upload className="w-12 h-12 mx-auto mb-3 text-gray-400" />
+            <p className="mb-2 text-gray-900">Drag and drop files here, or click to browse</p>
+            <p className="text-sm text-gray-500">
+              Support for PDFs, images, datasets (CSV, JSON), and code files
+            </p>
+            <button
+              onClick={() => addFile(`sample-dataset-${Date.now()}.csv`)}
+              className="mt-4 px-6 py-2 rounded-lg bg-gray-100 border border-gray-200 hover:bg-gray-200 transition-colors text-gray-700"
+            >
+              Upload Files
+            </button>
+          </div>
