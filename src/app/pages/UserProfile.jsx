@@ -144,6 +144,12 @@ export function UserProfile() {
                 </div>
                 <div className="text-sm text-gray-600">Solutions</div>
               </div>
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
+                <div className="text-2xl mb-1 bg-gradient-to-r from-[#a855f7] to-[#0ea5e9] bg-clip-text text-transparent">
+                  {profile.stats.problems}
+                </div>
+                <div className="text-sm text-gray-600">Problems</div>
+              </div>
             </div>
           </div>
         </div>
