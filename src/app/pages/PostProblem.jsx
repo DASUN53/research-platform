@@ -85,3 +85,30 @@ return (
               Upload Files
             </button>
           </div>
+
+          {files.length > 0 && (
+            <div className="mt-4 space-y-2">
+              {files.map((file, i) => (
+                <div
+                  key={i}
+                  className="flex items-center justify-between p-3 rounded-lg bg-gray-50 border border-gray-200"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#0ea5e9]/10 to-[#a855f7]/10 flex items-center justify-center border border-blue-200">
+                      {file.endsWith('.csv') ? <Database className="w-5 h-5 text-blue-600" /> :
+                       file.endsWith('.pdf') ? <FileText className="w-5 h-5 text-blue-600" /> :
+                       <ImageIcon className="w-5 h-5 text-blue-600" />}
+                    </div>
+                    <span className="text-sm text-gray-900">{file}</span>
+                  </div>
+                  <button
+                    onClick={() => removeFile(i)}
+                    className="p-1 rounded hover:bg-gray-200 transition-colors"
+                  >
+                    <X className="w-4 h-4 text-gray-600" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
