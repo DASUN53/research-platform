@@ -4,9 +4,8 @@ import { useState } from "react";
 
 export function UserProfile() {
   const { username = "" } = useParams();
-  const [activeTab, setActiveTab] = useState<
-  "activity" | "solutions" | "badges"
->("activity");
+  const [activeTab, setActiveTab] =
+    (useState < "activity") | "solutions" | ("badges" > "activity");
 
   const profile = {
     name: "John Doe",
@@ -87,9 +86,34 @@ export function UserProfile() {
     },
   ];
   return (
-    <div>
-      User Profile
-      <h1>{username}</h1>
+    <div className="p-6">
+      <div className="max-w-6xl mx-auto space-y-6">
+        <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm">
+          <div className="h-32 bg-gradient-to-r from-[#0ea5e9] to-[#a855f7]" />
+          <div className="px-8 pb-8">
+            <div className="flex items-end gap-6 -mt-16 mb-6">
+              <img
+                src={profile.avatar}
+                alt={profile.name}
+                className="w-32 h-32 rounded-2xl border-4 border-white shadow-xl"
+              />
+              <div className="flex-1 mt-16">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h1 className="text-3xl mb-1 text-gray-900">
+                      {profile.name}
+                    </h1>
+                    <p className="text-gray-600">@{profile.username}</p>
+                  </div>
+                  <button className="px-6 py-2 rounded-lg bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] text-white hover:opacity-90 transition-opacity shadow-lg shadow-blue-500/30">
+                    Edit Profile
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
