@@ -124,4 +124,14 @@ Looking for optimization techniques or alternative architectures that could work
             </button>
           </div>
         </div>
-        
+
+        <div className="flex flex-wrap gap-2 mb-6">
+          {problem.tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 border border-gray-200"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>   
