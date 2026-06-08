@@ -112,3 +112,22 @@ return (
             </div>
           )}
         </div>
+
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+          <label className="block mb-4 text-gray-900">Tags</label>
+          <div className="flex flex-wrap gap-2">
+            {availableTags.map((tag) => (
+              <button
+                key={tag}
+                onClick={() => toggleTag(tag)}
+                className={`px-3 py-1.5 rounded-full text-sm transition-all ${
+                  selectedTags.includes(tag)
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border border-[#0ea5e9] text-[#0ea5e9] shadow-sm"
+                    : "bg-gray-100 border border-gray-200 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+        </div>
