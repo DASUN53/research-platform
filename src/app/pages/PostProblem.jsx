@@ -131,3 +131,38 @@ return (
             ))}
           </div>
         </div>
+
+         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+            <label className="block mb-2 text-gray-900">Difficulty Level</label>
+            <select className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all text-gray-900">
+              <option value="">Select difficulty...</option>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+              <option value="expert">Expert</option>
+            </select>
+          </div>
+
+          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+            <label className="block mb-2 text-gray-900">Collaboration Type</label>
+            <select className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all text-gray-900">
+              <option value="open">Open Collaboration</option>
+              <option value="invite">Invite Only</option>
+              <option value="team">Team Project</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="flex justify-end gap-4">
+          <button className="px-6 py-3 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-100 transition-colors">
+            Save as Draft
+          </button>
+          <button className="px-6 py-3 rounded-lg bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] text-white hover:opacity-90 transition-opacity shadow-lg shadow-blue-500/30">
+            Publish Problem
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
