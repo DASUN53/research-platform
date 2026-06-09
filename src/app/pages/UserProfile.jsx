@@ -157,6 +157,40 @@ export function UserProfile() {
             </div>
           </div>
         </div>
+        <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm">
+          <div className="flex border-b border-gray-200">
+            <button
+              onClick={() => setActiveTab("activity")}
+              className={`flex-1 px-6 py-4 transition-all ${
+                activeTab === "activity"
+                  ? "bg-blue-900 border-b-2 border-[#0ea5e9] text-[white]"
+                  : "text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              Recent Activity
+            </button>
+            <button
+              onClick={() => setActiveTab("solutions")}
+              className={`flex-1 px-6 py-4 transition-all ${
+                activeTab === "solutions"
+                  ? "bg-blue-900 border-b-2 border-[#0ea5e9] text-[white]"
+                  : "text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              Top Solutions
+            </button>
+            <button
+              onClick={() => setActiveTab("badges")}
+              className={`flex-1 px-6 py-4 transition-all ${
+                activeTab === "badges"
+                  ? "bg-blue-900 border-b-2 border-[#0ea5e9] text-[white]"
+                  : "text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              Achievements
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
