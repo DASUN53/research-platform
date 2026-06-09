@@ -163,7 +163,7 @@ export function UserProfile() {
               onClick={() => setActiveTab("activity")}
               className={`flex-1 px-6 py-4 transition-all ${
                 activeTab === "activity"
-                  ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9]"
+                  ? "bg-blue-900 border-b-2 border-[#0ea5e9] text-[white]"
                   : "text-gray-600 hover:bg-gray-50"
               }`}
             >
@@ -173,7 +173,7 @@ export function UserProfile() {
               onClick={() => setActiveTab("solutions")}
               className={`flex-1 px-6 py-4 transition-all ${
                 activeTab === "solutions"
-                  ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9]"
+                  ? "bg-blue-900 border-b-2 border-[#0ea5e9] text-[white]"
                   : "text-gray-600 hover:bg-gray-50"
               }`}
             >
@@ -183,7 +183,7 @@ export function UserProfile() {
               onClick={() => setActiveTab("badges")}
               className={`flex-1 px-6 py-4 transition-all ${
                 activeTab === "badges"
-                  ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9]"
+                  ? "bg-blue-900 border-b-2 border-[#0ea5e9] text-[white]"
                   : "text-gray-600 hover:bg-gray-50"
               }`}
             >
