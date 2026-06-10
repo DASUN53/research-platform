@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock } from "lucide-react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
-/*import { loginUser } from "../services/authService";*/
-/*import { AppAlert } from "../components/AppAlert";*/
+import { loginUser } from "../services/authService";
+import { AppAlert } from "../components/AppAlert";
 
 export function LoginPage() {
   const navigate = useNavigate();
