@@ -6,11 +6,50 @@ import { registerUser } from "../services/authService";
 import { AppAlert } from "../AppAlert";
 
 export function RegisterPage() {
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    full_name: "",
+    email: "",
+    password: "",
+    university_or_organization: "",
+    role: "student",
+  });
+
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    if (!acceptedTerms) {
+      setError("Please accept the Terms of Service and Privacy Policy");
+      return;
+    }
+    setLoading(true);
+
+    try {
+      await registerUser(formData);
+      setSuccess("Account created successfully. Redirecting to login...");
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 1200);
+    } catch (err) {
+      setError(err.message || "Registration failed");
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#d9f1ff] via-[#e8f2ff] to-[#f3d9ff] text-gray-900 flex items-center justify-center px-6 py-12 relative overflow-hidden">
@@ -158,7 +197,7 @@ export function RegisterPage() {
                   />
                 </div>
               </div>
-              
+
               <label className="flex items-start gap-2 cursor-pointer text-sm">
                 <input type="checkbox" className="mt-1 rounded" />
                 <span className="text-gray-600">
