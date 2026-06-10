@@ -2,13 +2,20 @@ import { useParams } from "react-router-dom";
 
 import {
   Award,
+  Calendar,
+  MapPin,
+  Link as LinkIcon,
+  Mail,
   Star,
   Trophy,
   Flame,
   Target,
   CheckCircle,
-  MapPin,
-  LinkIcon,
+  Bookmark,
+  Lightbulb,
+  BookOpen,
+  Tags,
+  ThumbsUp,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getCurrentUser } from "../services/authService";
@@ -197,27 +204,48 @@ export function UserProfile() {
   );
 
   return (
-    <div className="p-6">
+    <div className="p-6 text-gray-900 dark:text-gray-100">
       <div className="max-w-6xl mx-auto space-y-6">
-        <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm">
+        <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <div className="h-32 bg-blue-900" />
           <div className="px-8 pb-8">
             <div className="flex items-end gap-6 -mt-16 mb-6">
-              <img
-                src={profile.avatar}
-                alt={profile.name}
-                className="w-32 h-32 rounded-2xl border-4 border-white shadow-xl"
-              />
+              <div className="relative">
+                <img
+                  src={avatar}
+                  alt={profile.full_name}
+                  className="w-32 h-32 rounded-2xl border-4 border-white shadow-xl bg-white object-cover dark:border-gray-900 dark:bg-gray-800"
+                />
+                {currentUser?.user_id === profile.user_id && (
+                  <label className="absolute bottom-2 right-2 px-3 py-1 rounded-lg bg-[#0ea5e9] text-white text-xs cursor-pointer hover:bg-blue-600 transition">
+                    {imageUploading ? "Uploading..." : "Change"}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleProfileImageChange}
+                      className="hidden"
+                      disabled={imageUploading}
+                    />
+                  </label>
+                )}
+              </div>
+
               <div className="flex-1 mt-16">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h1 className="text-3xl mb-1 text-gray-900">
-                      {profile.name}
+                    <h1 className="text-3xl mb-1 text-gray-900 dark:text-gray-100">
+                      {profile.full_name}
                     </h1>
-                    <p className="text-gray-600">@{profile.username}</p>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      @{profile.username.split("@")[0] || "researcher"}
+                    </p>
                   </div>
-                  <button className="px-6 py-2 rounded-lg bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] text-white hover:opacity-90 transition-opacity shadow-lg shadow-blue-500/30">
-                    Edit Profile
+
+                  <button
+                    onClick={() => setIsEditing(!isEditing)}
+                    className="px-6 py-2 rounded-lg bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] text-white hover:opacity-90 transition-opacity shadow-lg shadow-blue-500/30"
+                  >
+                    {isEditing ? "Cancel" : "Edit Profile"}
                   </button>
                 </div>
               </div>
