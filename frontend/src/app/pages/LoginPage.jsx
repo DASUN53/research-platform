@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock } from "lucide-react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { loginUser } from "../services/authService";
-import { AppAlert } from "../components/AppAlert";
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -20,22 +19,22 @@ export function LoginPage() {
       ...formData,
       [e.target.name]: e.target.value,
     });
-
-    const handleLogin = async (e) => {
-      e.preventDefault();
-      setError("");
-      setLoading(true);
-
-      try {
-        await loginUser(formData);
-        navigate("/app");
-      } catch (err) {
-        setError(err.message || "Login failed");
-      } finally {
-        setLoading(false);
-      }
-    };
   };
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      await loginUser(formData);
+      navigate("/app");
+    } catch (err) {
+      setError(err.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-[#eef6ff] via-[#f8fbff] to-[#f3efff] text-slate-900 flex items-center justify-center px-6 py-12">
       <div className="absolute inset-0">
@@ -76,13 +75,6 @@ export function LoginPage() {
           <div className="absolute -inset-5 rounded-[2.5rem] bg-gradient-to-r from-blue-300/45 via-cyan-300/35 to-violet-300/45 blur-2xl" />
 
           <div className="relative rounded-[2rem] border border-white bg-white/85 backdrop-blur-xl p-8 shadow-2xl shadow-slate-900/10">
-            <div className="space-y-3 mb-5">
-              <AppAlert
-                type="error"
-                message={error}
-                onClose={() => setError("")}
-              />
-            </div>
             <form className="space-y-5" onSubmit={handleLogin}>
               <div>
                 <label className="block mb-2 text-sm font-medium text-slate-700">
