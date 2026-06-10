@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { AppAlert } from "../pages/AppAlert";
 import {
   Award,
   Star,
@@ -9,29 +10,88 @@ import {
   MapPin,
   LinkIcon,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getCurrentUser } from "../services/authService";
+import {
+  getUserProfile,
+  getUserPosts,
+  getUserSolutions,
+  getUserFields,
+  updateUserProfile,
+  updateProfilePicture,
+  refreshCurrentUser,
+} from "../services/userService";
 
 export function UserProfile() {
+  const { username } = useParams();
+  const [profile, setProfile] = useState(null);
+  const [userPosts, setUserPosts] = useState([]);
+  const [userSolutions, setUserSolutions] = useState([]);
+  const [userFields, setUserFields] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [imageUploading, setImageUploading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editLoading, setEditLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [activeTab, setActiveTab] = useState("activity");
-  const profile = {
-    name: "Dasun Kavinda",
-    username: "dasunkavinda",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
-    bio: "Machine Learning Engineer | PhD Candidate | Open Source Enthusiast",
-    location: "San Francisco, CA",
-    website: "johndoe.dev",
-    email: "john@example.com",
-    joinedDate: "January 2024",
-    reputation: 1240,
-    level: 12,
-    stats: {
-      problems: 23,
-      solutions: 47,
-      discussions: 156,
-      upvotes: 342,
-    },
-    streak: 12,
-  };
+
+  const [editForm, setEditForm] = useState({
+    full_name: "",
+    bio: "",
+    university_or_organization: "",
+  });
+
+  const currentUser = getCurrentUser();
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const userId = username || currentUser?.user_id;
+
+        if (!userId) {
+          setError("User not found. Please login again.");
+          setLoading(false);
+          return;
+        }
+
+        const [profileData, postsData, solutionsData, fieldsData] =
+          await Promise.all([
+            getUserProfile(userId),
+            getUserPosts(userId),
+            getUserSolutions(userId),
+            getUserFields(userId),
+          ]);
+        const finalPosts = Array.isArray(postsData)
+          ? postsData
+          : postsData.posts || [];
+        const finalSolutions = Array.isArray(solutionsData)
+          ? solutionsData
+          : solutionsData.solutions || [];
+
+        const finalFields = Array.isArray(fieldsData)
+          ? fieldsData
+          : fieldsData.fields || [];
+
+        setProfile(profileData);
+        setUserPosts(finalPosts);
+        setUserSolutions(finalSolutions);
+        setUserFields(finalFields);
+
+        setEditForm({
+          full_name: profileData.full_name || "",
+          bio: profileData.bio || "",
+          university_or_organization:
+            profileData.university_or_organization || "",
+        });
+      } catch (err) {
+        setError(err.message || "Failed to load user profile");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUserProfile();
+  }, [username, currentUser?.user_id]);
 
   const badges = [
     {
