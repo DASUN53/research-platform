@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock } from "lucide-react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { loginUser } from "../services/authService";
+import { AppAlert } from "../AppAlert";
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -75,6 +76,14 @@ export function LoginPage() {
           <div className="absolute -inset-5 rounded-[2.5rem] bg-gradient-to-r from-blue-300/45 via-cyan-300/35 to-violet-300/45 blur-2xl" />
 
           <div className="relative rounded-[2rem] border border-white bg-white/85 backdrop-blur-xl p-8 shadow-2xl shadow-slate-900/10">
+            <div className="space-y-3 mb-5">
+              <AppAlert
+                type="error"
+                message={error}
+                onClose={() => setError("")}
+              />
+            </div>
+
             <form className="space-y-5" onSubmit={handleLogin}>
               <div>
                 <label className="block mb-2 text-sm font-medium text-slate-700">

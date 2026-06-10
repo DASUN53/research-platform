@@ -1,6 +1,9 @@
-import { Link } from "react-router-dom";
-import { Sparkles, Mail, User, Lock } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Mail, User, Lock } from "lucide-react";
 import { FaGithub, FaGoodreads, FaGoogle } from "react-icons/fa";
+import { registerUser } from "../services/authService";
+import { AppAlert } from "../AppAlert";
 
 export function RegisterPage() {
   return (
