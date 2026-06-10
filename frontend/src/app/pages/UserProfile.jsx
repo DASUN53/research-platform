@@ -145,6 +145,24 @@ export function UserProfile() {
       earned: false,
     },
   ];
+  if (loading) {
+    return (
+      <div className="p-6">
+        <div className="max-w-6xl mx-auto rounded-xl border border-gray-200 bg-white p-8 shadow-sm text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
+          Loading profile...
+        </div>
+      </div>
+    );
+  }
+  if (error || !profile) {
+    return (
+      <div className="p-6">
+        <div className="max-w-6xl mx-auto rounded-xl border border-red-200 bg-red-50 p-8 text-red-700 dark:border-red-900/70 dark:bg-red-950/40 dark:text-red-300">
+          {error || "User profile not found"}
+        </div>
+      </div>
+    );
+  }
   const recentActivity = [
     {
       type: "solution",
