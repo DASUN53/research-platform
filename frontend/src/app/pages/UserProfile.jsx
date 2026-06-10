@@ -163,6 +163,13 @@ export function UserProfile() {
       </div>
     );
   }
+
+  const avatar = profile.profile_picture
+    ? getImageUrl(profile.profile_picture)
+    : "/default-profile.png";
+
+  const reputation = profile.total_points || 0;
+  
   const recentActivity = [
     {
       type: "solution",
