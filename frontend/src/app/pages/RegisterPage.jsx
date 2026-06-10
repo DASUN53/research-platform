@@ -105,19 +105,60 @@ export function RegisterPage() {
                   />
                 </div>
               </div>
+
               <div>
-                <label className="block mb-2 text-sm text-gray-700">
-                  Password
+                <label className="block mb-2 text-sm text-slate-700 font-medium">
+                  University / Organization
                 </label>
+
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                   <input
-                    type="password"
-                    placeholder="Create a strong password"
-                    className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
+                    name="university_or_organization"
+                    type="text"
+                    value={FormData.university_or_organization}
+                    onChange={handleChange}
+                    placeholder="Sabaragamuwa University"
+                    className="w-full pl-11 pr-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-800 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
                   />
                 </div>
               </div>
+
+              <div>
+                <label className="block mb-2 text-sm text-slate-700 font-medium">
+                  Role
+                </label>
+                <select
+                  name="role"
+                  value={formData.role}
+                  onChange={handleChange}
+                  className="w-full pl-11 pr-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-800 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
+                >
+                  <option value="student">Student</option>
+                  <option value="researcher">Reseatcher</option>
+                  <option value="engineer">Engineer</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block mb-2 text-sm text-slate-700 font-medium">
+                  password
+                </label>
+
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <input
+                    name="password"
+                    type="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Create a strong password"
+                    className="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-blue-800 focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
+                    required
+                  />
+                </div>
+              </div>
+              
               <label className="flex items-start gap-2 cursor-pointer text-sm">
                 <input type="checkbox" className="mt-1 rounded" />
                 <span className="text-gray-600">
