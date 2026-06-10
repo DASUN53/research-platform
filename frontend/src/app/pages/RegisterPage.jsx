@@ -6,6 +6,12 @@ import { registerUser } from "../services/authService";
 import { AppAlert } from "../AppAlert";
 
 export function RegisterPage() {
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#d9f1ff] via-[#e8f2ff] to-[#f3d9ff] text-gray-900 flex items-center justify-center px-6 py-12 relative overflow-hidden">
       <div className="absolute inset-0">
@@ -78,20 +84,24 @@ export function RegisterPage() {
                     placeholder="John Doe"
                     className="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-50/80 border border-slate-200 focus:border-blue-800 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
                     required
-                 />
+                  />
                 </div>
               </div>
 
               <div>
-                <label className="block mb-2 text-sm text-gray-700">
+                <label className="block mb-2 text-sm text-slate-700 font-medium">
                   Email
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                   <input
+                    name="email"
                     type="email"
+                    value={FormData.email}
+                    onChange={handleChange}
                     placeholder="your.email@example.com"
-                    className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
+                    className="w-full pl-11 pr-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-800 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
+                    required
                   />
                 </div>
               </div>
