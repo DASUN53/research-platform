@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { AppAlert } from "../pages/AppAlert";
+
 import {
   Award,
   Star,
@@ -169,27 +169,33 @@ export function UserProfile() {
     : "/default-profile.png";
 
   const reputation = profile.total_points || 0;
-  
-  const recentActivity = [
-    {
-      type: "solution",
-      title: "Provided verified solution for 'GPU Memory Optimization'",
-      time: "2 hours ago",
-      upvotes: 23,
-    },
-    {
-      type: "comment",
-      title: "Commented on 'Data Pipeline Architecture'",
-      time: "5 hours ago",
-      upvotes: 8,
-    },
-    {
-      type: "problem",
-      title: "Posted 'Quantum Computing Algorithm Challenge'",
-      time: "1 day ago",
-      upvotes: 15,
-    },
-  ];
+
+  const earnedBadges = profile.badges || [];
+
+  const displayedBadges = defaultBadges.map((badge) => {
+    const earnedBadge = earnedBadges.find(
+      (item) => item.badge_name === badge.name,
+    );
+    return {
+      ...badge,
+      earned: Boolean(earnedBadge),
+    };
+  });
+
+  const solvedPosts = userPosts.filter(
+    (post) => post.status === "solved",
+  ).length;
+
+  const openPosts = userPosts.filter((post) => post.status === "open").length;
+
+  const verifiedSolutions = userSolutions.filter(
+    (solution) => Number(solution.is_verified) === 1,
+  );
+  const totalSolutionLikes = userSolutions.reduce(
+    (sum, solution) => sum + Number(solution.like_count || 0),
+    0,
+  );
+
   return (
     <div className="p-6">
       <div className="max-w-6xl mx-auto space-y-6">
