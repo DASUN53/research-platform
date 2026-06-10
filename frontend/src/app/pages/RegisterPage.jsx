@@ -84,26 +84,27 @@ export function RegisterPage() {
             </Link>
           </form>
           <div className="my-6 flex items-center gap-4">
-            <div className="flex-1 h-px bg-gray-200" />
-            <span className="text-sm text-gray-500">Or sign up with</span>
-            <div className="flex-1 h-px bg-gray-200" />
+            <div className="flex-1 h-px bg-slate-200" />
+            <span className="text-sm text-slate-500">Or sign up with</span>
+            <div className="flex-1 h-px bg-slate-200" />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <button className="flex items-center justify-center gap-2 py-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-gray-700">
+            <button className="flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 bg-white/80 hover:bg-gray-50 transition-all text-slate-700 font-medium shadow-sm">
               <FaGithub className="w-5 h-5" />
               GitHub
             </button>
-            <button className="flex items-center justify-center gap-2 py-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-gray-700">
+            <button className="flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 bg-white/80 hover:bg-slate-50 transition-all text-slate-700 font-medium shadow-sm">
               <FaGoogle className="w-5 h-5" />
               Google
             </button>
           </div>
-          <p className="mt-6 text-center text-sm text-gray-600">
+
+          <p className="mt-7 text-center text-sm text-slate-600">
             Already have an account?{" "}
             <Link
               to="/login"
-              className="text-[#0ea5e9] hover:underline font-medium"
+              className="text-blue-700 hover:text-blue-800 hover:underline font-medium"
             >
               Sign in
             </Link>
