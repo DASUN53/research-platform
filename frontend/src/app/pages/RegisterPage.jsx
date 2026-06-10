@@ -36,98 +36,122 @@ export function RegisterPage() {
               CollabSolve
             </span>
           </Link>
-          
-          <h1 className="text-3xl mb-2 text-gray-900">Create Account</h1>
-          <p className="text-gray-600">
-            Join the collaborative research community
+
+          <h1 className="text-3xl font-bold tracking-tight mb-3 text-slate-900">
+            Create Account
+          </h1>
+          <p className="text-slate-600">
+            Join a community where students, researchers, and developers solve
+            problems together
           </p>
         </div>
-        <div className="rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-xl p-8 shadow-xl">
-          <form className="space-y-5">
-            <div>
-              <label className="block mb-2 text-sm text-gray-700">
-                Full Name
-              </label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="John Doe"
-                  className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
-                />
-              </div>
+
+        <div className="relative">
+          <div className="absolute -inset-5 rounded-[2.5rem] bg-gradient-to-r from-blue-300/45 via-cyan-300/35 to-violet-300/45 blur-2xl" />
+
+          <div className="relative rounded-[2rem] border border-white bg-white/85 backdrop-blur-xl p-8 shadow-2xl shadow-slate-900/10">
+            <div className="space-y-3 mb-5">
+              <AppAlert
+                type="error"
+                message={error}
+                onClose={() => setError("")}
+              />
+              <AppAlert
+                type="success"
+                message={success}
+                onClose={() => setSuccess("")}
+              />
             </div>
 
-            <div>
-              <label className="block mb-2 text-sm text-gray-700">Email</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="email"
-                  placeholder="your.email@example.com"
-                  className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
-                />
+            <form className="space-y-5">
+                <div>
+                  <label className="block mb-2 text-sm text-slate-700 font-medium">
+                    Full Name
+                  </label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      placeholder="John Doe"
+                      className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block mb-2 text-sm text-gray-700">
+                    Email
+                  </label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="email"
+                      placeholder="your.email@example.com"
+                      className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm text-gray-700">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="password"
+                      placeholder="Create a strong password"
+                      className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
+                    />
+                  </div>
+                </div>
+                <label className="flex items-start gap-2 cursor-pointer text-sm">
+                  <input type="checkbox" className="mt-1 rounded" />
+                  <span className="text-gray-600">
+                    I agree to the{" "}
+                    <a href="#" className="text-[#0ea5e9] hover:underline">
+                      Terms of Service
+                    </a>{" "}
+                    and{" "}
+                    <a href="#" className="text-[#0ea5e9] hover:underline">
+                      Privacy Policy
+                    </a>
+                  </span>
+                </label>
+                <Link
+                  to="/app"
+                  className="block w-full py-3 rounded-lg bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] text-white hover:opacity-90 transition-opacity text-center shadow-lg shadow-blue-500/30"
+                >
+                  Create Account
+                </Link>
+            </form>
+              <div className="my-6 flex items-center gap-4">
+                <div className="flex-1 h-px bg-slate-200" />
+                <span className="text-sm text-slate-500">Or sign up with</span>
+                <div className="flex-1 h-px bg-slate-200" />
               </div>
-            </div>
-            <div>
-              <label className="block mb-2 text-sm text-gray-700">
-                Password
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="password"
-                  placeholder="Create a strong password"
-                  className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
-                />
+
+              <div className="grid grid-cols-2 gap-4">
+                <button className="flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 bg-white/80 hover:bg-gray-50 transition-all text-slate-700 font-medium shadow-sm">
+                  <FaGithub className="w-5 h-5" />
+                  GitHub
+                </button>
+                <button className="flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 bg-white/80 hover:bg-slate-50 transition-all text-slate-700 font-medium shadow-sm">
+                  <FaGoogle className="w-5 h-5" />
+                  Google
+                </button>
               </div>
+
+              <p className="mt-7 text-center text-sm text-slate-600">
+                Already have an account?{" "}
+                <Link
+                  to="/login"
+                  className="text-blue-700 hover:text-blue-800 hover:underline font-medium"
+                >
+                  Sign in
+                </Link>
+              </p>
             </div>
-            <label className="flex items-start gap-2 cursor-pointer text-sm">
-              <input type="checkbox" className="mt-1 rounded" />
-              <span className="text-gray-600">
-                I agree to the{" "}
-                <a href="#" className="text-[#0ea5e9] hover:underline">
-                  Terms of Service
-                </a>{" "}
-                and{" "}
-                <a href="#" className="text-[#0ea5e9] hover:underline">
-                  Privacy Policy
-                </a>
-              </span>
-            </label>
-            <Link
-              to="/app"
-              className="block w-full py-3 rounded-lg bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] text-white hover:opacity-90 transition-opacity text-center shadow-lg shadow-blue-500/30"
-            >
-              Create Account
-            </Link>
-          </form>
-          <div className="my-6 flex items-center gap-4">
-            <div className="flex-1 h-px bg-slate-200" />
-            <span className="text-sm text-slate-500">Or sign up with</span>
-            <div className="flex-1 h-px bg-slate-200" />
           </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <button className="flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 bg-white/80 hover:bg-gray-50 transition-all text-slate-700 font-medium shadow-sm">
-              <FaGithub className="w-5 h-5" />
-              GitHub
-            </button>
-            <button className="flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 bg-white/80 hover:bg-slate-50 transition-all text-slate-700 font-medium shadow-sm">
-              <FaGoogle className="w-5 h-5" />
-              Google
-            </button>
-          </div>
-
-          <p className="mt-7 text-center text-sm text-slate-600">
-            Already have an account?{" "}
-            <Link
-              to="/login"
-              className="text-blue-700 hover:text-blue-800 hover:underline font-medium"
-            >
-              Sign in
-            </Link>
-          </p>
         </div>
       </div>
     </div>
