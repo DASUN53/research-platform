@@ -8,9 +8,12 @@ import { AppAlert } from "../AppAlert";
 export function RegisterPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#d9f1ff] via-[#e8f2ff] to-[#f3d9ff] text-gray-900 flex items-center justify-center px-6 py-12 relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-[#0ea5e9]/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#a855f7]/10 rounded-full blur-3xl" />
-
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#dbeafe_1px,transparent_1px),linear-gradient(to_bottom,#dbeafe_1px,transparent_1px)] bg-[size:80px_80px] opacity-45" />
+        <div className="absolute -top-40 left-1/2 h-[560px] w-[820px] -translate-x-1/2 rounded-full bg-blue-200/70 blur-3xl" />
+        <div className="absolute top-52 -right-40 h-[460px] w-[460px] rounded-full bg-violet-200/70 blur-3xl" />
+        <div className="absolute bottom-[-140px] -left-40 h-[460px] w-[460px] rounded-full bg-cyan-200/70 blur-3xl" />
+      </div>
       <div className="relative z-10 w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-6">
