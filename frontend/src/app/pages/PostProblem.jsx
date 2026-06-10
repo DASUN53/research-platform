@@ -1,37 +1,55 @@
 import { useState } from "react";
-import { Upload, X, FileText, Image as ImageIcon, Code, Database } from "lucide-react";
+import {
+  Upload,
+  X,
+  FileText,
+  Image as ImageIcon,
+  Code,
+  Database,
+} from "lucide-react";
 
 export function PostProblem() {
-  const [files, setFiles] = useState<string[]>([]);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [files, setFiles] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const availableTags = [
-    "Machine Learning", "Data Science", "Web Development", "Python",
-    "JavaScript", "Algorithms", "Database", "Cloud Computing",
-    "Security", "DevOps", "Research", "Optimization"
+    "Machine Learning",
+    "Data Science",
+    "Web Development",
+    "Python",
+    "JavaScript",
+    "Algorithms",
+    "Database",
+    "Cloud Computing",
+    "Security",
+    "DevOps",
+    "Research",
+    "Optimization",
   ];
 
-  const addFile = (fileName: string) => {
+  const addFile = (fileName) => {
     setFiles([...files, fileName]);
   };
 
-  const removeFile = (index: number) => {
+  const removeFile = (index) => {
     setFiles(files.filter((_, i) => i !== index));
   };
 
-  const toggleTag = (tag: string) => {
+  const toggleTag = (tag) => {
     if (selectedTags.includes(tag)) {
-      setSelectedTags(selectedTags.filter(t => t !== tag));
+      setSelectedTags(selectedTags.filter((t) => t !== tag));
     } else {
       setSelectedTags([...selectedTags, tag]);
     }
   };
 
-return (
+  return (
     <div className="p-6 max-w-5xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl mb-2 text-gray-900">Post a Problem</h1>
-        <p className="text-gray-600">Share your challenge with the research community</p>
+        <p className="text-gray-600">
+          Share your challenge with the research community
+        </p>
       </div>
 
       <div className="space-y-6">
@@ -66,15 +84,18 @@ return (
             className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all resize-none text-gray-900"
           />
           <p className="mt-2 text-sm text-gray-500">
-            Tip: Include code snippets, datasets, or research papers for better context
+            Tip: Include code snippets, datasets, or research papers for better
+            context
           </p>
         </div>
-        
+
         <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
           <label className="block mb-4 text-gray-900">Attachments</label>
           <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-400 transition-colors cursor-pointer bg-gray-50">
             <Upload className="w-12 h-12 mx-auto mb-3 text-gray-400" />
-            <p className="mb-2 text-gray-900">Drag and drop files here, or click to browse</p>
+            <p className="mb-2 text-gray-900">
+              Drag and drop files here, or click to browse
+            </p>
             <p className="text-sm text-gray-500">
               Support for PDFs, images, datasets (CSV, JSON), and code files
             </p>
@@ -95,9 +116,13 @@ return (
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#0ea5e9]/10 to-[#a855f7]/10 flex items-center justify-center border border-blue-200">
-                      {file.endsWith('.csv') ? <Database className="w-5 h-5 text-blue-600" /> :
-                       file.endsWith('.pdf') ? <FileText className="w-5 h-5 text-blue-600" /> :
-                       <ImageIcon className="w-5 h-5 text-blue-600" />}
+                      {file.endsWith(".csv") ? (
+                        <Database className="w-5 h-5 text-blue-600" />
+                      ) : file.endsWith(".pdf") ? (
+                        <FileText className="w-5 h-5 text-blue-600" />
+                      ) : (
+                        <ImageIcon className="w-5 h-5 text-blue-600" />
+                      )}
                     </div>
                     <span className="text-sm text-gray-900">{file}</span>
                   </div>
@@ -132,7 +157,7 @@ return (
           </div>
         </div>
 
-         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
             <label className="block mb-2 text-gray-900">Difficulty Level</label>
             <select className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all text-gray-900">
@@ -145,7 +170,9 @@ return (
           </div>
 
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-            <label className="block mb-2 text-gray-900">Collaboration Type</label>
+            <label className="block mb-2 text-gray-900">
+              Collaboration Type
+            </label>
             <select className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all text-gray-900">
               <option value="open">Open Collaboration</option>
               <option value="invite">Invite Only</option>
