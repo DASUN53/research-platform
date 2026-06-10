@@ -64,93 +64,96 @@ export function RegisterPage() {
             </div>
 
             <form className="space-y-5">
-                <div>
-                  <label className="block mb-2 text-sm text-slate-700 font-medium">
-                    Full Name
-                  </label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                    <input
-                      type="text"
-                      placeholder="John Doe"
-                      className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block mb-2 text-sm text-gray-700">
-                    Email
-                  </label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                    <input
-                      type="email"
-                      placeholder="your.email@example.com"
-                      className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block mb-2 text-sm text-gray-700">
-                    Password
-                  </label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                    <input
-                      type="password"
-                      placeholder="Create a strong password"
-                      className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
-                    />
-                  </div>
-                </div>
-                <label className="flex items-start gap-2 cursor-pointer text-sm">
-                  <input type="checkbox" className="mt-1 rounded" />
-                  <span className="text-gray-600">
-                    I agree to the{" "}
-                    <a href="#" className="text-[#0ea5e9] hover:underline">
-                      Terms of Service
-                    </a>{" "}
-                    and{" "}
-                    <a href="#" className="text-[#0ea5e9] hover:underline">
-                      Privacy Policy
-                    </a>
-                  </span>
+              <div>
+                <label className="block mb-2 text-sm text-slate-700 font-medium">
+                  Full Name
                 </label>
-                <Link
-                  to="/app"
-                  className="block w-full py-3 rounded-lg bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] text-white hover:opacity-90 transition-opacity text-center shadow-lg shadow-blue-500/30"
-                >
-                  Create Account
-                </Link>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <input
+                    name="full_name"
+                    type="text"
+                    value={FormData.full_name}
+                    onChange={handleChange}
+                    placeholder="John Doe"
+                    className="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-50/80 border border-slate-200 focus:border-blue-800 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
+                    required
+                 />
+                </div>
+              </div>
+
+              <div>
+                <label className="block mb-2 text-sm text-gray-700">
+                  Email
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="email"
+                    placeholder="your.email@example.com"
+                    className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block mb-2 text-sm text-gray-700">
+                  Password
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="password"
+                    placeholder="Create a strong password"
+                    className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
+                  />
+                </div>
+              </div>
+              <label className="flex items-start gap-2 cursor-pointer text-sm">
+                <input type="checkbox" className="mt-1 rounded" />
+                <span className="text-gray-600">
+                  I agree to the{" "}
+                  <a href="#" className="text-[#0ea5e9] hover:underline">
+                    Terms of Service
+                  </a>{" "}
+                  and{" "}
+                  <a href="#" className="text-[#0ea5e9] hover:underline">
+                    Privacy Policy
+                  </a>
+                </span>
+              </label>
+              <Link
+                to="/app"
+                className="block w-full py-3 rounded-lg bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] text-white hover:opacity-90 transition-opacity text-center shadow-lg shadow-blue-500/30"
+              >
+                Create Account
+              </Link>
             </form>
-              <div className="my-6 flex items-center gap-4">
-                <div className="flex-1 h-px bg-slate-200" />
-                <span className="text-sm text-slate-500">Or sign up with</span>
-                <div className="flex-1 h-px bg-slate-200" />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <button className="flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 bg-white/80 hover:bg-gray-50 transition-all text-slate-700 font-medium shadow-sm">
-                  <FaGithub className="w-5 h-5" />
-                  GitHub
-                </button>
-                <button className="flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 bg-white/80 hover:bg-slate-50 transition-all text-slate-700 font-medium shadow-sm">
-                  <FaGoogle className="w-5 h-5" />
-                  Google
-                </button>
-              </div>
-
-              <p className="mt-7 text-center text-sm text-slate-600">
-                Already have an account?{" "}
-                <Link
-                  to="/login"
-                  className="text-blue-700 hover:text-blue-800 hover:underline font-medium"
-                >
-                  Sign in
-                </Link>
-              </p>
+            <div className="my-6 flex items-center gap-4">
+              <div className="flex-1 h-px bg-slate-200" />
+              <span className="text-sm text-slate-500">Or sign up with</span>
+              <div className="flex-1 h-px bg-slate-200" />
             </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <button className="flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 bg-white/80 hover:bg-gray-50 transition-all text-slate-700 font-medium shadow-sm">
+                <FaGithub className="w-5 h-5" />
+                GitHub
+              </button>
+              <button className="flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 bg-white/80 hover:bg-slate-50 transition-all text-slate-700 font-medium shadow-sm">
+                <FaGoogle className="w-5 h-5" />
+                Google
+              </button>
+            </div>
+
+            <p className="mt-7 text-center text-sm text-slate-600">
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                className="text-blue-700 hover:text-blue-800 hover:underline font-medium"
+              >
+                Sign in
+              </Link>
+            </p>
           </div>
         </div>
       </div>
