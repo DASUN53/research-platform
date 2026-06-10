@@ -93,7 +93,21 @@ export function UserProfile() {
     fetchUserProfile();
   }, [username, currentUser?.user_id]);
 
-  const badges = [
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return "";
+
+    if (imagePath.startsWith("http")) {
+      return imagePath;
+    }
+
+    if (imagePath.startsWith("/uploads")) {
+      return `http://localhost:5000${imagePath}`;
+    }
+
+    return imagePath;
+  };
+
+  const defaultbadges = [
     {
       name: "First Solution",
       icon: CheckCircle,
