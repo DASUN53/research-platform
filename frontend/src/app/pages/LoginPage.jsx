@@ -65,77 +65,107 @@ export function LoginPage() {
               CollabSolve
             </span>
           </Link>
-          <h1 className="text-3xl mb-2 text-gray-900">Welcome Back</h1>
-          <p className="text-gray-600">
-            Sign in to continue your research journey
+          <h1 className="text-4xl font-extrabold tracking-tight mb-3 text-slate-950">
+            Welcome Back
+          </h1>
+          <p className="text-slate-600">
+            Sign in to collaborate, share solutions, and grow knowledge together
           </p>
         </div>
-        <div className="rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-xl p-8 shadow-xl">
-          <form className="space-y-5">
-            <div className="form-1">
-              <label className="block mb-2 text-sm text-gray-700">Email</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="email"
-                  placeholder="your.email@example.com"
-                  className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
-                />
-              </div>
-              <div className="form-2">
-                <label className="block mb-2 text-sm text-gray-700">
-                  Password
+        <div className="relative">
+          <div className="absolute -inset-5 rounded-[2.5rem] bg-gradient-to-r from-blue-300/45 via-cyan-300/35 to-violet-300/45 blur-2xl" />
+
+          <div className="relative rounded-[2rem] border border-white bg-white/85 backdrop-blur-xl p-8 shadow-2xl shadow-slate-900/10">
+            <div className="space-y-3 mb-5">
+              <AppAlert
+                type="error"
+                message={error}
+                onClose={() => setError("")}
+              />
+            </div>
+            <form className="space-y-5" onSubmit={handleLogin}>
+              <div>
+                <label className="block mb-2 text-sm font-medium text-slate-700">
+                  Email
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                   <input
-                    type="password"
-                    placeholder="Enter your password"
-                    className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="your.email@example.com"
+                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50/80 border border-slate-200  text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
+                    required
                   />
                 </div>
               </div>
-              <div className="flex items-center justify-between text-sm">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" className="rounded" />
-                  <span className="text-gray-600">Remember me</span>
+              <div>
+                <label className="block mb-2 text-sm font-medium text-slate-700">
+                  Password
                 </label>
-                <a href="#" className="text-[#0ea5e9] hover:underline">
+                <div className="relative">
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <input
+                    name="password"
+                    type="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Enter your password"
+                    className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50/80 border border-gray-200 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:ring-4 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="flex items-center justify-between text-sm mt-5">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <span className="text-slate-600">Remember me</span>
+                </label>
+                <a
+                  href="#"
+                  className="text-blue-700 font-medium hover:text-blue-800 hover:underline"
+                >
                   Forgot password?
                 </a>
               </div>
-              <Link
-                to="/app"
-                className="block w-full py-3 rounded-lg bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] text-white hover:opacity-90 transition-opacity text-center shadow-lg shadow-blue-500/30"
+              <button
+                type="submit"
+                disabled={loading}
+                className="mt-6 block w-full py-3.5 rounded-xl bg-[#1e3a8a] text-white font-semibold hover:bg-[#1d4ed8] hover:-translate-y-0.5 transition-all text-center shadow-xl shadow-blue-300/40 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Sign In
-              </Link>
+                {loading ? "Signing In..." : "Sign In"}
+              </button>
+            </form>
+            <div className="my-6 flex items-center gap-4">
+              <div className="flex-1 h-px bg-gray-200" />
+              <span className="text-sm text-gray-500">Or continue with</span>
+              <div className="flex-1 h-px bg-gray-200" />
             </div>
-          </form>
-          <div className="my-6 flex items-center gap-4">
-            <div className="flex-1 h-px bg-gray-200" />
-            <span className="text-sm text-gray-500">Or continue with</span>
-            <div className="flex-1 h-px bg-gray-200" />
+            <div className="grid grid-cols-2 gap-4">
+              <button className="flex items-center justify-center gap-2 py-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-gray-700">
+                <FaGithub className="w-5 h-5" />
+                GitHub
+              </button>
+              <button className="flex items-center justify-center gap-2 py-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-gray-700">
+                <FaGoogle className="w-5 h-5" />
+                Google
+              </button>
+            </div>
+            <p className="mt-6 text-center text-sm text-gray-600">
+              Don't have an account?{" "}
+              <Link
+                to="/register"
+                className="text-[#0ea5e9] hover:underline font-medium"
+              >
+                Sign up
+              </Link>
+            </p>
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            <button className="flex items-center justify-center gap-2 py-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-gray-700">
-              <FaGithub className="w-5 h-5" />
-              GitHub
-            </button>
-            <button className="flex items-center justify-center gap-2 py-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-gray-700">
-              <FaGoogle className="w-5 h-5" />
-              Google
-            </button>
-          </div>
-          <p className="mt-6 text-center text-sm text-gray-600">
-            Don't have an account?{" "}
-            <Link
-              to="/register"
-              className="text-[#0ea5e9] hover:underline font-medium"
-            >
-              Sign up
-            </Link>
-          </p>
         </div>
       </div>
     </div>
