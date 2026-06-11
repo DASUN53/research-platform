@@ -400,17 +400,18 @@ export function UserProfile() {
               </div>
             </div>
           </div>
-          <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm">
-            <div className="flex border-b border-gray-200">
+
+          <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div className="flex border-b border-gray-200 overflow-x-auto dark:border-gray-800">
               <button
                 onClick={() => setActiveTab("activity")}
-                className={`flex-1 px-6 py-4 transition-all ${
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
                   activeTab === "activity"
-                    ? "bg-blue-900 border-b-2 border-[#0ea5e9] text-[white]"
-                    : "text-gray-600 hover:bg-gray-50"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
                 }`}
               >
-                Recent Activity
+                Activity
               </button>
               <button
                 onClick={() => setActiveTab("solutions")}
