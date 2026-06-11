@@ -22,3 +22,17 @@ export function KnowledgeArchive() {
   const [archiveItems, setArchiveItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const categories = [
+    { id: "all", name: "All Categories" },
+    ...Array.from(
+      new Set(
+        archiveItems
+          .map((item) => item.field_name)
+          .filter((fieldName) => Boolean(fieldName))
+      )
+    ).map((fieldName) => ({
+      id: fieldName,
+      name: fieldName,
+    })),
+  ];
