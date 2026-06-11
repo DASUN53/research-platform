@@ -227,6 +227,32 @@ export function UserProfile() {
     );
   }
 
+  const displayedBadges = defaultBadges.map((badge) => {
+    const earnedBadge = earnedBadges.find(
+      (item) => item.badge_name === badge.name,
+    );
+
+    return {
+      ...badge,
+      earned: Boolean(earnedBadge),
+    };
+  });
+
+  const solvedPosts = userPosts.filter(
+    (post) => post.status === "solved",
+  ).length;
+
+  const openPosts = userPosts.filter((post) => post.status === "open").length;
+
+  const verifiedSolutions = userSolutions.filter(
+    (solution) => Number(solution.is_verified) === 1,
+  );
+
+  const totalSolutionLikes = userSolutions.reduce(
+    (sum, solution) => sum + Number(solution.like_count || 0),
+    0,
+  );
+
   return (
     <div className="p-6 text-gray-900 dark:text-gray-100">
       <div className="max-w-6xl mx-auto space-y-6">
@@ -316,59 +342,126 @@ export function UserProfile() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#0ea5e9] to-[#06b6d4] bg-clip-text text-transparent">
-                  {profile.reputation}
+                  {reputation}
                 </div>
-                <div className="text-sm text-gray-600">Reputation</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Reputation
+                </div>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#06b6d4] to-[#a855f7] bg-clip-text text-transparent">
-                  {profile.stats?.solutions || 0}
+                  {solvedPosts}
                 </div>
-                <div className="text-sm text-gray-600">Solutions</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Solutions
+                </div>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#a855f7] to-[#0ea5e9] bg-clip-text text-transparent">
-                  {profile.stats?.problems || 0}
+                  {userPosts.length}
                 </div>
-                <div className="text-sm text-gray-600">Problems</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Problems
+                </div>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#10b981] to-[#06b6d4] bg-clip-text text-transparent">
-                  {profile.streak}
+                  {userSolutions.length}
                 </div>
-                <div className="text-sm text-gray-600">Day Streak</div>
+                <div className="text-sm text-gray-600  dark:text-gray-400">
+                  Solutions
+                </div>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] bg-clip-text text-transparent">
-                  Level {profile.level}
+                  {verifiedSolutions.length}
                 </div>
-                <div className="text-sm text-gray-600">Researcher</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Verified
+                </div>
+              </div>
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
+                <div className="text-2xl mb-1 bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] bg-clip-text text-transparent">
+                  {openPosts}
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Open
+                </div>
+              </div>
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
+                <div className="text-2xl mb-1 bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] bg-clip-text text-transparent">
+                  {level}
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Level
+                </div>
               </div>
             </div>
           </div>
-          <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm">
-            <div className="flex border-b border-gray-200">
+
+          <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div className="flex border-b border-gray-200 overflow-x-auto dark:border-gray-800">
               <button
                 onClick={() => setActiveTab("activity")}
-                className={`flex-1 px-6 py-4 transition-all ${
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
                   activeTab === "activity"
-                    ? "bg-blue-900 border-b-2 border-[#0ea5e9] text-[white]"
-                    : "text-gray-600 hover:bg-gray-50"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
                 }`}
               >
-                Recent Activity
+                Activity
+              </button>
+              <button
+                onClick={() => setActiveTab("problems")}
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
+                  activeTab === "problems"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
+                }`}
+              >
+                Posted Problems
               </button>
               <button
                 onClick={() => setActiveTab("solutions")}
-                className={`flex-1 px-6 py-4 transition-all ${
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
                   activeTab === "solutions"
-                    ? "bg-blue-900 border-b-2 border-[#0ea5e9] text-[white]"
-                    : "text-gray-600 hover:bg-gray-50"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
                 }`}
               >
-                Top Solutions
+                Submitted Solutions
+              </button>
+              <button
+                onClick={() => setActiveTab("verified")}
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
+                  activeTab === "verified"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
+                }`}
+              >
+                Verified Solutions
+              </button>
+              <button
+                onClick={() => setActiveTab("fields")}
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
+                  activeTab === "fields"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
+                }`}
+              >
+                Fields
+              </button>
+              <button
+                onClick={() => setActiveTab("badges")}
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
+                  activeTab === "badges"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
+                }`}
+              >
+                Badges
               </button>
             </div>
           </div>
