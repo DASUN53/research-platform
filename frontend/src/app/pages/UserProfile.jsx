@@ -127,6 +127,40 @@ export function UserProfile() {
       setImageUploading(false);
     }
   };
+  const handleEditChange = (e) => {
+    setEditForm({
+      ...editForm,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleUpdateProfile = async () => {
+    try {
+      setEditLoading(true);
+      setError("");
+      setMessage("");
+
+      await updateUserProfile(profile.user_id, {
+        full_name: editForm.full_name,
+        bio: editForm.bio,
+        university_or_organization: editForm.university_or_organization,
+      });
+
+      const updatedProfile = await getUserProfile(profile.user_id);
+      setProfile(updatedProfile);
+
+      if (currentUser?.user_id === profile.user_id) {
+        await refreshCurrentUser(profile.user_id);
+      }
+
+      setIsEditing(false);
+      setMessage("Profile updated successfully");
+    } catch (err) {
+      setError(err.message || "Failed to update profile");
+    } finally {
+      setEditLoading(false);
+    }
+  };
 
   const getImageUrl = (imagePath) => {
     if (!imagePath) return "";
@@ -246,15 +280,27 @@ export function UserProfile() {
                     </p>
                   </div>
 
-                  <button
-                    onClick={() => setIsEditing(!isEditing)}
-                    className="px-6 py-2 rounded-lg bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] text-white hover:opacity-90 transition-opacity shadow-lg shadow-blue-500/30"
-                  >
-                    {isEditing ? "Cancel" : "Edit Profile"}
-                  </button>
+                  {currentUser?.user_id === profile.user_id && (
+                    <div className="flex items-center gap-3">
+                      <Link
+                        to="/app/saved-problems"
+                        className="inline-flex items-center gap-2 px-5 py-2 rounded-lg border border-blue-200 bg-blue-50 text-[#0ea5e9] hover:bg-blue-100 transition-colors dark:border-blue-900/60 dark:bg-blue-950/40 dark:text-[#38bdf8] dark:hover:bg-blue-950/60"
+                      >
+                        <Bookmark className="w-4 h-4" />
+                        Saved Problems
+                      </Link>
+
+                      <button
+                        onClick={() => setIsEditing(!isEditing)}
+                        className="px-6 py-2 rounded-lg bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] text-white hover:opacity-90 transition-opacity shadow-lg shadow-blue-500/30"
+                      >
+                        {isEditing ? "Cancel" : "Edit Profile"}
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
+            </div>  
             <p className="text-lg mb-4 text-gray-700">{profile.bio}</p>
 
             <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-6">
@@ -294,29 +340,29 @@ export function UserProfile() {
               </div>
             </div>
           </div>
-        </div>
-        <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm">
-          <div className="flex border-b border-gray-200">
-            <button
-              onClick={() => setActiveTab("activity")}
-              className={`flex-1 px-6 py-4 transition-all ${
-                activeTab === "activity"
-                  ? "bg-blue-900 border-b-2 border-[#0ea5e9] text-[white]"
-                  : "text-gray-600 hover:bg-gray-50"
-              }`}
-            >
-              Recent Activity
-            </button>
-            <button
-              onClick={() => setActiveTab("solutions")}
-              className={`flex-1 px-6 py-4 transition-all ${
-                activeTab === "solutions"
-                  ? "bg-blue-900 border-b-2 border-[#0ea5e9] text-[white]"
-                  : "text-gray-600 hover:bg-gray-50"
-              }`}
-            >
-              Top Solutions
-            </button>
+          <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm">
+            <div className="flex border-b border-gray-200">
+              <button
+                onClick={() => setActiveTab("activity")}
+                className={`flex-1 px-6 py-4 transition-all ${
+                  activeTab === "activity"
+                    ? "bg-blue-900 border-b-2 border-[#0ea5e9] text-[white]"
+                    : "text-gray-600 hover:bg-gray-50"
+                }`}
+              >
+                Recent Activity
+              </button>
+              <button
+                onClick={() => setActiveTab("solutions")}
+                className={`flex-1 px-6 py-4 transition-all ${
+                  activeTab === "solutions"
+                    ? "bg-blue-900 border-b-2 border-[#0ea5e9] text-[white]"
+                    : "text-gray-600 hover:bg-gray-50"
+                }`}
+              >
+                Top Solutions
+              </button>
+            </div>
           </div>
         </div>
       </div>
