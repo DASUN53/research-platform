@@ -28,6 +28,7 @@ import {
   updateProfilePicture,
   refreshCurrentUser,
 } from "../services/userService";
+import { Avatar } from "../components/ui/avatar";
 
 export function UserProfile() {
   const { username } = useParams();
@@ -35,7 +36,7 @@ export function UserProfile() {
   const [userPosts, setUserPosts] = useState([]);
   const [userSolutions, setUserSolutions] = useState([]);
   const [userFields, setUserFields] = useState([]);
-  /* const [loading, setLoading] = useState(true);*/
+  const [loading, setLoading] = useState(true);
   const [imageUploading, setImageUploading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
@@ -100,6 +101,33 @@ export function UserProfile() {
     fetchUserProfile();
   }, [username, currentUser?.user_id]);
 
+  const handleProfileImageChange = async (e) => {
+    const file = e.target.files[0];
+
+    if (!file || !profile) return;
+
+    try {
+      setImageUploading(true);
+      setError("");
+      setMessage("");
+
+      await updateProfilePicture(profile.user_id, file);
+
+      const updatedProfile = await getUserProfile(profile.user_id);
+      setProfile(updatedProfile);
+
+      if (currentUser?.user_id === profile.user_id) {
+        await refreshCurrentUser(profile.user_id);
+      }
+
+      setMessage("Profile picture updated successfully");
+    } catch (err) {
+      setError(err.message || "Failed to update profile picture");
+    } finally {
+      setImageUploading(false);
+    }
+  };
+
   const getImageUrl = (imagePath) => {
     if (!imagePath) return "";
 
@@ -152,7 +180,7 @@ export function UserProfile() {
       earned: false,
     },
   ];
-  /*if (loading) {
+  if (loading) {
     return (
       <div className="p-6">
         <div className="max-w-6xl mx-auto rounded-xl border border-gray-200 bg-white p-8 shadow-sm text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
@@ -169,7 +197,7 @@ export function UserProfile() {
         </div>
       </div>
     );
-  }*/
+  }
 
   return (
     <div className="p-6 text-gray-900 dark:text-gray-100">
@@ -189,7 +217,7 @@ export function UserProfile() {
             <div className="flex items-end gap-6 -mt-16 mb-6">
               <div className="relative">
                 <img
-                  src={avatar}
+                  src={Avatar}
                   alt={profile.full_name}
                   className="w-32 h-32 rounded-2xl border-4 border-white shadow-xl bg-white object-cover dark:border-gray-900 dark:bg-gray-800"
                 />
