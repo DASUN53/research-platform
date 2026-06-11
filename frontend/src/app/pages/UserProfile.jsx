@@ -2,10 +2,8 @@ import { useParams } from "react-router-dom";
 import { AppAlert } from "../AppAlert";
 import {
   Award,
-  Calendar,
   MapPin,
   Link as LinkIcon,
-  Mail,
   Star,
   Trophy,
   Flame,
@@ -300,13 +298,28 @@ export function UserProfile() {
                   )}
                 </div>
               </div>
-            </div>  
+            </div>
+
             <p className="text-lg mb-4 text-gray-700">{profile.bio}</p>
 
-            <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-6">
-              <span className="flex items-center gap-2"></span>
-              <span className="flex items-center gap-2"></span>
+            <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400 mb-6">
+              <span className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" />
+                {profile.university_or_organization || "Organization not added"}
+              </span>
+              
+              <span className="flex items-center gap-2">
+                <LinkIcon className="w-4 h-4" />
+                <a
+                  href="#"
+                  className="text-[#0ea5e9] hover:underline dark:text-[#38bdf8]"
+                >
+                  CollabSolve Profile
+                </a>
+              </span>
             </div>
+
+
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#0ea5e9] to-[#06b6d4] bg-clip-text text-transparent">
