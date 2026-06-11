@@ -174,6 +174,15 @@ export function UserProfile() {
   return (
     <div className="p-6 text-gray-900 dark:text-gray-100">
       <div className="max-w-6xl mx-auto space-y-6">
+        <div className="space-y-3 mb-5">
+          <AppAlert
+            type="success"
+            message={message}
+            onClose={() => setMessage("")}
+          />
+          <AppAlert type="error" message={error} onClose={() => setError("")} />
+        </div>
+
         <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <div className="h-32 bg-blue-900" />
           <div className="px-8 pb-8">
