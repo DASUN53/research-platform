@@ -414,14 +414,54 @@ export function UserProfile() {
                 Activity
               </button>
               <button
-                onClick={() => setActiveTab("solutions")}
-                className={`flex-1 px-6 py-4 transition-all ${
-                  activeTab === "solutions"
-                    ? "bg-blue-900 border-b-2 border-[#0ea5e9] text-[white]"
-                    : "text-gray-600 hover:bg-gray-50"
+                onClick={() => setActiveTab("problems")}
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
+                  activeTab === "problems"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
                 }`}
               >
-                Top Solutions
+                Posted Problems
+              </button>
+              <button
+                onClick={() => setActiveTab("solutions")}
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
+                  activeTab === "solutions"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
+                }`}
+              >
+                Submitted Solutions
+              </button>
+              <button
+                onClick={() => setActiveTab("verified")}
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
+                  activeTab === "verified"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
+                }`}
+              >
+                Verified Solutions
+              </button>
+              <button
+                onClick={() => setActiveTab("fields")}
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
+                  activeTab === "fields"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
+                }`}
+              >
+                Fields
+              </button>
+              <button
+                onClick={() => setActiveTab("badges")}
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
+                  activeTab === "badges"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
+                }`}
+              >
+                Badges
               </button>
             </div>
           </div>
