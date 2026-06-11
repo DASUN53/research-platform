@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { AppAlert } from "../AppAlert";
 import {
   Award,
@@ -10,10 +10,6 @@ import {
   Target,
   CheckCircle,
   Bookmark,
-  Lightbulb,
-  BookOpen,
-  Tags,
-  ThumbsUp,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getCurrentUser } from "../services/authService";
@@ -249,7 +245,7 @@ export function UserProfile() {
             <div className="flex items-end gap-6 -mt-16 mb-6">
               <div className="relative">
                 <img
-                  src={Avatar}
+                  src={getImageUrl(profile.profile_picture)}
                   alt={profile.full_name}
                   className="w-32 h-32 rounded-2xl border-4 border-white shadow-xl bg-white object-cover dark:border-gray-900 dark:bg-gray-800"
                 />
@@ -274,7 +270,7 @@ export function UserProfile() {
                       {profile.full_name}
                     </h1>
                     <p className="text-gray-600 dark:text-gray-400">
-                      @{profile.username.split("@")[0] || "researcher"}
+                      {profile.username?.split("@")[0] || "researcher"}
                     </p>
                   </div>
 
@@ -307,7 +303,7 @@ export function UserProfile() {
                 <MapPin className="w-4 h-4" />
                 {profile.university_or_organization || "Organization not added"}
               </span>
-              
+
               <span className="flex items-center gap-2">
                 <LinkIcon className="w-4 h-4" />
                 <a
@@ -319,7 +315,6 @@ export function UserProfile() {
               </span>
             </div>
 
-
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#0ea5e9] to-[#06b6d4] bg-clip-text text-transparent">
@@ -329,13 +324,13 @@ export function UserProfile() {
               </div>
               <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#06b6d4] to-[#a855f7] bg-clip-text text-transparent">
-                  {profile.stats.solutions}
+                  {profile.stats?.solutions || 0}
                 </div>
                 <div className="text-sm text-gray-600">Solutions</div>
               </div>
               <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#a855f7] to-[#0ea5e9] bg-clip-text text-transparent">
-                  {profile.stats.problems}
+                  {profile.stats?.problems || 0}
                 </div>
                 <div className="text-sm text-gray-600">Problems</div>
               </div>
