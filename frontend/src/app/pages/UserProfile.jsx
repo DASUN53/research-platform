@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-
+import { AppAlert } from "../AppAlert";
 import {
   Award,
   Calendar,
@@ -35,7 +35,7 @@ export function UserProfile() {
   const [userPosts, setUserPosts] = useState([]);
   const [userSolutions, setUserSolutions] = useState([]);
   const [userFields, setUserFields] = useState([]);
-  const [loading, setLoading] = useState(true);
+  /* const [loading, setLoading] = useState(true);*/
   const [imageUploading, setImageUploading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
@@ -152,7 +152,7 @@ export function UserProfile() {
       earned: false,
     },
   ];
-  if (loading) {
+  /*if (loading) {
     return (
       <div className="p-6">
         <div className="max-w-6xl mx-auto rounded-xl border border-gray-200 bg-white p-8 shadow-sm text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
@@ -169,39 +169,7 @@ export function UserProfile() {
         </div>
       </div>
     );
-  }
-
-  const avatar = profile.profile_picture
-    ? getImageUrl(profile.profile_picture)
-    : "/default-profile.png";
-
-  const reputation = profile.total_points || 0;
-
-  const earnedBadges = profile.badges || [];
-
-  const displayedBadges = defaultBadges.map((badge) => {
-    const earnedBadge = earnedBadges.find(
-      (item) => item.badge_name === badge.name,
-    );
-    return {
-      ...badge,
-      earned: Boolean(earnedBadge),
-    };
-  });
-
-  const solvedPosts = userPosts.filter(
-    (post) => post.status === "solved",
-  ).length;
-
-  const openPosts = userPosts.filter((post) => post.status === "open").length;
-
-  const verifiedSolutions = userSolutions.filter(
-    (solution) => Number(solution.is_verified) === 1,
-  );
-  const totalSolutionLikes = userSolutions.reduce(
-    (sum, solution) => sum + Number(solution.like_count || 0),
-    0,
-  );
+  }*/
 
   return (
     <div className="p-6 text-gray-900 dark:text-gray-100">
