@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Mail, User, Lock } from "lucide-react";
 import { FaGithub, FaGoodreads, FaGoogle } from "react-icons/fa";
 import { registerUser } from "../services/authService";
@@ -51,6 +51,29 @@ export function RegisterPage() {
       setLoading(false);
     }
   };
+
+  const handleCredentialLogin = (response) => {
+    console.log("response-token", response);
+    console.log(response.credential);
+  };
+
+  useEffect(() => {
+    google.accounts.id.initialize({
+      client_id:
+        "506226501226-06loravbvj6vcmfruoekloov61cf440v.apps.googleusercontent.com",
+      callback: handleCredentialLogin,
+    });
+
+    google.accounts.id.renderButton(document.getElementById("googleSignIn"), {
+      theme: "outline",
+      size: "large",
+      shape: "pill",
+      width: 180,
+      height: 100,
+      text: "signin_with",
+    });
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#d9f1ff] via-[#e8f2ff] to-[#f3d9ff] text-gray-900 flex items-center justify-center px-6 py-12 relative overflow-hidden">
       <div className="absolute inset-0">
@@ -118,7 +141,7 @@ export function RegisterPage() {
                   <input
                     name="full_name"
                     type="text"
-                    value={FormData.full_name}
+                    value={formData.full_name}
                     onChange={handleChange}
                     placeholder="John Doe"
                     className="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-50/80 border border-slate-200 focus:border-blue-800 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
@@ -136,7 +159,7 @@ export function RegisterPage() {
                   <input
                     name="email"
                     type="email"
-                    value={FormData.email}
+                    value={formData.email}
                     onChange={handleChange}
                     placeholder="your.email@example.com"
                     className="w-full pl-11 pr-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-800 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
@@ -155,7 +178,7 @@ export function RegisterPage() {
                   <input
                     name="university_or_organization"
                     type="text"
-                    value={FormData.university_or_organization}
+                    value={formData.university_or_organization}
                     onChange={handleChange}
                     placeholder="Sabaragamuwa University"
                     className="w-full pl-11 pr-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-800 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
@@ -225,14 +248,16 @@ export function RegisterPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <button className="flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 bg-white/80 hover:bg-gray-50 transition-all text-slate-700 font-medium shadow-sm">
+              <button className="w-full flex items-center justify-center gap-3 px-1  rounded-full border border-gray-300 bg-white hover:bg-gray-50 transition-colors text-gray-700 font-medium">
                 <FaGithub className="w-5 h-5" />
                 GitHub
               </button>
-              <button className="flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 bg-white/80 hover:bg-slate-50 transition-all text-slate-700 font-medium shadow-sm">
-                <FaGoogle className="w-5 h-5" />
-                Google
-              </button>
+              <div id="googleSignIn">
+                <button className="flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 bg-white/80 hover:bg-slate-50 transition-all text-slate-700 font-medium shadow-sm">
+                  <FaGoogle className="w-5 h-5" />
+                  Google
+                </button>
+              </div>
             </div>
 
             <p className="mt-7 text-center text-sm text-slate-600">
