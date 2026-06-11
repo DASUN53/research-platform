@@ -316,35 +316,61 @@ export function UserProfile() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#0ea5e9] to-[#06b6d4] bg-clip-text text-transparent">
-                  {profile.reputation}
+                  {reputation}
                 </div>
-                <div className="text-sm text-gray-600">Reputation</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Reputation
+                </div>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#06b6d4] to-[#a855f7] bg-clip-text text-transparent">
-                  {profile.stats?.solutions || 0}
+                  {solvedPosts}
                 </div>
-                <div className="text-sm text-gray-600">Solutions</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Solutions
+                </div>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#a855f7] to-[#0ea5e9] bg-clip-text text-transparent">
-                  {profile.stats?.problems || 0}
+                  {userPosts.length}
                 </div>
-                <div className="text-sm text-gray-600">Problems</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Problems
+                </div>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#10b981] to-[#06b6d4] bg-clip-text text-transparent">
-                  {profile.streak}
+                  {userSolutions.length}
                 </div>
-                <div className="text-sm text-gray-600">Day Streak</div>
+                <div className="text-sm text-gray-600  dark:text-gray-400">
+                  Solutions
+                </div>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] bg-clip-text text-transparent">
-                  Level {profile.level}
+                  {verifiedSolutions.length}
                 </div>
-                <div className="text-sm text-gray-600">Researcher</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Verified
+                </div>
+              </div>
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
+                <div className="text-2xl mb-1 bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] bg-clip-text text-transparent">
+                  {openPosts}
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Open
+                </div>
+              </div>
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
+                <div className="text-2xl mb-1 bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] bg-clip-text text-transparent">
+                  {level}
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Level
+                </div>
               </div>
             </div>
           </div>
