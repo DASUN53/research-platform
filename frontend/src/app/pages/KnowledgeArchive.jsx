@@ -66,3 +66,16 @@ export function KnowledgeArchive() {
       year: "numeric",
     });
   };
+
+  const getDifficultyStyle = (difficulty) => {
+    if (difficulty === "advanced") {
+      return "bg-blue-100 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300";
+    }
+
+    if (difficulty === "intermediate") {
+      return "bg-yellow-100 text-yellow-700 dark:bg-yellow-950/40 dark:text-yellow-300";
+    }
+
+    return "bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-300";
+  };
+
