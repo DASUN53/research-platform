@@ -227,6 +227,32 @@ export function UserProfile() {
     );
   }
 
+  const displayedBadges = defaultBadges.map((badge) => {
+    const earnedBadge = earnedBadges.find(
+      (item) => item.badge_name === badge.name,
+    );
+
+    return {
+      ...badge,
+      earned: Boolean(earnedBadge),
+    };
+  });
+
+  const solvedPosts = userPosts.filter(
+    (post) => post.status === "solved",
+  ).length;
+
+  const openPosts = userPosts.filter((post) => post.status === "open").length;
+
+  const verifiedSolutions = userSolutions.filter(
+    (solution) => Number(solution.is_verified) === 1,
+  );
+
+  const totalSolutionLikes = userSolutions.reduce(
+    (sum, solution) => sum + Number(solution.like_count || 0),
+    0,
+  );
+
   return (
     <div className="p-6 text-gray-900 dark:text-gray-100">
       <div className="max-w-6xl mx-auto space-y-6">
