@@ -222,4 +222,18 @@ export function LandingPage() {
             </div>
           </div>
 
+          {/* Brand trust strip */}
+          <div className="mt-12 rounded-3xl border border-slate-200 bg-white/75 backdrop-blur-xl p-6 shadow-xl shadow-slate-900/5">
+            <div className="grid md:grid-cols-3 gap-6 text-center">
+              <div>
+                <p className="text-sm font-medium text-slate-500 mb-1">
+                  Built for
+                </p>
+                <p className="text-lg font-bold text-slate-950">
+                  Students, Researchers & Developers
+                </p>
+              </div>
+
+
+
 
