@@ -243,4 +243,17 @@ export function LandingPage() {
                 </p>
               </div>
 
+              <div>
+                <p className="text-sm font-medium text-slate-500 mb-1">
+                  Powered by
+                </p>
+                <p className="text-lg font-bold text-slate-950">
+                  Collaboration & Knowledge
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
 
