@@ -124,3 +124,31 @@ export function KnowledgeArchive() {
             documents.
           </p>
         </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <aside className="space-y-6">
+            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+              <h3 className="mb-4 flex items-center gap-2 text-gray-900 dark:text-gray-100">
+                <Filter className="w-5 h-5" />
+                Filters
+              </h3>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm mb-2 text-gray-700 dark:text-gray-300">
+                    Difficulty
+                  </label>
+
+                  <select
+                    value={selectedDifficulty}
+                    onChange={(e) => setSelectedDifficulty(e.target.value)}
+                    className="w-full px-3 py-2 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#0ea5e9] focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 dark:focus:ring-blue-900/40"
+                  >
+                    <option value="all">All Levels</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                  </select>
+                </div>
+              </div>
+            </div>
