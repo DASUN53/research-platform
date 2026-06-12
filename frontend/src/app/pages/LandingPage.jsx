@@ -195,6 +195,18 @@ export function LandingPage() {
                   </div>
                 </div>
 
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="rounded-2xl border border-slate-200 bg-blue-50 p-5">
+                    <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center mb-4">
+                      <Users className="w-5 h-5" />
+                    </div>
+                    <h4 className="font-bold text-slate-950">
+                      Team Collaboration
+                    </h4>
+                    <p className="text-sm text-slate-600 mt-1">
+                      Work together on real problems.
+                    </p>
+                  </div>
 
 
 
