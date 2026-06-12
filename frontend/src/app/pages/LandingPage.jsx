@@ -133,5 +133,68 @@ export function LandingPage() {
               </div>
             </div>
 
+             {/* Right workflow visual */}
+            <div className="relative">
+              <div className="absolute -inset-6 rounded-[2.5rem] bg-gradient-to-r from-blue-300/50 via-cyan-300/40 to-violet-300/50 blur-2xl" />
+
+              <div className="relative rounded-[2rem] border border-white bg-white/85 backdrop-blur-xl shadow-2xl shadow-slate-900/10 p-6">
+                <div className="rounded-3xl bg-slate-950 p-6 text-white mb-5 overflow-hidden relative">
+                  <div className="absolute -top-20 -right-16 h-48 w-48 rounded-full bg-blue-500/30 blur-3xl" />
+                  <div className="absolute -bottom-20 -left-16 h-48 w-48 rounded-full bg-violet-500/30 blur-3xl" />
+
+                  <div className="relative">
+                    <p className="text-sm text-blue-200 mb-2">
+                      Platform Workflow
+                    </p>
+                    <h3 className="text-2xl font-bold mb-6">
+                      From problem to solution
+                    </h3>
+
+                    <div className="space-y-4">
+                      {[
+                        {
+                            step: "01",
+                            title: "Share your challenge",
+                            desc: "Post your academic or technical problem and explain what support you need.",
+                            color: "bg-blue-500",
+                        },
+                        {
+                          step: "02",
+                          title: "Discuss with contributors",
+                          desc: "Students and experts collaborate together.",
+                          color: "bg-cyan-500",
+                        },
+                        {
+                          step: "03",
+                          title: "Build verified knowledge",
+                          desc: "Useful answers become reusable solutions.",
+                          color: "bg-violet-500",
+                        },
+                      ].map((item, i) => (
+                        <div
+                          key={i}
+                          className="flex gap-4 rounded-2xl bg-white/10 p-4 backdrop-blur-sm"
+                        >
+                          <div
+                            className={`h-11 w-11 shrink-0 rounded-xl ${item.color} flex items-center justify-center text-sm font-bold`}
+                          >
+                            {item.step}
+                          </div>
+
+                          <div>
+                            <h4 className="font-semibold text-white">
+                              {item.title}
+                            </h4>
+                            <p className="text-sm text-slate-300 mt-1">
+                              {item.desc}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+
 
 
