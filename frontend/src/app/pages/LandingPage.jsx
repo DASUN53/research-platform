@@ -273,3 +273,74 @@ export function LandingPage() {
             </p>
           </div>
 
+          <div className="grid md:grid-cols-3 gap-7">
+            {[
+              {
+                icon: Users,
+                title: "Collaborative",
+                desc: "Work together with experts worldwide",
+                color: "bg-blue-100 text-blue-600",
+                line: "from-blue-500 to-cyan-400",
+              },
+              {
+                icon: Zap,
+                title: "Real-time",
+                desc: "Instant discussions and updates",
+                color: "bg-violet-100 text-violet-600",
+                line: "from-violet-500 to-fuchsia-400",
+              },
+              {
+                icon: Trophy,
+                title: "Gamified",
+                desc: "Earn reputation and achievements",
+                color: "bg-amber-100 text-amber-600",
+                line: "from-amber-400 to-orange-400",
+              },
+              {
+                icon: Search,
+                title: "Smart Search",
+                desc: "AI-powered recommendations",
+                color: "bg-cyan-100 text-cyan-600",
+                line: "from-cyan-500 to-blue-400",
+              },
+              {
+                icon: BookOpen,
+                title: "Knowledge Base",
+                desc: "Access thousands of solutions",
+                color: "bg-emerald-100 text-emerald-600",
+                line: "from-emerald-500 to-cyan-400",
+              },
+              {
+                icon: FileText,
+                title: "Advanced Tools",
+                desc: "Rich editor, file uploads, datasets",
+                color: "bg-fuchsia-100 text-fuchsia-600",
+                line: "from-fuchsia-500 to-violet-500",
+              },
+            ].map((feature, i) => (
+              <div
+                key={i}
+                className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-7 shadow-lg shadow-slate-900/5 hover:shadow-2xl hover:shadow-slate-900/10 hover:-translate-y-1 transition-all"
+              >
+                <div
+                  className={`absolute top-0 left-0 h-1 w-full bg-gradient-to-r ${feature.line}`}
+                />
+
+                <div
+                  className={`w-14 h-14 rounded-2xl ${feature.color} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform`}
+                >
+                  <feature.icon className="w-7 h-7" />
+                </div>
+
+                <h3 className="text-xl font-bold mb-2 text-slate-950">
+                  {feature.title}
+                </h3>
+
+                <p className="text-slate-600 leading-relaxed">
+                  {feature.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
