@@ -202,3 +202,19 @@ export function KnowledgeArchive() {
                 />
               </div>
             </div>
+
+            {loading && (
+              <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
+                Loading archive...
+              </div>
+            )}
+
+            <div className="space-y-3 mb-5">
+              <AppAlert type="error" message={error} onClose={() => setError("")} />
+            </div>
+
+            {!loading && !error && filteredArchiveItems.length === 0 && (
+              <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
+                No archived solved problems found.
+              </div>
+            )}
