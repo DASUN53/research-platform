@@ -523,7 +523,46 @@ export function UserProfile() {
                       key={solution.solution_id}
                       to={`/app/problem/${solution.post_id}`}
                       className="block p-4 rounded-lg border border-gray-200 bg-gray-50 hover:border-blue-300 hover:shadow-md transition-all dark:border-gray-800 dark:bg-gray-800/70 dark:hover:border-blue-700"
-                    ></Link>
+                    >
+                      <div className="flex items-start justify-between gap-4 mb-2">
+                        <div>
+                          <h3 className="text-gray-900 dark:text-gray-100 mb-1">
+                            {solution.post_title || "Original Problem"}
+                          </h3>
+
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                            Answered {formatDate(solution.created_at)}
+                          </p>
+                        </div>
+
+                        {Number(solution.is_verified) === 1 ? (
+                          <span className="px-3 py-1 rounded-full text-xs bg-green-50 text-green-700 border border-green-100 dark:bg-green-950/40 dark:text-green-300 dark:border-green-900/60">
+                            Verified
+                          </span>
+                        ) : (
+                          <span className="px-3 py-1 rounded-full text-xs bg-yellow-50 text-yellow-700 border border-yellow-100 dark:bg-yellow-950/40 dark:text-yellow-300 dark:border-yellow-900/60">
+                            Pending
+                          </span>
+                        )}
+                      </div>
+
+                      <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-3 mb-3">
+                        {solution.solution_text}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2">
+                        {solution.field_name && (
+                          <span className="px-3 py-1 rounded-full text-xs bg-gray-100 text-gray-700 border border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700">
+                            {solution.field_name}
+                          </span>
+                        )}
+
+                        <span className="px-3 py-1 rounded-full text-xs bg-blue-50 text-blue-700 border border-blue-100 flex items-center gap-1 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-900/60">
+                          <ThumbsUp className="w-3 h-3" />
+                          {solution.like_count || 0} likes
+                        </span>
+                      </div>
+                    </Link>
                   ))}
                 </div>
               )}
