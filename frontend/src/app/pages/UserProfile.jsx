@@ -464,6 +464,52 @@ export function UserProfile() {
                 Badges
               </button>
             </div>
+
+            <div className="p-6">
+              {activeTab === "problems" && (
+                <div className="space-y-4">
+                  {userPosts.length === 0 && (
+                    <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+                      Posted problems will appear here.
+                    </div>
+                  )}
+
+                  {userPosts.length === 0 && (
+                    <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+                      Posted problems will appear here.
+                    </div>
+                  )}
+
+                  {userPosts.map((post) => (
+                    <Link
+                      key={post.post_id}
+                      to={`/app/problem/${post.post_id}`}
+                      className="block p-4 rounded-lg border border-gray-200 bg-gray-50 hover:border-blue-300 hover:shadow-md transition-all dark:border-gray-800 dark:bg-gray-800/70 dark:hover:border-blue-700"
+                    >
+                      <h3 className="text-gray-900 dark:text-gray-100 mb-2">
+                        {post.title}
+                      </h3>
+
+                      <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-3">
+                        {post.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2">
+                        <span className="px-3 py-1 rounded-full text-xs bg-blue-50 text-blue-700 border border-blue-100 capitalize dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-900/60">
+                          {post.status}
+                        </span>
+
+                        {post.field_name && (
+                          <span className="px-3 py-1 rounded-full text-xs bg-gray-100 text-gray-700 border border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700">
+                            {post.field_name}
+                          </span>
+                        )}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
