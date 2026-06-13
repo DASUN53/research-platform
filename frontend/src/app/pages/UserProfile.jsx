@@ -509,6 +509,24 @@ export function UserProfile() {
                   ))}
                 </div>
               )}
+
+              {activeTab === "solutions" && (
+                <div className="space-y-4">
+                  {userSolutions.length === 0 && (
+                    <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+                      Submitted solutions will appear here.
+                    </div>
+                  )}
+
+                  {userSolutions.map((solution) => (
+                    <Link
+                      key={solution.solution_id}
+                      to={`/app/problem/${solution.post_id}`}
+                      className="block p-4 rounded-lg border border-gray-200 bg-gray-50 hover:border-blue-300 hover:shadow-md transition-all dark:border-gray-800 dark:bg-gray-800/70 dark:hover:border-blue-700"
+                    ></Link>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
