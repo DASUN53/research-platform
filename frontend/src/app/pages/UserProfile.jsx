@@ -566,6 +566,34 @@ export function UserProfile() {
                   ))}
                 </div>
               )}
+              {activeTab === "badges" && (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {displayedBadges.map((badge, i) => (
+                    <div
+                      key={i}
+                      className={`rounded-xl border p-6 text-center transition-all ${
+                        badge.earned
+                          ? "border-blue-200 bg-gradient-to-br from-white to-blue-50 hover:scale-105 shadow-sm hover:shadow-lg dark:border-blue-900/60 dark:from-gray-900 dark:to-blue-950/30"
+                          : "border-gray-200 bg-gray-50 opacity-50 dark:border-gray-800 dark:bg-gray-800/70"
+                      }`}
+                    >
+                      <div
+                        className={`w-16 h-16 mx-auto mb-3 rounded-xl bg-gradient-to-br ${badge.color} flex items-center justify-center shadow-lg`}
+                      >
+                        <badge.icon className="w-8 h-8 text-white" />
+                      </div>
+
+                      <h3 className="mb-1 text-gray-900 dark:text-gray-100">
+                        {badge.name}
+                      </h3>
+
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        {badge.earned ? "Earned" : "Locked"}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
