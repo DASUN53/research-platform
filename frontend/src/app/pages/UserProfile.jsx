@@ -227,7 +227,7 @@ export function UserProfile() {
     );
   }
 
-  const displayedBadges = defaultBadges.map((badge) => {
+  const displayedBadges = defaultbadges.map((badge) => {
     const earnedBadge = earnedBadges.find(
       (item) => item.badge_name === badge.name,
     );
@@ -463,6 +463,137 @@ export function UserProfile() {
               >
                 Badges
               </button>
+            </div>
+
+            <div className="p-6">
+              {activeTab === "problems" && (
+                <div className="space-y-4">
+                  {userPosts.length === 0 && (
+                    <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+                      Posted problems will appear here.
+                    </div>
+                  )}
+
+                  {userPosts.length === 0 && (
+                    <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+                      Posted problems will appear here.
+                    </div>
+                  )}
+
+                  {userPosts.map((post) => (
+                    <Link
+                      key={post.post_id}
+                      to={`/app/problem/${post.post_id}`}
+                      className="block p-4 rounded-lg border border-gray-200 bg-gray-50 hover:border-blue-300 hover:shadow-md transition-all dark:border-gray-800 dark:bg-gray-800/70 dark:hover:border-blue-700"
+                    >
+                      <h3 className="text-gray-900 dark:text-gray-100 mb-2">
+                        {post.title}
+                      </h3>
+
+                      <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-3">
+                        {post.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2">
+                        <span className="px-3 py-1 rounded-full text-xs bg-blue-50 text-blue-700 border border-blue-100 capitalize dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-900/60">
+                          {post.status}
+                        </span>
+
+                        {post.field_name && (
+                          <span className="px-3 py-1 rounded-full text-xs bg-gray-100 text-gray-700 border border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700">
+                            {post.field_name}
+                          </span>
+                        )}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+
+              {activeTab === "solutions" && (
+                <div className="space-y-4">
+                  {userSolutions.length === 0 && (
+                    <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+                      Submitted solutions will appear here.
+                    </div>
+                  )}
+
+                  {userSolutions.map((solution) => (
+                    <Link
+                      key={solution.solution_id}
+                      to={`/app/problem/${solution.post_id}`}
+                      className="block p-4 rounded-lg border border-gray-200 bg-gray-50 hover:border-blue-300 hover:shadow-md transition-all dark:border-gray-800 dark:bg-gray-800/70 dark:hover:border-blue-700"
+                    >
+                      <div className="flex items-start justify-between gap-4 mb-2">
+                        <div>
+                          <h3 className="text-gray-900 dark:text-gray-100 mb-1">
+                            {solution.post_title || "Original Problem"}
+                          </h3>
+
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                            Answered {formatDate(solution.created_at)}
+                          </p>
+                        </div>
+
+                        {Number(solution.is_verified) === 1 ? (
+                          <span className="px-3 py-1 rounded-full text-xs bg-green-50 text-green-700 border border-green-100 dark:bg-green-950/40 dark:text-green-300 dark:border-green-900/60">
+                            Verified
+                          </span>
+                        ) : (
+                          <span className="px-3 py-1 rounded-full text-xs bg-yellow-50 text-yellow-700 border border-yellow-100 dark:bg-yellow-950/40 dark:text-yellow-300 dark:border-yellow-900/60">
+                            Pending
+                          </span>
+                        )}
+                      </div>
+
+                      <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-3 mb-3">
+                        {solution.solution_text}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2">
+                        {solution.field_name && (
+                          <span className="px-3 py-1 rounded-full text-xs bg-gray-100 text-gray-700 border border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700">
+                            {solution.field_name}
+                          </span>
+                        )}
+
+                        <span className="px-3 py-1 rounded-full text-xs bg-blue-50 text-blue-700 border border-blue-100 flex items-center gap-1 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-900/60">
+                          <ThumbsUp className="w-3 h-3" />
+                          {solution.like_count || 0} likes
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+              {activeTab === "badges" && (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {displayedBadges.map((badge, i) => (
+                    <div
+                      key={i}
+                      className={`rounded-xl border p-6 text-center transition-all ${
+                        badge.earned
+                          ? "border-blue-200 bg-gradient-to-br from-white to-blue-50 hover:scale-105 shadow-sm hover:shadow-lg dark:border-blue-900/60 dark:from-gray-900 dark:to-blue-950/30"
+                          : "border-gray-200 bg-gray-50 opacity-50 dark:border-gray-800 dark:bg-gray-800/70"
+                      }`}
+                    >
+                      <div
+                        className={`w-16 h-16 mx-auto mb-3 rounded-xl bg-gradient-to-br ${badge.color} flex items-center justify-center shadow-lg`}
+                      >
+                        <badge.icon className="w-8 h-8 text-white" />
+                      </div>
+
+                      <h3 className="mb-1 text-gray-900 dark:text-gray-100">
+                        {badge.name}
+                      </h3>
+
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        {badge.earned ? "Earned" : "Locked"}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
