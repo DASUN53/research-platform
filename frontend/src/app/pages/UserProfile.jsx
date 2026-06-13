@@ -227,7 +227,7 @@ export function UserProfile() {
     );
   }
 
-  const displayedBadges = defaultBadges.map((badge) => {
+  const displayedBadges = defaultbadges.map((badge) => {
     const earnedBadge = earnedBadges.find(
       (item) => item.badge_name === badge.name,
     );
