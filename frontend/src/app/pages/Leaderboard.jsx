@@ -1,8 +1,15 @@
 import { Trophy, TrendingUp, Award, Zap } from "lucide-react";
+import { getLeaderboard } from "../services/reputationService";
 import { useState } from "react";
+import { AppAlert } from "../AppAlert";
 
 export function Leaderboard() {
   const [timeframe, setTimeframe] = useState("week");
+  const [topUsers, setTopUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isSwitching, setIsSwitching] = useState(false);
+  const [error, setError] = useState("");
+  
   const topUsers = [
     {
       rank: 1,
