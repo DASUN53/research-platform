@@ -1,39 +1,176 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import { AppAlert } from "../AppAlert";
 import {
   Award,
+  MapPin,
+  Link as LinkIcon,
   Star,
   Trophy,
   Flame,
   Target,
   CheckCircle,
-  MapPin,
-  LinkIcon,
+  Bookmark,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getCurrentUser } from "../services/authService";
+import {
+  getUserProfile,
+  getUserPosts,
+  getUserSolutions,
+  getUserFields,
+  updateUserProfile,
+  updateProfilePicture,
+  refreshCurrentUser,
+} from "../services/userService";
+import { Avatar } from "../components/ui/avatar";
 
 export function UserProfile() {
+  const { username } = useParams();
+  const [profile, setProfile] = useState(null);
+  const [userPosts, setUserPosts] = useState([]);
+  const [userSolutions, setUserSolutions] = useState([]);
+  const [userFields, setUserFields] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [imageUploading, setImageUploading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editLoading, setEditLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [activeTab, setActiveTab] = useState("activity");
-  const profile = {
-    name: "Dasun Kavinda",
-    username: "dasunkavinda",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
-    bio: "Machine Learning Engineer | PhD Candidate | Open Source Enthusiast",
-    location: "San Francisco, CA",
-    website: "johndoe.dev",
-    email: "john@example.com",
-    joinedDate: "January 2024",
-    reputation: 1240,
-    level: 12,
-    stats: {
-      problems: 23,
-      solutions: 47,
-      discussions: 156,
-      upvotes: 342,
-    },
-    streak: 12,
+
+  const [editForm, setEditForm] = useState({
+    full_name: "",
+    bio: "",
+    university_or_organization: "",
+  });
+
+  const currentUser = getCurrentUser();
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const userId = username || currentUser?.user_id;
+
+        if (!userId) {
+          setError("User not found. Please login again.");
+          setLoading(false);
+          return;
+        }
+
+        const [profileData, postsData, solutionsData, fieldsData] =
+          await Promise.all([
+            getUserProfile(userId),
+            getUserPosts(userId),
+            getUserSolutions(userId),
+            getUserFields(userId),
+          ]);
+        const finalPosts = Array.isArray(postsData)
+          ? postsData
+          : postsData.posts || [];
+        const finalSolutions = Array.isArray(solutionsData)
+          ? solutionsData
+          : solutionsData.solutions || [];
+
+        const finalFields = Array.isArray(fieldsData)
+          ? fieldsData
+          : fieldsData.fields || [];
+
+        setProfile(profileData);
+        setUserPosts(finalPosts);
+        setUserSolutions(finalSolutions);
+        setUserFields(finalFields);
+
+        setEditForm({
+          full_name: profileData.full_name || "",
+          bio: profileData.bio || "",
+          university_or_organization:
+            profileData.university_or_organization || "",
+        });
+      } catch (err) {
+        setError(err.message || "Failed to load user profile");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUserProfile();
+  }, [username, currentUser?.user_id]);
+
+  const handleProfileImageChange = async (e) => {
+    const file = e.target.files[0];
+
+    if (!file || !profile) return;
+
+    try {
+      setImageUploading(true);
+      setError("");
+      setMessage("");
+
+      await updateProfilePicture(profile.user_id, file);
+
+      const updatedProfile = await getUserProfile(profile.user_id);
+      setProfile(updatedProfile);
+
+      if (currentUser?.user_id === profile.user_id) {
+        await refreshCurrentUser(profile.user_id);
+      }
+
+      setMessage("Profile picture updated successfully");
+    } catch (err) {
+      setError(err.message || "Failed to update profile picture");
+    } finally {
+      setImageUploading(false);
+    }
+  };
+  const handleEditChange = (e) => {
+    setEditForm({
+      ...editForm,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const badges = [
+  const handleUpdateProfile = async () => {
+    try {
+      setEditLoading(true);
+      setError("");
+      setMessage("");
+
+      await updateUserProfile(profile.user_id, {
+        full_name: editForm.full_name,
+        bio: editForm.bio,
+        university_or_organization: editForm.university_or_organization,
+      });
+
+      const updatedProfile = await getUserProfile(profile.user_id);
+      setProfile(updatedProfile);
+
+      if (currentUser?.user_id === profile.user_id) {
+        await refreshCurrentUser(profile.user_id);
+      }
+
+      setIsEditing(false);
+      setMessage("Profile updated successfully");
+    } catch (err) {
+      setError(err.message || "Failed to update profile");
+    } finally {
+      setEditLoading(false);
+    }
+  };
+
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return "";
+
+    if (imagePath.startsWith("http")) {
+      return imagePath;
+    }
+
+    if (imagePath.startsWith("/uploads")) {
+      return `http://localhost:5000${imagePath}`;
+    }
+
+    return imagePath;
+  };
+
+  const defaultbadges = [
     {
       name: "First Solution",
       icon: CheckCircle,
@@ -71,114 +208,393 @@ export function UserProfile() {
       earned: false,
     },
   ];
-  const recentActivity = [
-    {
-      type: "solution",
-      title: "Provided verified solution for 'GPU Memory Optimization'",
-      time: "2 hours ago",
-      upvotes: 23,
-    },
-    {
-      type: "comment",
-      title: "Commented on 'Data Pipeline Architecture'",
-      time: "5 hours ago",
-      upvotes: 8,
-    },
-    {
-      type: "problem",
-      title: "Posted 'Quantum Computing Algorithm Challenge'",
-      time: "1 day ago",
-      upvotes: 15,
-    },
-  ];
+  if (loading) {
+    return (
+      <div className="p-6">
+        <div className="max-w-6xl mx-auto rounded-xl border border-gray-200 bg-white p-8 shadow-sm text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
+          Loading profile...
+        </div>
+      </div>
+    );
+  }
+  if (error || !profile) {
+    return (
+      <div className="p-6">
+        <div className="max-w-6xl mx-auto rounded-xl border border-red-200 bg-red-50 p-8 text-red-700 dark:border-red-900/70 dark:bg-red-950/40 dark:text-red-300">
+          {error || "User profile not found"}
+        </div>
+      </div>
+    );
+  }
+
+  const displayedBadges = defaultbadges.map((badge) => {
+    const earnedBadge = earnedBadges.find(
+      (item) => item.badge_name === badge.name,
+    );
+
+    return {
+      ...badge,
+      earned: Boolean(earnedBadge),
+    };
+  });
+
+  const solvedPosts = userPosts.filter(
+    (post) => post.status === "solved",
+  ).length;
+
+  const openPosts = userPosts.filter((post) => post.status === "open").length;
+
+  const verifiedSolutions = userSolutions.filter(
+    (solution) => Number(solution.is_verified) === 1,
+  );
+
+  const totalSolutionLikes = userSolutions.reduce(
+    (sum, solution) => sum + Number(solution.like_count || 0),
+    0,
+  );
+
   return (
-    <div className="p-6">
+    <div className="p-6 text-gray-900 dark:text-gray-100">
       <div className="max-w-6xl mx-auto space-y-6">
-        <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm">
+        <div className="space-y-3 mb-5">
+          <AppAlert
+            type="success"
+            message={message}
+            onClose={() => setMessage("")}
+          />
+          <AppAlert type="error" message={error} onClose={() => setError("")} />
+        </div>
+
+        <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <div className="h-32 bg-blue-900" />
           <div className="px-8 pb-8">
             <div className="flex items-end gap-6 -mt-16 mb-6">
-              <img
-                src={profile.avatar}
-                alt={profile.name}
-                className="w-32 h-32 rounded-2xl border-4 border-white shadow-xl"
-              />
+              <div className="relative">
+                <img
+                  src={getImageUrl(profile.profile_picture)}
+                  alt={profile.full_name}
+                  className="w-32 h-32 rounded-2xl border-4 border-white shadow-xl bg-white object-cover dark:border-gray-900 dark:bg-gray-800"
+                />
+                {currentUser?.user_id === profile.user_id && (
+                  <label className="absolute bottom-2 right-2 px-3 py-1 rounded-lg bg-[#0ea5e9] text-white text-xs cursor-pointer hover:bg-blue-600 transition">
+                    {imageUploading ? "Uploading..." : "Change"}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleProfileImageChange}
+                      className="hidden"
+                      disabled={imageUploading}
+                    />
+                  </label>
+                )}
+              </div>
+
               <div className="flex-1 mt-16">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h1 className="text-3xl mb-1 text-gray-900">
-                      {profile.name}
+                    <h1 className="text-3xl mb-1 text-gray-900 dark:text-gray-100">
+                      {profile.full_name}
                     </h1>
-                    <p className="text-gray-600">@{profile.username}</p>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      {profile.username?.split("@")[0] || "researcher"}
+                    </p>
                   </div>
-                  <button className="px-6 py-2 rounded-lg bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] text-white hover:opacity-90 transition-opacity shadow-lg shadow-blue-500/30">
-                    Edit Profile
-                  </button>
+
+                  {currentUser?.user_id === profile.user_id && (
+                    <div className="flex items-center gap-3">
+                      <Link
+                        to="/app/saved-problems"
+                        className="inline-flex items-center gap-2 px-5 py-2 rounded-lg border border-blue-200 bg-blue-50 text-[#0ea5e9] hover:bg-blue-100 transition-colors dark:border-blue-900/60 dark:bg-blue-950/40 dark:text-[#38bdf8] dark:hover:bg-blue-950/60"
+                      >
+                        <Bookmark className="w-4 h-4" />
+                        Saved Problems
+                      </Link>
+
+                      <button
+                        onClick={() => setIsEditing(!isEditing)}
+                        className="px-6 py-2 rounded-lg bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] text-white hover:opacity-90 transition-opacity shadow-lg shadow-blue-500/30"
+                      >
+                        {isEditing ? "Cancel" : "Edit Profile"}
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
+
             <p className="text-lg mb-4 text-gray-700">{profile.bio}</p>
 
-            <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-6">
-              <span className="flex items-center gap-2"></span>
-              <span className="flex items-center gap-2"></span>
+            <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400 mb-6">
+              <span className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" />
+                {profile.university_or_organization || "Organization not added"}
+              </span>
+
+              <span className="flex items-center gap-2">
+                <LinkIcon className="w-4 h-4" />
+                <a
+                  href="#"
+                  className="text-[#0ea5e9] hover:underline dark:text-[#38bdf8]"
+                >
+                  CollabSolve Profile
+                </a>
+              </span>
             </div>
+
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#0ea5e9] to-[#06b6d4] bg-clip-text text-transparent">
-                  {profile.reputation}
+                  {reputation}
                 </div>
-                <div className="text-sm text-gray-600">Reputation</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Reputation
+                </div>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#06b6d4] to-[#a855f7] bg-clip-text text-transparent">
-                  {profile.stats.solutions}
+                  {solvedPosts}
                 </div>
-                <div className="text-sm text-gray-600">Solutions</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Solutions
+                </div>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#a855f7] to-[#0ea5e9] bg-clip-text text-transparent">
-                  {profile.stats.problems}
+                  {userPosts.length}
                 </div>
-                <div className="text-sm text-gray-600">Problems</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Problems
+                </div>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#10b981] to-[#06b6d4] bg-clip-text text-transparent">
-                  {profile.streak}
+                  {userSolutions.length}
                 </div>
-                <div className="text-sm text-gray-600">Day Streak</div>
+                <div className="text-sm text-gray-600  dark:text-gray-400">
+                  Solutions
+                </div>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
                 <div className="text-2xl mb-1 bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] bg-clip-text text-transparent">
-                  Level {profile.level}
+                  {verifiedSolutions.length}
                 </div>
-                <div className="text-sm text-gray-600">Researcher</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Verified
+                </div>
+              </div>
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
+                <div className="text-2xl mb-1 bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] bg-clip-text text-transparent">
+                  {openPosts}
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Open
+                </div>
+              </div>
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800/70">
+                <div className="text-2xl mb-1 bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] bg-clip-text text-transparent">
+                  {level}
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Level
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm">
-          <div className="flex border-b border-gray-200">
-            <button
-              onClick={() => setActiveTab("activity")}
-              className={`flex-1 px-6 py-4 transition-all ${
-                activeTab === "activity"
-                  ? "bg-blue-900 border-b-2 border-[#0ea5e9] text-[white]"
-                  : "text-gray-600 hover:bg-gray-50"
-              }`}
-            >
-              Recent Activity
-            </button>
-            <button
-              onClick={() => setActiveTab("solutions")}
-              className={`flex-1 px-6 py-4 transition-all ${
-                activeTab === "solutions"
-                  ? "bg-blue-900 border-b-2 border-[#0ea5e9] text-[white]"
-                  : "text-gray-600 hover:bg-gray-50"
-              }`}
-            >
-              Top Solutions
-            </button>
+
+          <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div className="flex border-b border-gray-200 overflow-x-auto dark:border-gray-800">
+              <button
+                onClick={() => setActiveTab("activity")}
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
+                  activeTab === "activity"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
+                }`}
+              >
+                Activity
+              </button>
+              <button
+                onClick={() => setActiveTab("problems")}
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
+                  activeTab === "problems"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
+                }`}
+              >
+                Posted Problems
+              </button>
+              <button
+                onClick={() => setActiveTab("solutions")}
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
+                  activeTab === "solutions"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
+                }`}
+              >
+                Submitted Solutions
+              </button>
+              <button
+                onClick={() => setActiveTab("verified")}
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
+                  activeTab === "verified"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
+                }`}
+              >
+                Verified Solutions
+              </button>
+              <button
+                onClick={() => setActiveTab("fields")}
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
+                  activeTab === "fields"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
+                }`}
+              >
+                Fields
+              </button>
+              <button
+                onClick={() => setActiveTab("badges")}
+                className={`flex-1 min-w-max px-6 py-4 transition-all ${
+                  activeTab === "badges"
+                    ? "bg-gradient-to-r from-[#0ea5e9]/10 to-[#a855f7]/10 border-b-2 border-[#0ea5e9] text-[#0ea5e9] dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:text-[#38bdf8]"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
+                }`}
+              >
+                Badges
+              </button>
+            </div>
+
+            <div className="p-6">
+              {activeTab === "problems" && (
+                <div className="space-y-4">
+                  {userPosts.length === 0 && (
+                    <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+                      Posted problems will appear here.
+                    </div>
+                  )}
+
+                  {userPosts.length === 0 && (
+                    <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+                      Posted problems will appear here.
+                    </div>
+                  )}
+
+                  {userPosts.map((post) => (
+                    <Link
+                      key={post.post_id}
+                      to={`/app/problem/${post.post_id}`}
+                      className="block p-4 rounded-lg border border-gray-200 bg-gray-50 hover:border-blue-300 hover:shadow-md transition-all dark:border-gray-800 dark:bg-gray-800/70 dark:hover:border-blue-700"
+                    >
+                      <h3 className="text-gray-900 dark:text-gray-100 mb-2">
+                        {post.title}
+                      </h3>
+
+                      <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-3">
+                        {post.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2">
+                        <span className="px-3 py-1 rounded-full text-xs bg-blue-50 text-blue-700 border border-blue-100 capitalize dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-900/60">
+                          {post.status}
+                        </span>
+
+                        {post.field_name && (
+                          <span className="px-3 py-1 rounded-full text-xs bg-gray-100 text-gray-700 border border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700">
+                            {post.field_name}
+                          </span>
+                        )}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+
+              {activeTab === "solutions" && (
+                <div className="space-y-4">
+                  {userSolutions.length === 0 && (
+                    <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+                      Submitted solutions will appear here.
+                    </div>
+                  )}
+
+                  {userSolutions.map((solution) => (
+                    <Link
+                      key={solution.solution_id}
+                      to={`/app/problem/${solution.post_id}`}
+                      className="block p-4 rounded-lg border border-gray-200 bg-gray-50 hover:border-blue-300 hover:shadow-md transition-all dark:border-gray-800 dark:bg-gray-800/70 dark:hover:border-blue-700"
+                    >
+                      <div className="flex items-start justify-between gap-4 mb-2">
+                        <div>
+                          <h3 className="text-gray-900 dark:text-gray-100 mb-1">
+                            {solution.post_title || "Original Problem"}
+                          </h3>
+
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                            Answered {formatDate(solution.created_at)}
+                          </p>
+                        </div>
+
+                        {Number(solution.is_verified) === 1 ? (
+                          <span className="px-3 py-1 rounded-full text-xs bg-green-50 text-green-700 border border-green-100 dark:bg-green-950/40 dark:text-green-300 dark:border-green-900/60">
+                            Verified
+                          </span>
+                        ) : (
+                          <span className="px-3 py-1 rounded-full text-xs bg-yellow-50 text-yellow-700 border border-yellow-100 dark:bg-yellow-950/40 dark:text-yellow-300 dark:border-yellow-900/60">
+                            Pending
+                          </span>
+                        )}
+                      </div>
+
+                      <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-3 mb-3">
+                        {solution.solution_text}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2">
+                        {solution.field_name && (
+                          <span className="px-3 py-1 rounded-full text-xs bg-gray-100 text-gray-700 border border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700">
+                            {solution.field_name}
+                          </span>
+                        )}
+
+                        <span className="px-3 py-1 rounded-full text-xs bg-blue-50 text-blue-700 border border-blue-100 flex items-center gap-1 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-900/60">
+                          <ThumbsUp className="w-3 h-3" />
+                          {solution.like_count || 0} likes
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+              {activeTab === "badges" && (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {displayedBadges.map((badge, i) => (
+                    <div
+                      key={i}
+                      className={`rounded-xl border p-6 text-center transition-all ${
+                        badge.earned
+                          ? "border-blue-200 bg-gradient-to-br from-white to-blue-50 hover:scale-105 shadow-sm hover:shadow-lg dark:border-blue-900/60 dark:from-gray-900 dark:to-blue-950/30"
+                          : "border-gray-200 bg-gray-50 opacity-50 dark:border-gray-800 dark:bg-gray-800/70"
+                      }`}
+                    >
+                      <div
+                        className={`w-16 h-16 mx-auto mb-3 rounded-xl bg-gradient-to-br ${badge.color} flex items-center justify-center shadow-lg`}
+                      >
+                        <badge.icon className="w-8 h-8 text-white" />
+                      </div>
+
+                      <h3 className="mb-1 text-gray-900 dark:text-gray-100">
+                        {badge.name}
+                      </h3>
+
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        {badge.earned ? "Earned" : "Locked"}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

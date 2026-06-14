@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock } from "lucide-react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
-/*import { loginUser } from "../services/authService";*/
-/*import { AppAlert } from "../components/AppAlert";*/
+import { loginUser } from "../services/authService";
+import { AppAlert } from "../AppAlert";
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -20,22 +20,22 @@ export function LoginPage() {
       ...formData,
       [e.target.name]: e.target.value,
     });
-
-    const handleLogin = async (e) => {
-      e.preventDefault();
-      setError("");
-      setLoading(true);
-
-      try {
-        await loginUser(formData);
-        navigate("/app");
-      } catch (err) {
-        setError(err.message || "Login failed");
-      } finally {
-        setLoading(false);
-      }
-    };
   };
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      await loginUser(formData);
+      navigate("/app");
+    } catch (err) {
+      setError(err.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-[#eef6ff] via-[#f8fbff] to-[#f3efff] text-slate-900 flex items-center justify-center px-6 py-12">
       <div className="absolute inset-0">
@@ -83,6 +83,7 @@ export function LoginPage() {
                 onClose={() => setError("")}
               />
             </div>
+
             <form className="space-y-5" onSubmit={handleLogin}>
               <div>
                 <label className="block mb-2 text-sm font-medium text-slate-700">
