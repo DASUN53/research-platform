@@ -508,6 +508,19 @@ export function UserProfile() {
                           <Target className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                         )}
                       </div>
+                      <div className="flex-1">
+                        <p className="mb-1 text-gray-900 dark:text-gray-100">
+                          Posted "{post.title}"
+                        </p>
+                        <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+                          <span>{formatDate(post.created_at)}</span>
+
+                          <span className="flex items-center gap-1 capitalize">
+                            <Star className="w-3 h-3" />
+                            {post.status}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
