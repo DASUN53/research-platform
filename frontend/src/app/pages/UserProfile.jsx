@@ -8,7 +8,6 @@ import {
   Trophy,
   Flame,
   Target,
-  CheckCircle,
   Bookmark,
 } from "lucide-react";
 import { useEffect, useState } from "react";
