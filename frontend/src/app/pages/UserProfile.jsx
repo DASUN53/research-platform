@@ -250,7 +250,7 @@ export function UserProfile() {
         : "Beginner");
 
   const earnedBadges = profile.badges || [];
-  
+
   const displayedBadges = defaultbadges.map((badge) => {
     const earnedBadge = earnedBadges.find(
       (item) => item.badge_name === badge.name,
@@ -488,7 +488,31 @@ export function UserProfile() {
                 Badges
               </button>
             </div>
-
+            <div className="p-6">
+              {activeTab === "activity" && (
+                <div className="space-y-4">
+                  {userPosts.length === 0 && (
+                    <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+                      No recent activity yet.
+                    </div>
+                  )}
+                  {userPosts.slice(0, 5).map((post) => (
+                    <div
+                      key={post.post_id}
+                      className="flex items-start gap-4 p-4 rounded-lg border border-gray-200 bg-gray-50 hover:border-blue-300 hover:shadow-md transition-all dark:border-gray-800 dark:bg-gray-800/70 dark:hover:border-blue-700"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#0ea5e9]/10 to-[#a855f7]/10 flex items-center justify-center flex-shrink-0 border border-blue-200 dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:border-blue-900/60">
+                        {post.status === "solved" ? (
+                          <CheckCircle className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                        ) : (
+                          <Target className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
             <div className="p-6">
               {activeTab === "problems" && (
                 <div className="space-y-4">
