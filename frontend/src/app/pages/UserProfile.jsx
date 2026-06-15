@@ -155,6 +155,14 @@ export function UserProfile() {
       setEditLoading(false);
     }
   };
+  const formatDate = (dateString) => {
+    if (!dateString) return "Recently";
+
+    return new Date(dateString).toLocaleDateString("en-US", {
+      month: "long",
+      year: "numeric",
+    });
+  };
 
   const getImageUrl = (imagePath) => {
     if (!imagePath) return "";
@@ -227,6 +235,22 @@ export function UserProfile() {
     );
   }
 
+  const avatar = profile.profile_picture
+    ? getImageUrl(profile.profile_picture)
+    : "/default-profile.png";
+
+  const reputation = profile.total_points || 0;
+
+  const level =
+    profile.level ||
+    (reputation >= 500
+      ? "Expert"
+      : reputation >= 100
+        ? "Contributor"
+        : "Beginner");
+
+  const earnedBadges = profile.badges || [];
+  
   const displayedBadges = defaultbadges.map((badge) => {
     const earnedBadge = earnedBadges.find(
       (item) => item.badge_name === badge.name,
