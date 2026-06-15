@@ -8,7 +8,6 @@ import {
   Trophy,
   Flame,
   Target,
-  CheckCircle,
   Bookmark,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -155,6 +154,14 @@ export function UserProfile() {
       setEditLoading(false);
     }
   };
+  const formatDate = (dateString) => {
+    if (!dateString) return "Recently";
+
+    return new Date(dateString).toLocaleDateString("en-US", {
+      month: "long",
+      year: "numeric",
+    });
+  };
 
   const getImageUrl = (imagePath) => {
     if (!imagePath) return "";
@@ -226,6 +233,22 @@ export function UserProfile() {
       </div>
     );
   }
+
+  const avatar = profile.profile_picture
+    ? getImageUrl(profile.profile_picture)
+    : "/default-profile.png";
+
+  const reputation = profile.total_points || 0;
+
+  const level =
+    profile.level ||
+    (reputation >= 500
+      ? "Expert"
+      : reputation >= 100
+        ? "Contributor"
+        : "Beginner");
+
+  const earnedBadges = profile.badges || [];
 
   const displayedBadges = defaultbadges.map((badge) => {
     const earnedBadge = earnedBadges.find(
@@ -464,7 +487,44 @@ export function UserProfile() {
                 Badges
               </button>
             </div>
+            <div className="p-6">
+              {activeTab === "activity" && (
+                <div className="space-y-4">
+                  {userPosts.length === 0 && (
+                    <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+                      No recent activity yet.
+                    </div>
+                  )}
+                  {userPosts.slice(0, 5).map((post) => (
+                    <div
+                      key={post.post_id}
+                      className="flex items-start gap-4 p-4 rounded-lg border border-gray-200 bg-gray-50 hover:border-blue-300 hover:shadow-md transition-all dark:border-gray-800 dark:bg-gray-800/70 dark:hover:border-blue-700"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#0ea5e9]/10 to-[#a855f7]/10 flex items-center justify-center flex-shrink-0 border border-blue-200 dark:from-[#0ea5e9]/20 dark:to-[#a855f7]/20 dark:border-blue-900/60">
+                        {post.status === "solved" ? (
+                          <CheckCircle className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                        ) : (
+                          <Target className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <p className="mb-1 text-gray-900 dark:text-gray-100">
+                          Posted "{post.title}"
+                        </p>
+                        <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+                          <span>{formatDate(post.created_at)}</span>
 
+                          <span className="flex items-center gap-1 capitalize">
+                            <Star className="w-3 h-3" />
+                            {post.status}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
             <div className="p-6">
               {activeTab === "problems" && (
                 <div className="space-y-4">
