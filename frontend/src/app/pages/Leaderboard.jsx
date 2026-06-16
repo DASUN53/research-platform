@@ -122,6 +122,21 @@ export function Leaderboard() {
           {isSwitching ? "Updating..." : "Updated from database"}
         </div>
       </div>
+      {loading && (
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
+          Loading leaderboard...
+        </div>
+      )}
+
+      <div className="space-y-3 mb-5">
+        <AppAlert type="error" message={error} onClose={() => setError("")} />
+      </div>
+
+      {!loading && !error && topUsers.length === 0 && (
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
+          No leaderboard data available yet.
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         {topUsers.slice(0, 3).map((user, i) => (
