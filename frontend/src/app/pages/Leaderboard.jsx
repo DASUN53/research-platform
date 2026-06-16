@@ -1,6 +1,6 @@
 import { Trophy, TrendingUp, Award, Zap } from "lucide-react";
 import { getLeaderboard } from "../services/reputationService";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppAlert } from "../AppAlert";
 
 export function Leaderboard() {
@@ -10,6 +10,53 @@ export function Leaderboard() {
   const [isSwitching, setIsSwitching] = useState(false);
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+        if (topUsers.length === 0) {
+          setLoading(true);
+        } else {
+          setIsSwitching(true);
+        }
+        setError("");
+
+        const data = await getLeaderboard(timeframe);
+
+        const rankedUsers = data.map((user, index) => ({
+          ...user,
+          rank: index + 1,
+          username: user.email ? user.email.split("@")[0] : "user",
+          avatar: user.profile_picture
+            ? getImageUrl(user.profile_picture)
+            : "/default-profile.png",
+          reputation: Number(user.total_points || 0),
+          badge: user.level || "Beginner",
+          level: Math.max(
+            1,
+            Math.floor(Number(user.total_points || 0) / 100) + 1,
+          ),
+          solutions: Number(user.solution_count || 0),
+          verifiedSolutions: Number(user.verified_solution_count || 0),
+          comments: Number(user.comment_count || 0),
+          trend:
+            timeframe === "week"
+              ? `${user.total_points || 0} points this week`
+              : timeframe === "month"
+                ? `${user.total_points || 0} points this month`
+                : `${user.verified_solution_count || 0} verified`,
+        }));
+
+        setTopUsers(rankedUsers);
+      } catch (err) {
+        setError(err.message || "Failed to load leaderboard");
+      } finally {
+        setLoading(false);
+        setIsSwitching(false);
+      }
+    };
+
+    fetchLeaderboard();
+  }, [timeframe]);
   const getBadgeColor = (badge) => {
     const colors = {
       Expert: "from-[#a855f7] to-[#0ea5e9]",
@@ -23,7 +70,7 @@ export function Leaderboard() {
   const mostActive = topUsers[0]?.full_name || "No users yet";
   const topContributor = topUsers[1]?.full_name || "No users yet";
   const risingStar = topUsers[2]?.full_name || "No users yet";
-  
+
   return (
     <div className="p-6 max-w-6xl mx-auto text-gray-900 dark:text-gray-100">
       <div className="mb-8">
@@ -136,39 +183,41 @@ export function Leaderboard() {
           </div>
         ))}
       </div>
-      <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm">
+      <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm dark:border-gray-800 dark:bg-gray-900">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-200 bg-gray-50">
-                <th className="px-6 py-4 text-left text-sm text-gray-600">
+              <tr className="border-b border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-800/70">
+                <th className="px-6 py-4 text-left text-sm text-gray-600 dark:text-gray-400">
                   Rank
                 </th>
-                <th className="px-6 py-4 text-left text-sm text-gray-600">
+                <th className="px-6 py-4 text-left text-sm text-gray-600 dark:text-gray-400">
                   User
                 </th>
-                <th className="px-6 py-4 text-left text-sm text-gray-600">
+                <th className="px-6 py-4 text-left text-sm text-gray-600 dark:text-gray-400">
                   Badge
                 </th>
-                <th className="px-6 py-4 text-right text-sm text-gray-600">
+                <th className="px-6 py-4 text-right text-sm text-gray-600 dark:text-gray-400">
                   Level
                 </th>
-                <th className="px-6 py-4 text-right text-sm text-gray-600">
+                <th className="px-6 py-4 text-right text-sm text-gray-600 dark:text-gray-400">
                   Reputation
                 </th>
-                <th className="px-6 py-4 text-right text-sm text-gray-600">
+                <th className="px-6 py-4 text-right text-sm text-gray-600 dark:text-gray-400">
                   Solutions
                 </th>
-                <th className="px-6 py-4 text-right text-sm text-gray-600">
-                  Trend
+                <th className="px-6 py-4 text-right text-sm text-gray-600 dark:text-gray-400">
+                  Badges
+                </th>
+                <th className="px-6 py-4 text-right text-sm text-gray-600 dark:text-gray-400">
+                  Status
                 </th>
               </tr>
             </thead>
             <tbody>
               {topUsers.map((user, i) => (
                 <tr
-                  key={user.rank}
-                  key={user.rank}
+                  key={user.user_id}
                   className={`border-b border-gray-100 hover:bg-gray-50 transition-colors ${
                     user.username === "johndoe" ? "bg-blue-50/50" : ""
                   }`}
