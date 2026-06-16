@@ -71,6 +71,20 @@ export function Leaderboard() {
   const topContributor = topUsers[1]?.full_name || "No users yet";
   const risingStar = topUsers[2]?.full_name || "No users yet";
 
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return "/default-profile.png";
+
+    if (imagePath.startsWith("http")) {
+      return imagePath;
+    }
+
+    if (imagePath.startsWith("/uploads")) {
+      return `http://localhost:5000${imagePath}`;
+    }
+
+    return imagePath;
+  };
+
   return (
     <div className="p-6 max-w-6xl mx-auto text-gray-900 dark:text-gray-100">
       <div className="mb-8">
@@ -122,6 +136,21 @@ export function Leaderboard() {
           {isSwitching ? "Updating..." : "Updated from database"}
         </div>
       </div>
+      {loading && (
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
+          Loading leaderboard...
+        </div>
+      )}
+
+      <div className="space-y-3 mb-5">
+        <AppAlert type="error" message={error} onClose={() => setError("")} />
+      </div>
+
+      {!loading && !error && topUsers.length === 0 && (
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
+          No leaderboard data available yet.
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         {topUsers.slice(0, 3).map((user, i) => (
@@ -235,7 +264,9 @@ export function Leaderboard() {
                           }`}
                         />
                       ) : (
-                        <span className="text-gray-600">#{user.rank}</span>
+                        <span className="text-gray-600 dark:text-gray-400 ">
+                          #{user.rank}
+                        </span>
                       )}
                     </div>
                   </td>
@@ -243,11 +274,13 @@ export function Leaderboard() {
                     <div className="flex items-center gap-3">
                       <img
                         src={user.avatar}
-                        alt={user.name}
-                        className="w-10 h-10 rounded-full ring-2 ring-gray-200"
+                        alt={user.full_name}
+                        className="w-10 h-10 rounded-full ring-2 ring-gray-200  dark:ring-gray-700"
                       />
                       <div>
-                        <div className="text-gray-900">{user.name}</div>
+                        <div className="text-gray-900 dark:text-gray-100">
+                          {user.full_name}
+                        </div>
                         <div className="text-sm text-gray-500">
                           @{user.username}
                         </div>
@@ -271,11 +304,14 @@ export function Leaderboard() {
                       {user.reputation.toLocaleString()}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-right text-gray-900">
-                    {user.solutions}
+                  <td className="px-6 py-4 text-right text-gray-900 dark:text-gray-100">
+                    {user.solutions || 0}
+                  </td>
+                  <td className="px-6 py-4 text-right text-gray-900 dark:text-gray-100">
+                    {user.badge_count || 0}
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <span className="flex items-center justify-end gap-1 text-green-600 font-medium">
+                    <span className="flex items-center justify-end gap-1 text-green-600 dark:text-green-400 font-medium">
                       <TrendingUp className="w-4 h-4" />
                       {user.trend}
                     </span>
