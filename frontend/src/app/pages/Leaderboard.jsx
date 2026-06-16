@@ -71,6 +71,20 @@ export function Leaderboard() {
   const topContributor = topUsers[1]?.full_name || "No users yet";
   const risingStar = topUsers[2]?.full_name || "No users yet";
 
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return "/default-profile.png";
+
+    if (imagePath.startsWith("http")) {
+      return imagePath;
+    }
+
+    if (imagePath.startsWith("/uploads")) {
+      return `http://localhost:5000${imagePath}`;
+    }
+
+    return imagePath;
+  };
+
   return (
     <div className="p-6 max-w-6xl mx-auto text-gray-900 dark:text-gray-100">
       <div className="mb-8">
