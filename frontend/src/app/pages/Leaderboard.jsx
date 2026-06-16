@@ -20,10 +20,12 @@ export function Leaderboard() {
     return colors[badge] || "from-[#0ea5e9] to-[#06b6d4]";
   };
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="p-6 max-w-6xl mx-auto text-gray-900 dark:text-gray-100">
       <div className="mb-8">
-        <h1 className="text-3xl mb-2 text-gray-900">Leaderboard</h1>
-        <p className="text-gray-600">
+        <h1 className="text-3xl mb-2 text-gray-900 dark:text-gray-100">
+          Leaderboard
+        </h1>
+        <p className="text-gray-600 dark:text-gray-400">
           Top contributors in the research community
         </p>
       </div>
@@ -40,6 +42,7 @@ export function Leaderboard() {
           >
             This week
           </button>
+
           <button
             onClick={() => setTimeframe("month")}
             className={`px-4 py-2 rounded-lg transition-all ${
@@ -50,6 +53,7 @@ export function Leaderboard() {
           >
             This Month
           </button>
+
           <button
             onClick={() => setTimeframe("all")}
             className={`px-4 py-2 rounded-lg transition-all ${
@@ -63,9 +67,10 @@ export function Leaderboard() {
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-500">
           <TrendingUp className="w-4 h-4" />
-          Updated live
+          {isSwitching ? "Updating..." : "Updated from database"}
         </div>
       </div>
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         {topUsers.slice(0, 3).map((user, i) => (
           <div
@@ -228,38 +233,46 @@ export function Leaderboard() {
         </div>
       </div>
       <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#0ea5e9] to-[#06b6d4] flex items-center justify-center shadow-lg shadow-blue-500/20">
               <Zap className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="text-gray-900">Most Active</h3>
-              <p className="text-sm text-gray-600">Dr. Emily Watson</p>
+              <h3 className="text-gray-900 dark:text-gray-100">Most Active</h3>
+              <p className="text-sm text-gray-600  dark:text-gray-400">
+                {mostActive}
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#06b6d4] to-[#a855f7] flex items-center justify-center shadow-lg shadow-cyan-500/20">
               <Award className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="text-gray-900">Top Contributor</h3>
-              <p className="text-sm text-gray-600">Sarah Chen</p>
+              <h3 className="text-gray-900 dark:text-gray-100">
+                Top Contributor
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                {topContributor}
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#a855f7] to-[#0ea5e9] flex items-center justify-center shadow-lg shadow-purple-500/20">
               <Trophy className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="text-gray-900">Rising Star</h3>
-              <p className="text-sm text-gray-600">John Doe</p>
+              <h3 className="text-gray-900 dark:text-gray-100">Rising Star</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                {risingStar}
+              </p>
             </div>
           </div>
         </div>
