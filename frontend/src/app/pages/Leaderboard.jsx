@@ -19,6 +19,11 @@ export function Leaderboard() {
     };
     return colors[badge] || "from-[#0ea5e9] to-[#06b6d4]";
   };
+
+  const mostActive = topUsers[0]?.full_name || "No users yet";
+  const topContributor = topUsers[1]?.full_name || "No users yet";
+  const risingStar = topUsers[2]?.full_name || "No users yet";
+  
   return (
     <div className="p-6 max-w-6xl mx-auto text-gray-900 dark:text-gray-100">
       <div className="mb-8">
