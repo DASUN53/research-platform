@@ -1,6 +1,6 @@
 import { Trophy, TrendingUp, Award, Zap } from "lucide-react";
 import { getLeaderboard } from "../services/reputationService";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppAlert } from "../AppAlert";
 
 export function Leaderboard() {
@@ -10,6 +10,53 @@ export function Leaderboard() {
   const [isSwitching, setIsSwitching] = useState(false);
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+        if (topUsers.length === 0) {
+          setLoading(true);
+        } else {
+          setIsSwitching(true);
+        }
+        setError("");
+
+        const data = await getLeaderboard(timeframe);
+
+        const rankedUsers = data.map((user, index) => ({
+          ...user,
+          rank: index + 1,
+          username: user.email ? user.email.split("@")[0] : "user",
+          avatar: user.profile_picture
+            ? getImageUrl(user.profile_picture)
+            : "/default-profile.png",
+          reputation: Number(user.total_points || 0),
+          badge: user.level || "Beginner",
+          level: Math.max(
+            1,
+            Math.floor(Number(user.total_points || 0) / 100) + 1,
+          ),
+          solutions: Number(user.solution_count || 0),
+          verifiedSolutions: Number(user.verified_solution_count || 0),
+          comments: Number(user.comment_count || 0),
+          trend:
+            timeframe === "week"
+              ? `${user.total_points || 0} points this week`
+              : timeframe === "month"
+                ? `${user.total_points || 0} points this month`
+                : `${user.verified_solution_count || 0} verified`,
+        }));
+
+        setTopUsers(rankedUsers);
+      } catch (err) {
+        setError(err.message || "Failed to load leaderboard");
+      } finally {
+        setLoading(false);
+        setIsSwitching(false);
+      }
+    };
+
+    fetchLeaderboard();
+  }, [timeframe]);
   const getBadgeColor = (badge) => {
     const colors = {
       Expert: "from-[#a855f7] to-[#0ea5e9]",
@@ -19,11 +66,32 @@ export function Leaderboard() {
     };
     return colors[badge] || "from-[#0ea5e9] to-[#06b6d4]";
   };
+
+  const mostActive = topUsers[0]?.full_name || "No users yet";
+  const topContributor = topUsers[1]?.full_name || "No users yet";
+  const risingStar = topUsers[2]?.full_name || "No users yet";
+
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return "/default-profile.png";
+
+    if (imagePath.startsWith("http")) {
+      return imagePath;
+    }
+
+    if (imagePath.startsWith("/uploads")) {
+      return `http://localhost:5000${imagePath}`;
+    }
+
+    return imagePath;
+  };
+
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="p-6 max-w-6xl mx-auto text-gray-900 dark:text-gray-100">
       <div className="mb-8">
-        <h1 className="text-3xl mb-2 text-gray-900">Leaderboard</h1>
-        <p className="text-gray-600">
+        <h1 className="text-3xl mb-2 text-gray-900 dark:text-gray-100">
+          Leaderboard
+        </h1>
+        <p className="text-gray-600 dark:text-gray-400">
           Top contributors in the research community
         </p>
       </div>
@@ -40,6 +108,7 @@ export function Leaderboard() {
           >
             This week
           </button>
+
           <button
             onClick={() => setTimeframe("month")}
             className={`px-4 py-2 rounded-lg transition-all ${
@@ -50,6 +119,7 @@ export function Leaderboard() {
           >
             This Month
           </button>
+
           <button
             onClick={() => setTimeframe("all")}
             className={`px-4 py-2 rounded-lg transition-all ${
@@ -63,9 +133,25 @@ export function Leaderboard() {
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-500">
           <TrendingUp className="w-4 h-4" />
-          Updated live
+          {isSwitching ? "Updating..." : "Updated from database"}
         </div>
       </div>
+      {loading && (
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
+          Loading leaderboard...
+        </div>
+      )}
+
+      <div className="space-y-3 mb-5">
+        <AppAlert type="error" message={error} onClose={() => setError("")} />
+      </div>
+
+      {!loading && !error && topUsers.length === 0 && (
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
+          No leaderboard data available yet.
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         {topUsers.slice(0, 3).map((user, i) => (
           <div
@@ -126,39 +212,41 @@ export function Leaderboard() {
           </div>
         ))}
       </div>
-      <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm">
+      <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm dark:border-gray-800 dark:bg-gray-900">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-200 bg-gray-50">
-                <th className="px-6 py-4 text-left text-sm text-gray-600">
+              <tr className="border-b border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-800/70">
+                <th className="px-6 py-4 text-left text-sm text-gray-600 dark:text-gray-400">
                   Rank
                 </th>
-                <th className="px-6 py-4 text-left text-sm text-gray-600">
+                <th className="px-6 py-4 text-left text-sm text-gray-600 dark:text-gray-400">
                   User
                 </th>
-                <th className="px-6 py-4 text-left text-sm text-gray-600">
+                <th className="px-6 py-4 text-left text-sm text-gray-600 dark:text-gray-400">
                   Badge
                 </th>
-                <th className="px-6 py-4 text-right text-sm text-gray-600">
+                <th className="px-6 py-4 text-right text-sm text-gray-600 dark:text-gray-400">
                   Level
                 </th>
-                <th className="px-6 py-4 text-right text-sm text-gray-600">
+                <th className="px-6 py-4 text-right text-sm text-gray-600 dark:text-gray-400">
                   Reputation
                 </th>
-                <th className="px-6 py-4 text-right text-sm text-gray-600">
+                <th className="px-6 py-4 text-right text-sm text-gray-600 dark:text-gray-400">
                   Solutions
                 </th>
-                <th className="px-6 py-4 text-right text-sm text-gray-600">
-                  Trend
+                <th className="px-6 py-4 text-right text-sm text-gray-600 dark:text-gray-400">
+                  Badges
+                </th>
+                <th className="px-6 py-4 text-right text-sm text-gray-600 dark:text-gray-400">
+                  Status
                 </th>
               </tr>
             </thead>
             <tbody>
               {topUsers.map((user, i) => (
                 <tr
-                  key={user.rank}
-                  key={user.rank}
+                  key={user.user_id}
                   className={`border-b border-gray-100 hover:bg-gray-50 transition-colors ${
                     user.username === "johndoe" ? "bg-blue-50/50" : ""
                   }`}
@@ -176,7 +264,9 @@ export function Leaderboard() {
                           }`}
                         />
                       ) : (
-                        <span className="text-gray-600">#{user.rank}</span>
+                        <span className="text-gray-600 dark:text-gray-400 ">
+                          #{user.rank}
+                        </span>
                       )}
                     </div>
                   </td>
@@ -184,11 +274,13 @@ export function Leaderboard() {
                     <div className="flex items-center gap-3">
                       <img
                         src={user.avatar}
-                        alt={user.name}
-                        className="w-10 h-10 rounded-full ring-2 ring-gray-200"
+                        alt={user.full_name}
+                        className="w-10 h-10 rounded-full ring-2 ring-gray-200  dark:ring-gray-700"
                       />
                       <div>
-                        <div className="text-gray-900">{user.name}</div>
+                        <div className="text-gray-900 dark:text-gray-100">
+                          {user.full_name}
+                        </div>
                         <div className="text-sm text-gray-500">
                           @{user.username}
                         </div>
@@ -212,11 +304,14 @@ export function Leaderboard() {
                       {user.reputation.toLocaleString()}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-right text-gray-900">
-                    {user.solutions}
+                  <td className="px-6 py-4 text-right text-gray-900 dark:text-gray-100">
+                    {user.solutions || 0}
+                  </td>
+                  <td className="px-6 py-4 text-right text-gray-900 dark:text-gray-100">
+                    {user.badge_count || 0}
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <span className="flex items-center justify-end gap-1 text-green-600 font-medium">
+                    <span className="flex items-center justify-end gap-1 text-green-600 dark:text-green-400 font-medium">
                       <TrendingUp className="w-4 h-4" />
                       {user.trend}
                     </span>
@@ -228,38 +323,46 @@ export function Leaderboard() {
         </div>
       </div>
       <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#0ea5e9] to-[#06b6d4] flex items-center justify-center shadow-lg shadow-blue-500/20">
               <Zap className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="text-gray-900">Most Active</h3>
-              <p className="text-sm text-gray-600">Dr. Emily Watson</p>
+              <h3 className="text-gray-900 dark:text-gray-100">Most Active</h3>
+              <p className="text-sm text-gray-600  dark:text-gray-400">
+                {mostActive}
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#06b6d4] to-[#a855f7] flex items-center justify-center shadow-lg shadow-cyan-500/20">
               <Award className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="text-gray-900">Top Contributor</h3>
-              <p className="text-sm text-gray-600">Sarah Chen</p>
+              <h3 className="text-gray-900 dark:text-gray-100">
+                Top Contributor
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                {topContributor}
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#a855f7] to-[#0ea5e9] flex items-center justify-center shadow-lg shadow-purple-500/20">
               <Trophy className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="text-gray-900">Rising Star</h3>
-              <p className="text-sm text-gray-600">John Doe</p>
+              <h3 className="text-gray-900 dark:text-gray-100">Rising Star</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                {risingStar}
+              </p>
             </div>
           </div>
         </div>
