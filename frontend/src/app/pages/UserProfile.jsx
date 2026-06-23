@@ -9,6 +9,7 @@ import {
   Flame,
   Target,
   Bookmark,
+  CheckCircle,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getCurrentUser } from "../services/authService";
