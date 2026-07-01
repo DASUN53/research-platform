@@ -1,9 +1,9 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { Mail, User, Lock } from "lucide-react";
-import { FaGithub, FaGoodreads, FaGoogle } from "react-icons/fa";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 import { registerUser } from "../services/authService";
-import { AppAlert } from "../AppAlert";
+import { AppAlert } from "../components/AppAlert";
 
 export function RegisterPage() {
   const navigate = useNavigate();
@@ -27,6 +27,7 @@ export function RegisterPage() {
       [e.target.name]: e.target.value,
     });
   };
+
   const handleRegister = async (e) => {
     e.preventDefault();
     setError("");
@@ -36,6 +37,7 @@ export function RegisterPage() {
       setError("Please accept the Terms of Service and Privacy Policy");
       return;
     }
+
     setLoading(true);
 
     try {
@@ -52,30 +54,8 @@ export function RegisterPage() {
     }
   };
 
-  const handleCredentialLogin = (response) => {
-    console.log("response-token", response);
-    console.log(response.credential);
-  };
-
-  useEffect(() => {
-    google.accounts.id.initialize({
-      client_id:
-        "506226501226-06loravbvj6vcmfruoekloov61cf440v.apps.googleusercontent.com",
-      callback: handleCredentialLogin,
-    });
-
-    google.accounts.id.renderButton(document.getElementById("googleSignIn"), {
-      theme: "outline",
-      size: "large",
-      shape: "pill",
-      width: 180,
-      height: 100,
-      text: "signin_with",
-    });
-  }, []);
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#d9f1ff] via-[#e8f2ff] to-[#f3d9ff] text-gray-900 flex items-center justify-center px-6 py-12 relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-[#eef6ff] via-[#f8fbff] to-[#f3efff] text-slate-900 flex items-center justify-center px-6 py-12">
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#dbeafe_1px,transparent_1px),linear-gradient(to_bottom,#dbeafe_1px,transparent_1px)] bg-[size:80px_80px] opacity-45" />
         <div className="absolute -top-40 left-1/2 h-[560px] w-[820px] -translate-x-1/2 rounded-full bg-blue-200/70 blur-3xl" />
@@ -92,7 +72,7 @@ export function RegisterPage() {
         </Link>
 
         <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-2 mb-6">
+          <Link to="/" className="inline-flex items-center gap-3 mb-7">
             <div className="w-12 h-12 rounded-xl overflow-hidden flex items-center justify-center shadow-lg shadow-blue-500/20 bg-white">
               <img
                 src="/collabsolve-logo.png"
@@ -100,17 +80,18 @@ export function RegisterPage() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="text-2xl font-semibold text-gray-900">
+
+            <span className="text-2xl font-bold tracking-tight text-slate-950">
               CollabSolve
             </span>
           </Link>
 
-          <h1 className="text-3xl font-bold tracking-tight mb-3 text-slate-900">
+          <h1 className="text-4xl font-extrabold tracking-tight mb-3 text-slate-950">
             Create Account
           </h1>
+
           <p className="text-slate-600">
-            Join a community where students, researchers, and developers solve
-            problems together
+            Join a community where students, researchers, and developers solve problems together
           </p>
         </div>
 
@@ -119,11 +100,7 @@ export function RegisterPage() {
 
           <div className="relative rounded-[2rem] border border-white bg-white/85 backdrop-blur-xl p-8 shadow-2xl shadow-slate-900/10">
             <div className="space-y-3 mb-5">
-              <AppAlert
-                type="error"
-                message={error}
-                onClose={() => setError("")}
-              />
+              <AppAlert type="error" message={error} onClose={() => setError("")} />
               <AppAlert
                 type="success"
                 message={success}
@@ -131,140 +108,157 @@ export function RegisterPage() {
               />
             </div>
 
-            <form className="space-y-5">
+            <form className="space-y-5" onSubmit={handleRegister}>
               <div>
-                <label className="block mb-2 text-sm text-slate-700 font-medium">
+                <label className="block mb-2 text-sm font-medium text-slate-700">
                   Full Name
                 </label>
+
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                   <input
                     name="full_name"
                     type="text"
                     value={formData.full_name}
                     onChange={handleChange}
                     placeholder="John Doe"
-                    className="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-50/80 border border-slate-200 focus:border-blue-800 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
+                    className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-50/80 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
                     required
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block mb-2 text-sm text-slate-700 font-medium">
+                <label className="block mb-2 text-sm font-medium text-slate-700">
                   Email
                 </label>
+
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                   <input
                     name="email"
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="your.email@example.com"
-                    className="w-full pl-11 pr-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-800 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
+                    className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-50/80 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
                     required
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block mb-2 text-sm text-slate-700 font-medium">
+                <label className="block mb-2 text-sm font-medium text-slate-700">
                   University / Organization
                 </label>
 
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                   <input
                     name="university_or_organization"
                     type="text"
                     value={formData.university_or_organization}
                     onChange={handleChange}
                     placeholder="Sabaragamuwa University"
-                    className="w-full pl-11 pr-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-800 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
+                    className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-50/80 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block mb-2 text-sm text-slate-700 font-medium">
+                <label className="block mb-2 text-sm font-medium text-slate-700">
                   Role
                 </label>
+
                 <select
                   name="role"
                   value={formData.role}
                   onChange={handleChange}
-                  className="w-full pl-11 pr-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-800 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
+                  className="w-full px-4 py-3.5 rounded-xl bg-slate-50/80 border border-slate-200 text-slate-900 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
                 >
                   <option value="student">Student</option>
-                  <option value="researcher">Reseatcher</option>
+                  <option value="researcher">Researcher</option>
                   <option value="engineer">Engineer</option>
                 </select>
               </div>
 
               <div>
-                <label className="block mb-2 text-sm text-slate-700 font-medium">
-                  password
+                <label className="block mb-2 text-sm font-medium text-slate-700">
+                  Password
                 </label>
 
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                   <input
                     name="password"
                     type="password"
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Create a strong password"
-                    className="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-blue-800 focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all"
+                    className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-50/80 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all"
                     required
                   />
                 </div>
               </div>
 
               <label className="flex items-start gap-2 cursor-pointer text-sm">
-                <input type="checkbox" className="mt-1 rounded" />
-                <span className="text-gray-600">
+                <input
+                  type="checkbox"
+                  checked={acceptedTerms}
+                  onChange={(e) => setAcceptedTerms(e.target.checked)}
+                  className="mt-1 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                />
+
+                <span className="text-slate-600">
                   I agree to the{" "}
-                  <a href="#" className="text-[#0ea5e9] hover:underline">
+                  <a
+                    href="#"
+                    className="text-blue-700 hover:text-blue-800 hover:underline font-medium"
+                  >
                     Terms of Service
                   </a>{" "}
                   and{" "}
-                  <a href="#" className="text-[#0ea5e9] hover:underline">
+                  <a
+                    href="#"
+                    className="text-blue-700 hover:text-blue-800 hover:underline font-medium"
+                  >
                     Privacy Policy
                   </a>
                 </span>
               </label>
-              <Link
-                to="/app"
-                className="block w-full py-3 rounded-lg bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] text-white hover:opacity-90 transition-opacity text-center shadow-lg shadow-blue-500/30"
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="block w-full py-3.5 rounded-xl bg-[#1e3a8a] text-white font-semibold hover:bg-[#1d4ed8] hover:-translate-y-0.5 transition-all text-center shadow-xl shadow-blue-300/40 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Create Account
-              </Link>
+                {loading ? "Creating Account..." : "Create Account"}
+              </button>
             </form>
-            <div className="my-6 flex items-center gap-4">
+
+            <div className="my-7 flex items-center gap-4">
               <div className="flex-1 h-px bg-slate-200" />
               <span className="text-sm text-slate-500">Or sign up with</span>
               <div className="flex-1 h-px bg-slate-200" />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <button className="w-full flex items-center justify-center gap-3 px-1  rounded-full border border-gray-300 bg-white hover:bg-gray-50 transition-colors text-gray-700 font-medium">
+              <button className="flex items-center justify-center gap-2 py-3.5 rounded-xl border border-slate-200 bg-white/80 hover:bg-slate-50 hover:border-slate-300 transition-all text-slate-700 font-medium shadow-sm">
                 <FaGithub className="w-5 h-5" />
                 GitHub
               </button>
-              <div id="googleSignIn">
-                <button className="flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 bg-white/80 hover:bg-slate-50 transition-all text-slate-700 font-medium shadow-sm">
-                  <FaGoogle className="w-5 h-5" />
-                  Google
-                </button>
-              </div>
+
+              <button className="flex items-center justify-center gap-2 py-3.5 rounded-xl border border-slate-200 bg-white/80 hover:bg-slate-50 hover:border-slate-300 transition-all text-slate-700 font-medium shadow-sm">
+                <FaGoogle className="w-5 h-5" />
+                Google
+              </button>
             </div>
 
             <p className="mt-7 text-center text-sm text-slate-600">
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="text-blue-700 hover:text-blue-800 hover:underline font-medium"
+                className="text-blue-700 hover:text-blue-800 hover:underline font-semibold"
               >
                 Sign in
               </Link>
