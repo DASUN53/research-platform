@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getArchiveItems } from "../services/archiveService";
-import { AppAlert } from "../AppAlert";
+import { AppAlert } from "../components/AppAlert";
 
 export function KnowledgeArchive() {
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -29,8 +29,8 @@ export function KnowledgeArchive() {
       new Set(
         archiveItems
           .map((item) => item.field_name)
-          .filter((fieldName) => Boolean(fieldName)),
-      ),
+          .filter((fieldName) => Boolean(fieldName))
+      )
     ).map((fieldName) => ({
       id: fieldName,
       name: fieldName,
@@ -44,9 +44,7 @@ export function KnowledgeArchive() {
         setError("");
 
         const data = await getArchiveItems();
-        const archiveList = Array.isArray(data)
-          ? data
-          : data.archiveItems || [];
+        const archiveList = Array.isArray(data) ? data : data.archiveItems || [];
 
         setArchiveItems(archiveList);
       } catch (err) {
@@ -164,7 +162,7 @@ export function KnowledgeArchive() {
                     category.id === "all"
                       ? archiveItems.length
                       : archiveItems.filter(
-                          (item) => item.field_name === category.id,
+                          (item) => item.field_name === category.id
                         ).length;
 
                   return (
@@ -212,11 +210,7 @@ export function KnowledgeArchive() {
             )}
 
             <div className="space-y-3 mb-5">
-              <AppAlert
-                type="error"
-                message={error}
-                onClose={() => setError("")}
-              />
+              <AppAlert type="error" message={error} onClose={() => setError("")} />
             </div>
 
             {!loading && !error && filteredArchiveItems.length === 0 && (
@@ -228,7 +222,8 @@ export function KnowledgeArchive() {
             <div className="space-y-5">
               {filteredArchiveItems.map((problem) => {
                 const postAttachments = problem.post_attachments || [];
-                const solutionAttachments = problem.solution_attachments || [];
+                const solutionAttachments =
+                  problem.solution_attachments || [];
                 const totalAttachments =
                   postAttachments.length + solutionAttachments.length;
 
@@ -260,7 +255,7 @@ export function KnowledgeArchive() {
                                 <Clock className="w-4 h-4" />
                                 Verified{" "}
                                 {formatDate(
-                                  problem.verified_at || problem.archived_at,
+                                  problem.verified_at || problem.archived_at
                                 )}
                               </span>
                             </div>
@@ -268,7 +263,7 @@ export function KnowledgeArchive() {
 
                           <div
                             className={`px-3 py-1 rounded-full text-xs ml-4 capitalize ${getDifficultyStyle(
-                              problem.difficulty_level,
+                              problem.difficulty_level
                             )}`}
                           >
                             {problem.difficulty_level || "beginner"}
