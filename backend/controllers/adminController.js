@@ -35,4 +35,31 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const getAllPosts = async (req, res) => {
+  try {
+    const [posts] = await db.query(`
+      SELECT 
+        p.post_id,
+        p.title,
+        p.description,
+        p.status,
+        p.is_archived,
+        p.created_at,
+        u.name AS author_name,
+        f.name AS field_name
+        FROM posts p
+        LEFT JOIN users u ON p.user_id = u.user_id
+        LEFT JOIN fields f ON p.field_id = f.field_id
+        ORDER BY p.created_at DESC
+      `);
+    res.json({ posts });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to get posts",
+      error: error.message,
+    });
+  }
+};
+
+
 export { getAllUsers, deleteUser };
