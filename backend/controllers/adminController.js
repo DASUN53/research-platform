@@ -152,4 +152,18 @@ const getAllSolutions = async (req, res) => {
   }
 };
 
+const deleteSolution = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await db.query("DELETE FROM solutions WHERE solution_id = ?", [id]);
+
+    res.json({ message: "Solution deleted successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to delete solution",
+      error: error.message,
+    });
+  }
+};
+
 export { getAllUsers, deleteUser };
