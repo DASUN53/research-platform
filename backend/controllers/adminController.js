@@ -61,5 +61,33 @@ const getAllPosts = async (req, res) => {
   }
 };
 
+const deletePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await db.query("DELETE FROM posts WHERE post_id = ?", [id]);
+
+    res.json({ message: "Post deleted successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to delete post",
+      error: error.message,
+    });
+  }
+};
+const archivePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await db.query("UPDATE posts SET is_archived = 1 WHERE post_id = ?", [id]);
+
+    res.json({ message: "Post archived successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to archive post",
+      error: error.message,
+    });
+  }
+};
 
 export { getAllUsers, deleteUser };
