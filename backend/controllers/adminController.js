@@ -90,4 +90,26 @@ const archivePost = async (req, res) => {
   }
 };
 
+const getAllComments = async (req, res) => {
+  try {
+    const [comments] = await db.query(`
+       SELECT 
+        c.comment_id,
+        c.content,
+        c.created_at,
+        u.name AS author_name,
+        p.title AS post_title
+      FROM comments c
+      LEFT JOIN users u ON c.user_id = u.user_id
+      LEFT JOIN posts p ON c.post_id = p.post_id
+      ORDER BY c.created_at DESC`);
+
+    res.json({ comments });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to get comments",
+      error: error.message,
+    });
+  }
+};
 export { getAllUsers, deleteUser };
