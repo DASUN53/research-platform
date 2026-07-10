@@ -128,4 +128,28 @@ const deleteComment = async (req, res) => {
   }
 };
 
+const getAllSolutions = async (req, res) => {
+  try {
+    const [solutions] = await db.query(`
+      SELECT 
+       s.solution_id,
+        s.content,
+        s.created_at,
+        u.name AS author_name,
+        p.title AS post_title
+      FROM solutions s 
+      LEFT JOIN users u ON s.user_id = u.user_id
+      LEFT JOIN users p ON s.post_id = p.post_id
+      ORDER BY s.created_at DESC
+      `);
+
+    res.json({ solutions });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to get solutions",
+      error: error.message,
+    });
+  }
+};
+
 export { getAllUsers, deleteUser };
