@@ -35,4 +35,97 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const getAllPosts = async (req, res) => {
+  try {
+    const [posts] = await db.query(`
+      SELECT 
+        p.post_id,
+        p.title,
+        p.description,
+        p.status,
+        p.is_archived,
+        p.created_at,
+        u.name AS author_name,
+        f.name AS field_name
+        FROM posts p
+        LEFT JOIN users u ON p.user_id = u.user_id
+        LEFT JOIN fields f ON p.field_id = f.field_id
+        ORDER BY p.created_at DESC
+      `);
+    res.json({ posts });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to get posts",
+      error: error.message,
+    });
+  }
+};
+
+const deletePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await db.query("DELETE FROM posts WHERE post_id = ?", [id]);
+
+    res.json({ message: "Post deleted successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to delete post",
+      error: error.message,
+    });
+  }
+};
+const archivePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await db.query("UPDATE posts SET is_archived = 1 WHERE post_id = ?", [id]);
+
+    res.json({ message: "Post archived successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to archive post",
+      error: error.message,
+    });
+  }
+};
+
+const getAllComments = async (req, res) => {
+  try {
+    const [comments] = await db.query(`
+       SELECT 
+        c.comment_id,
+        c.content,
+        c.created_at,
+        u.name AS author_name,
+        p.title AS post_title
+      FROM comments c
+      LEFT JOIN users u ON c.user_id = u.user_id
+      LEFT JOIN posts p ON c.post_id = p.post_id
+      ORDER BY c.created_at DESC`);
+
+    res.json({ comments });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to get comments",
+      error: error.message,
+    });
+  }
+};
+
+const deleteComment = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await db.query("DELETE FROM comments WHERE comment_id = ?", [id]);
+
+    res.json({ message: "Comment deleted successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to delete comment",
+      error: error.message,
+    });
+  }
+};
+
 export { getAllUsers, deleteUser };
