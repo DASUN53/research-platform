@@ -112,4 +112,20 @@ const getAllComments = async (req, res) => {
     });
   }
 };
+
+const deleteComment = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await db.query("DELETE FROM comments WHERE comment_id = ?", [id]);
+
+    res.json({ message: "Comment deleted successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to delete comment",
+      error: error.message,
+    });
+  }
+};
+
 export { getAllUsers, deleteUser };
