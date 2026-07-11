@@ -242,4 +242,8 @@ export {
   deleteComment,
   getAllSolutions,
   deleteSolution,
+  getAllFields,
+  createField,
+  updateField,
+  deleteField,
 };
