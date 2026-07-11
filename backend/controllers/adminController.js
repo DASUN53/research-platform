@@ -198,4 +198,34 @@ const createField = async (req, res) => {
     });
   }
 };
-export { getAllUsers, deleteUser };
+
+const updateField = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, description } = req.body;
+
+    await db.query(
+      "UPDATE fields SET name = ?, description = ? WHERE field_id = ?",
+      [name, description, id],
+    );
+
+    res.json({ message: "Field updated successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to update field",
+      error: error.message,
+    });
+  }
+};
+
+export {
+  getAllUsers,
+  deleteUser,
+  getAllPosts,
+  deletePost,
+  archivePost,
+  getAllComments,
+  deleteComment,
+  getAllSolutions,
+  deleteSolution,
+};
