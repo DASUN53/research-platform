@@ -217,6 +217,20 @@ const updateField = async (req, res) => {
     });
   }
 };
+const deleteField = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await db.query("DELETE FROM fields WHERE field_id = ?", [id]);
+
+    res.json({ message: "Field deleted successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to delete field",
+      error: error.message,
+    });
+  }
+};
 
 export {
   getAllUsers,
