@@ -166,4 +166,84 @@ const deleteSolution = async (req, res) => {
   }
 };
 
-export { getAllUsers, deleteUser };
+const getAllFields = async (req, res) => {
+  try {
+    const [fields] = await db.query(
+      "SELECT * FROM fields ORDER BY created_at DESC",
+    );
+
+    res.json({ fields });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to get fields",
+      error: error.message,
+    });
+  }
+};
+
+const createField = async (req, res) => {
+  try {
+    const { name, description } = req.body;
+
+    await db.query("INSERT INTO fields (name, description) VALUES (?, ?)", [
+      name,
+      description,
+    ]);
+
+    res.status(201).json({ message: "Field created successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to create field",
+      error: error.message,
+    });
+  }
+};
+
+const updateField = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, description } = req.body;
+
+    await db.query(
+      "UPDATE fields SET name = ?, description = ? WHERE field_id = ?",
+      [name, description, id],
+    );
+
+    res.json({ message: "Field updated successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to update field",
+      error: error.message,
+    });
+  }
+};
+const deleteField = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await db.query("DELETE FROM fields WHERE field_id = ?", [id]);
+
+    res.json({ message: "Field deleted successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to delete field",
+      error: error.message,
+    });
+  }
+};
+
+export {
+  getAllUsers,
+  deleteUser,
+  getAllPosts,
+  deletePost,
+  archivePost,
+  getAllComments,
+  deleteComment,
+  getAllSolutions,
+  deleteSolution,
+  getAllFields,
+  createField,
+  updateField,
+  deleteField,
+};
