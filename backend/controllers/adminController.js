@@ -166,4 +166,36 @@ const deleteSolution = async (req, res) => {
   }
 };
 
+const getAllFields = async (req, res) => {
+  try {
+    const [fields] = await db.query(
+      "SELECT * FROM fields ORDER BY created_at DESC",
+    );
+
+    res.json({ fields });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to get fields",
+      error: error.message,
+    });
+  }
+};
+
+const createField = async (req, res) => {
+  try {
+    const { name, description } = req.body;
+
+    await db.query("INSERT INTO fields (name, description) VALUES (?, ?)", [
+      name,
+      description,
+    ]);
+
+    res.status(201).json({ message: "Field created successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to create field",
+      error: error.message,
+    });
+  }
+};
 export { getAllUsers, deleteUser };
