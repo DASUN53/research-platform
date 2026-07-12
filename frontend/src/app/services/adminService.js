@@ -70,3 +70,29 @@ export const archiveAdminPost = async (id) => {
   }
   return data;
 };
+
+//comments
+export const getAdminComments = async () => {
+  const response = await fetch(`${API_BASE_URL}/admin/comments`, {
+    headers: getHeaders(),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to fetch comments");
+  }
+  return data.comments || [];
+};
+
+export const deleteAdminComment = async (id) => {
+  const response = await fetch(`${API_BASE_URL}/admin/comments/${id}`, {
+    method: "DELETE",
+    headers: getHeaders(),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to delete comment");
+  }
+  return data;
+};
+
+//solutions
