@@ -169,3 +169,28 @@ export const deleteAdminField = async (id) => {
   }
   return data;
 };
+
+//Archive
+
+export const getAdminArchive = async () => {
+  const response = await fetch(`${API_BASE_URL}/admin/archive`, {
+    headers: getHeaders(),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to fetch archive");
+  }
+  return data.archive || [];
+};
+
+export const restoreAdminArchivePost = async (id) => {
+  const response = await fetch(`${API_BASE_URL}/admin/archive/${id}/restore`, {
+    method: "PUT",
+    headers: getHeaders(),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to restore archived post");
+  }
+  return data;
+};
