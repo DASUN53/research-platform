@@ -118,3 +118,79 @@ export const deleteAdminSolution = async (id) => {
   }
   return data;
 };
+
+// Fields
+
+export const getAdminFields = async () => {
+  const response = await fetch(`${API_BASE_URL}/admin/fields`, {
+    headers: getHeaders(),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to fetch fields");
+  }
+  return data.fields || [];
+};
+
+export const createAdminField = async (fieldData) => {
+  const response = await fetch(`${API_BASE_URL}/admin/fields`, {
+    method: "POST",
+    headers: getHeaders(),
+    body: JSON.stringify(fieldData),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to create field");
+  }
+  return data;
+};
+
+export const updateAdminField = async (id, fieldData) => {
+  const response = await fetch(`${API_BASE_URL}/admin/fields/${id}`, {
+    method: "PUT",
+    headers: getHeaders(),
+    body: JSON.stringify(fieldData),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to update field");
+  }
+  return data;
+};
+
+export const deleteAdminField = async (id) => {
+  const response = await fetch(`${API_BASE_URL}/admin/fields/${id}`, {
+    method: "DELETE",
+    headers: getHeaders(),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to delete field");
+  }
+  return data;
+};
+
+//Archive
+
+export const getAdminArchive = async () => {
+  const response = await fetch(`${API_BASE_URL}/admin/archive`, {
+    headers: getHeaders(),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to fetch archive");
+  }
+  return data.archive || [];
+};
+
+export const restoreAdminArchivePost = async (id) => {
+  const response = await fetch(`${API_BASE_URL}/admin/archive/${id}/restore`, {
+    method: "PUT",
+    headers: getHeaders(),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to restore archived post");
+  }
+  return data;
+};
