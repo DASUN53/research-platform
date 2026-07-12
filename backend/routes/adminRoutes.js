@@ -27,10 +27,27 @@ router.use(adminOnly);
 
 //----------------------users--------------------
 router.get("/users", getAllUsers);
-router.delete("/users/:id",deleteUser);
+router.delete("/users/:id", deleteUser);
 
 //---------------------posts---------------------
-router.get ("/posts",getAllPosts);
-router.delete("/posts/:id",deletePost);
-router.put("/posts/:id/archive",archivePost);
+router.get("/posts", getAllPosts);
+router.delete("/posts/:id", deletePost);
+router.put("/posts/:id/archive", archivePost);
 
+//---------------------comments------------------
+router.get("/comments", getAllComments);
+router.delete("/comments/:id", deleteComment);
+
+//---------------------solutions----------------
+router.get("/solutions", getAllSolutions);
+router.delete("/soutions/:id", deleteSolution);
+
+//---------------------Fields--------------------
+router.get("/fields", getAllFields);
+router.delete("/fields/:id", deleteField);
+router.post("/fields", createField);
+router.put("/fields/:id", updateField);
+
+//--------------------archive-------------------
+router.get("/archive",getArchive);
+router.put("/archive/:id/restore",restoreArchivePost);
