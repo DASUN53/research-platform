@@ -20,3 +20,17 @@ import {
   restoreArchivePost,
 } from "../controllers/adminController.js";
 
+const router = express.Router();
+
+router.use(protect);
+router.use(adminOnly);
+
+//----------------------users--------------------
+router.get("/users", getAllUsers);
+router.delete("/users/:id",deleteUser);
+
+//---------------------posts---------------------
+router.get ("/posts",getAllPosts);
+router.delete("/posts/:id",deletePost);
+router.put("/posts/:id/archive",archivePost);
+
