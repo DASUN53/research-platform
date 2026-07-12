@@ -49,5 +49,7 @@ router.post("/fields", createField);
 router.put("/fields/:id", updateField);
 
 //--------------------archive-------------------
-router.get("/archive",getArchive);
-router.put("/archive/:id/restore",restoreArchivePost);
+router.get("/archive", getArchive);
+router.put("/archive/:id/restore", restoreArchivePost);
+
+export default router;
