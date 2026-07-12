@@ -231,6 +231,45 @@ const deleteField = async (req, res) => {
     });
   }
 };
+const getArchive = async (req, res) => {
+  try {
+    const [archive] = await db.query(`
+      SELECT 
+        p.post_id,
+        p.title,
+        p.description,
+        p.created_at,
+        u.name AS author_name,
+        f.name AS field_name
+      FROM posts p
+      LEFT JOIN users u ON p.user_id = u.user_id
+      LEFT JOIN fields f ON p.field_id = f.field_id
+      WHERE p.is_archived = 1
+      ORDER BY p.created_at DESC
+    `);
+
+    res.json({ archive });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to get archive",
+      error: error.message,
+    });
+  }
+};
+const restoreArchivePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await db.query("UPDATE posts SET is_archived = 0 WHERE post_id = ?", [id]);
+
+    res.json({ message: "Post restored successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to restore post",
+      error: error.message,
+    });
+  }
+};
 
 export {
   getAllUsers,
@@ -246,4 +285,6 @@ export {
   createField,
   updateField,
   deleteField,
+  getArchive,
+  restoreArchivePost,
 };
