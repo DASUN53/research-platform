@@ -96,3 +96,25 @@ export const deleteAdminComment = async (id) => {
 };
 
 //solutions
+export const getAdminSolutions = async () => {
+  const response = await fetch(`${API_BASE_URL}/admin/solutions`, {
+    headers: getHeaders(),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to fetch solutions");
+  }
+  return data.solutions || [];
+};
+
+export const deleteAdminSolution = async (id) => {
+  const response = await fetch(`${API_BASE_URL}/admin/solutions/${id}`, {
+    method: "DELETE",
+    headers: getHeaders(),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to delete solution");
+  }
+  return data;
+};
