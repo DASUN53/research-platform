@@ -248,7 +248,7 @@ const getArchive = async (req, res) => {
       ORDER BY p.created_at DESC
     `);
 
-      res.json({ archive });
+    res.json({ archive });
   } catch (error) {
     res.status(500).json({
       message: "Failed to get archive",
@@ -285,4 +285,6 @@ export {
   createField,
   updateField,
   deleteField,
+  getArchive,
+  restoreArchivePost,
 };
