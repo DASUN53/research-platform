@@ -41,7 +41,14 @@ const AdminSidebar = () => {
 
   return (
     <aside className={`admin-sidebar ${collapsed ? "collapsed" : ""}`}>
-      
+      <div className="admin-sidebar-header">
+        <Link to="/admin" className="admin-sidebar-brand">
+          <div className="admin-sidebar-logo">A</div>
+          {!collapsed && (
+            <span className="admin-sidebar-title">Admin Portal</span>
+          )}
+        </Link>
+      </div>
     </aside>
   );
 };
