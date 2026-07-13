@@ -1,6 +1,14 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+import { logoutUser } from "../../services/authService";
+import "./AdminSidebar.css";
 
 const AdminSidebar = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [collapsed, setCollapsed] = useState(false);
+  
   return (
     <aside className="w-64 min-h-screen bg-slate-900 text-white p-5">
       <h2 className="text-2xl font-bold mb-8">Admin Panel</h2>
