@@ -3,7 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { logoutUser } from "../../services/authService";
 import "./AdminSidebar.css";
-import { LayoutDashboard } from "lucide-react";
+import {
+  Archive,
+  FileText,
+  Layers,
+  LayoutDashboard,
+  Lightbulb,
+  MessageSquare,
+  Users,
+} from "lucide-react";
 
 const AdminSidebar = () => {
   const location = useLocation();
@@ -23,7 +31,12 @@ const AdminSidebar = () => {
 
   const menuItems = [
     { label: "Dashboard", path: "/admin", icon: LayoutDashboard, exact: true },
-    
+    { label: "Manage Users", path: "/admin/users", icon: Users },
+    { label: "Manage Posts", path: "/admin/posts", icon: FileText },
+    { label: "Manage Comments", path: "/admin/comments", icon: MessageSquare },
+    { label: "Manage Solutions", path: "/admin/solutions", icon: Lightbulb },
+    { label: "Manage Fields", path: "/admin/fields", icon: Layers },
+    { label: "Archive", path: "/admin/archive", icon: Archive },
   ];
   return (
     <aside className="w-64 min-h-screen bg-slate-900 text-white p-5">
