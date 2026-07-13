@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { logoutUser } from "../../services/authService";
 import "./AdminSidebar.css";
+import { LayoutDashboard } from "lucide-react";
 
 const AdminSidebar = () => {
   const location = useLocation();
@@ -19,6 +20,11 @@ const AdminSidebar = () => {
     logoutUser();
     navigate("/login");
   };
+
+  const menuItems = [
+    { label: "Dashboard", path: "/admin", icon: LayoutDashboard, exact: true },
+    
+  ];
   return (
     <aside className="w-64 min-h-screen bg-slate-900 text-white p-5">
       <h2 className="text-2xl font-bold mb-8">Admin Panel</h2>
