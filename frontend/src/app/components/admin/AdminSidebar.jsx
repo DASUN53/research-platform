@@ -8,7 +8,17 @@ const AdminSidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
-  
+
+  const isActive = (path) => {
+    if (path === "/admin" && location.pathname === "/admin") return true;
+    if (path == !"/admin" && location.pathname.startsWith(path)) return true;
+    return false;
+  };
+
+  const handleLogout = () => {
+    logoutUser();
+    navigate("/login");
+  };
   return (
     <aside className="w-64 min-h-screen bg-slate-900 text-white p-5">
       <h2 className="text-2xl font-bold mb-8">Admin Panel</h2>
