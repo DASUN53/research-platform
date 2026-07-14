@@ -48,7 +48,39 @@ const AdminSidebar = () => {
             <span className="admin-sidebar-title">Admin Portal</span>
           )}
         </Link>
+
+        <button
+          className="admin-sidebar-toggle"
+          onClick={() => setCollapsed(!collapsed)}
+        >
+          {collapsed ? (
+            <PanelLeftOpen size={20} />
+          ) : (
+            <PanelLeftClose size={20} />
+          )}
+        </button>
       </div>
+      <nav className="admin-sidebar-nav">
+        {menuItems.map((item) => {
+          const Icon = item.icon;
+
+          return (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`admin-sidebar-link ${
+                isActive(item.path) ? "active" : ""
+              }`}
+            >
+              <Icon className="admin-sidebar-icon" />
+
+              {!collapsed && (
+                <span className="admin-sidebar-label">{item.label}</span>
+              )}
+            </Link>
+          );
+        })}
+      </nav>
     </aside>
   );
 };
