@@ -60,6 +60,27 @@ const AdminSidebar = () => {
           )}
         </button>
       </div>
+      <nav className="admin-sidebar-nav">
+        {menuItems.map((item) => {
+          const Icon = item.icon;
+
+          return (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`admin-sidebar-link ${
+                isActive(item.path) ? "active" : ""
+              }`}
+            >
+              <Icon className="admin-sidebar-icon" />
+
+              {!collapsed && (
+                <span className="admin-sidebar-label">{item.label}</span>
+              )}
+            </Link>
+          );
+        })}
+      </nav>
     </aside>
   );
 };
