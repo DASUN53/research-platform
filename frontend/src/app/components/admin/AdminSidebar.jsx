@@ -48,6 +48,17 @@ const AdminSidebar = () => {
             <span className="admin-sidebar-title">Admin Portal</span>
           )}
         </Link>
+
+        <button
+          className="admin-sidebar-toggle"
+          onClick={() => setCollapsed(!collapsed)}
+        >
+          {collapsed ? (
+            <PanelLeftOpen size={20} />
+          ) : (
+            <PanelLeftClose size={20} />
+          )}
+        </button>
       </div>
     </aside>
   );
