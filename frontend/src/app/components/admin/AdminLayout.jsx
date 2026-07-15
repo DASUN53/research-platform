@@ -41,6 +41,14 @@ const AdminLayout = () => {
 
             <h2 className="admin-layout-title">Admin Workspace</h2>
           </div>
+
+          <div className="admin-layout-header-right">
+            <Link to="/app" className="admin-layout-home-btn">
+              <Home size={16} />
+              <span className="hide-mobile">Go to App</span>
+            </Link>
+            
+          </div>
         </header>
       </div>
     </div>
