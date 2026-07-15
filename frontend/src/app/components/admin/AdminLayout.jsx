@@ -29,12 +29,20 @@ const AdminLayout = () => {
 
     return `${API_BASE_URL.replace("/api", "")}${imagePath}`;
   };
-  
+
   return (
-    <div className="flex min-h-screen bg-slate-100">
+    <div className="admin-layout">
       <AdminSidebar />
 
-      <main className="flex-1 p-8">{children}</main>
+      <div className="admin-layout-content">
+        <header className="admin-layout-header">
+          <div className="admin-layout-header-left">
+            <Shield className="admin-layout-shield" />
+
+            <h2 className="admin-layout-title">Admin Workspace</h2>
+          </div>
+        </header>
+      </div>
     </div>
   );
 };
