@@ -81,6 +81,21 @@ const AdminSidebar = () => {
           );
         })}
       </nav>
+
+      <div className="admin-sidebar-footer">
+        <Link to="/app" className="admin-sidebar-link">
+          <Home className="admin-sidebar-icon" />
+
+          {!collapsed && (
+            <span className="admin-sidebar-label">Return to App</span>
+          )}
+        </Link>
+        <button className="admin-sidebar-link logout" onClick={handleLogout}>
+          <LogOut className="admin-sidebar-icon" />
+
+          {!collapsed && <span className="admin-sidebar-label">Logout</span>}
+        </button>
+      </div>
     </aside>
   );
 };
