@@ -47,7 +47,22 @@ const AdminLayout = () => {
               <Home size={16} />
               <span className="hide-mobile">Go to App</span>
             </Link>
-            
+
+            <div className="admin-layout-profile">
+              <img
+                src={getProfileImageUrl(currentUser?.profile_picture)}
+                alt="Admin"
+                className="admin-layout-avatar"
+              />
+
+              <div className="admin-layout-user hide-tablet">
+                <div className="admin-layout-name">{displayName}</div>
+
+                <div className="admin-layout-role">
+                  {currentUser?.role || "Admin"}
+                </div>
+              </div>
+            </div>
           </div>
         </header>
       </div>
