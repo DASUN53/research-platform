@@ -63,8 +63,18 @@ const AdminLayout = () => {
                 </div>
               </div>
             </div>
+
+            <button className="admin-layout-logout" onClick={handleLogout}>
+              <LogOut size={20} />
+            </button>
           </div>
         </header>
+
+        <main className="admin-layout-main">
+          <div className="admin-layout-page">
+            <Outlet />
+          </div>
+        </main>
       </div>
     </div>
   );
