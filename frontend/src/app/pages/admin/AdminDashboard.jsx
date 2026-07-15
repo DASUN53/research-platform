@@ -1,4 +1,28 @@
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import {
+  Users,
+  FileText,
+  MessageSquare,
+  Lightbulb,
+  Layers,
+  Archive,
+  Bell,
+  ArrowRight,
+  TrendingUp,
+  ShieldAlert,
+} from "lucide-react";
 import AdminLayout from "../../components/admin/AdminLayout";
+import {
+  getAdminUsers,
+  getAdminPosts,
+  getAdminComments,
+  getAdminSolutions,
+  getAdminFields,
+  getAdminArchive,
+} from "../../services/adminService";
+import { AppAlert } from "../../components/AppAlert";
+import "./admin-css/AdminDashboard.css";
 
 const AdminDashboard = () => {
   return (
