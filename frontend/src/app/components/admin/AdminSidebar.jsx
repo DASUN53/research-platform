@@ -11,10 +11,12 @@ import {
   Lightbulb,
   MessageSquare,
   Users,
+  PanelLeftClose,
+  Home,
+  LogOut,
 } from "lucide-react";
 
 const AdminSidebar = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
 
