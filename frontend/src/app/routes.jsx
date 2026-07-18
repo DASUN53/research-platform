@@ -22,6 +22,7 @@ import { NotFound } from "./pages/NotFound";
 
 // Admin imports
 import AdminRoute from "./components/AdminRoute";
+import AdminLayout from "./components/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 
 export const router = createBrowserRouter([
@@ -61,9 +62,10 @@ export const router = createBrowserRouter([
     path: "/admin",
     element: (
       <AdminRoute>
-        <AdminDashboard />
+        <AdminLayout />
       </AdminRoute>
     ),
+    children: [{ index: true, element: <AdminDashboard /> }],
   },
 
   {
