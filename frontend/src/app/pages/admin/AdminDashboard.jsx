@@ -21,7 +21,6 @@ import {
   getAdminFields,
   getAdminArchive,
 } from "../../services/adminService";
-import { AppAlert } from "../../components/AppAlert";
 import "./admin-css/AdminDashboard.css";
 
 const AdminDashboard = () => {
@@ -133,6 +132,41 @@ const AdminDashboard = () => {
           Overview and analytics of CollabSolve platform operations.
         </p>
       </div>
+
+      {loading ? (
+        <div className="admin-dashboard-loading-grid">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="admin-dashboard-loading-card" />
+          ))}
+        </div>
+      ) : (
+        <div className="admin-dashboard-stats-grid">
+          {statCards.map((card, idx) => {
+            const Icon = card.icon;
+            return (
+              <Link key={idx} to={card.link} className="admin-dashboard-card">
+                <div className="admin-dashboard-card-inner">
+                  <div>
+                    <span className="admin-dashboard-card-label">
+                      {card.label}
+                    </span>
+                    <h3 className="admin-dashboard-card-value">{card.value}</h3>
+                  </div>
+                  <div
+                    className={`admin-dashboard-card-icon-base bg-gradient-to-br ${card.color} ${card.shadow}`}
+                  >
+                    <Icon className="w-6 h-6" />
+                  </div>
+                </div>
+                <div className="admin-dashboard-card-action">
+                  Manage{" "}
+                  <ArrowRight className="admin-dashboard-card-action-icon" />
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
