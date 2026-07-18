@@ -1,0 +1,28 @@
+.admin-dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.admin-dashboard-header {
+  margin-bottom: 0.5rem;
+}
+
+.admin-dashboard-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #111827;
+}
+
+.dark .admin-dashboard-title {
+  color: #f3f4f6;
+}
+
+.admin-dashboard-subtitle {
+  color: #6b7280;
+}
+
+.dark .admin-dashboard-subtitle {
+  color: #9ca3af;
+}
