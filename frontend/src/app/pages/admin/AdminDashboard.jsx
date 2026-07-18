@@ -167,6 +167,46 @@ const AdminDashboard = () => {
           })}
         </div>
       )}
+      <div className="admin-dashboard-options-grid">
+        <div className="admin-dashboard-summary-card">
+          <div className="admin-dashboard-summary-header">
+            <TrendingUp className="admin-dashboard-summary-icon" />
+            <h3 className="admin-dashboard-summary-title">
+              Platform Activity Summary
+            </h3>
+          </div>
+          <p className="admin-dashboard-summary-text">
+            The platform is running smoothly. Use the side navigation panel or
+            the dashboard cards above to manage user accounts, check discussion
+            comments, update fields, or issue site-wide alerts.
+          </p>
+
+          <div className="admin-dashboard-summary-stats">
+            <div className="admin-dashboard-summary-stat-box">
+              <span className="admin-dashboard-summary-stat-label">
+                Average Interactions
+              </span>
+              <span className="admin-dashboard-summary-stat-value">
+                {stats.posts > 0
+                  ? (stats.comments / stats.posts).toFixed(1)
+                  : 0}{" "}
+                comments per post
+              </span>
+            </div>
+            <div className="admin-dashboard-summary-stat-box">
+              <span className="admin-dashboard-summary-stat-label">
+                Success Ratio
+              </span>
+              <span className="admin-dashboard-summary-stat-value">
+                {stats.posts > 0
+                  ? ((stats.solutions / stats.posts) * 100).toFixed(0)
+                  : 0}
+                % solutions submitted
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
