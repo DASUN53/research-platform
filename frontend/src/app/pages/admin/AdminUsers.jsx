@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Users, Search, Trash2, Shield, Calendar, Mail } from "lucide-react";
 import { getAdminUsers, deleteAdminUser } from "../../services/adminService";
-import { AppAlert } from "../../components/AppAlert";
 import "./admin-css/AdminUsers.css";
 
 const AdminUsers = () => {
@@ -87,6 +86,28 @@ const AdminUsers = () => {
             {users.length} Total Users
           </span>
         </div>
+      </div>
+      <div className="admin-users-filter-section">
+        <div className="admin-users-search-wrapper">
+          <Search className="admin-users-search-icon" />
+          <input
+            type="text"
+            placeholder="Search by name, email, or user ID..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="admin-users-search-input"
+          />
+        </div>
+
+        <select
+          value={roleFilter}
+          onChange={(e) => setRoleFilter(e.target.value)}
+          className="admin-users-select"
+        >
+          <option value="all">All Roles</option>
+          <option value="admin">Administrator</option>
+          <option value="user">Standard User</option>
+        </select>
       </div>
     </div>
   );
