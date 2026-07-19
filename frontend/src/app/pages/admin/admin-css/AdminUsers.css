@@ -1,0 +1,44 @@
+.admin-users-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.admin-users-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.admin-users-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.admin-users-subtitle {
+  color: #6b7280;
+}
+
+/* Badge */
+
+.admin-users-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+}
+
+.admin-users-badge-icon {
+  color: #0ea5e9;
+}
+
+.admin-users-badge-text {
+  font-weight: 600;
+}
