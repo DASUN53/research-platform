@@ -122,7 +122,7 @@
   background: #f9fafb;
 }
 
-/* User */
+/* -----------------------------  User --------------------------- */
 
 .admin-users-details-wrapper {
   display: flex;
@@ -156,7 +156,7 @@
   color: #6b7280;
 }
 
-/* Role */
+/* ------------------ - Role --------------------- */
 
 .admin-users-role-badge {
   display: inline-flex;
@@ -178,11 +178,58 @@
   color: #1d4ed8;
 }
 
-/* Date */
+/* --------------------- Date ------------------ */
 
 .admin-users-date-line {
   display: flex;
   align-items: center;
   gap: 6px;
   color: #6b7280;
+}
+
+/* Delete */
+
+.admin-users-td-actions {
+  text-align: right;
+}
+
+.admin-users-btn-delete {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  color: #ef4444;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.admin-users-btn-delete:hover {
+  background: #fee2e2;
+}
+
+.admin-users-protected {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+/* Empty */
+
+.admin-users-table-info {
+  padding: 50px;
+  text-align: center;
+  color: #6b7280;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .admin-users-header,
+  .admin-users-filter-section {
+    flex-direction: column;
+  }
+
+  .admin-users-select {
+    width: 100%;
+  }
 }
