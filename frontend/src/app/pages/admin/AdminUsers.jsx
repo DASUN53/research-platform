@@ -15,4 +15,40 @@ const AdminUsers = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      setError("");
+      const data = await getAdminUsers();
+      setUsers(data);
+    } catch (err) {
+      setError(err.message || "Failed to load users list");
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleDelete = async (id, name, role) => {
+    if (role === "admin") {
+      setError("Cannot delete an administrator account");
+      return;
+    }
+
+    if (
+      !window.confirm(
+        `Are you sure you want to delete user ${name}? This action is permanent.`,
+      )
+    ) {
+      return;
+    }
+
+    try {
+      setError("");
+      setSuccess("");
+      await deleteAdminUser(id);
+      setSuccess(`User "${name}" has been deleted successfully.`);
+      setUsers(users.filter((u) => u.user_id !== id));
+    } catch (err) {
+      setError(err.message || "Failed to delete user");
+    }
+  };
 };
