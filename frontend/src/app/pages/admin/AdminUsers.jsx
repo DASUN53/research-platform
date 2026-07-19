@@ -109,6 +109,86 @@ const AdminUsers = () => {
           <option value="user">Standard User</option>
         </select>
       </div>
+
+      <div className="admin-users-table-container">
+        {loading ? (
+          <div className="admin-users-table-info">Loading user accounts...</div>
+        ) : filteredUsers.length === 0 ? (
+          <div className="admin-users-table-info">
+            No users match the search filters.
+          </div>
+        ) : (
+          <div className="admin-users-table-responsive">
+            <table className="admin-users-table">
+              <thead className="admin-users-thead">
+                <tr>
+                  <th className="admin-users-th">ID</th>
+                  <th className="admin-users-th">User Details</th>
+                  <th className="admin-users-th">Role</th>
+                  <th className="admin-users-th">Registration Date</th>
+                  <th className="admin-users-th-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="admin-users-tbody">
+                {filteredUsers.map((user) => (
+                  <tr key={user.user_id} className="admin-users-tr">
+                    <td className="admin-users-td-id">#{user.user_id}</td>
+                    <td className="admin-users-td-details">
+                      <div className="admin-users-details-wrapper">
+                        <div className="admin-users-avatar">
+                          {user.name ? user.name[0].toUpperCase() : "U"}
+                        </div>
+                        <div>
+                          <div className="admin-users-name">{user.name}</div>
+                          <div className="admin-users-email-line">
+                            <Mail className="admin-users-email-icon" />
+                            {user.email}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="admin-users-td-role">
+                      <span
+                        className={`admin-users-role-badge ${
+                          user.role === "admin"
+                            ? "admin-users-role-admin"
+                            : "admin-users-role-user"
+                        }`}
+                      >
+                        {user.role === "admin" && (
+                          <Shield className="w-3 h-3" />
+                        )}
+                        {user.role}
+                      </span>
+                    </td>
+                    <td className="admin-users-td-date">
+                      <span className="admin-users-date-line">
+                        <Calendar className="admin-users-date-icon" />
+                        {formatDate(user.created_at)}
+                      </span>
+                    </td>
+                    <td className="admin-users-td-actions">
+                      {user.role !== "admin" ? (
+                        <button
+                          onClick={() =>
+                            handleDelete(user.user_id, user.name, user.role)
+                          }
+                          className="admin-users-btn-delete"
+                          title="Delete User"
+                        >
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+                      ) : (
+                        <span className="admin-users-protected">Protected</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
