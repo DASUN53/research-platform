@@ -24,6 +24,7 @@ import { NotFound } from "./pages/NotFound";
 import AdminRoute from "./components/AdminRoute";
 import AdminLayout from "./components/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminUsers from "./pages/admin/AdminUsers";
 
 export const router = createBrowserRouter([
   {
@@ -65,7 +66,10 @@ export const router = createBrowserRouter([
         <AdminLayout />
       </AdminRoute>
     ),
-    children: [{ index: true, element: <AdminDashboard /> }],
+    children: [
+      { index: true, element: <AdminDashboard /> },
+      { path: "users", element: <AdminUsers /> },
+    ],
   },
 
   {
