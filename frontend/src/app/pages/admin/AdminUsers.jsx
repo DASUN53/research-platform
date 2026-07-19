@@ -71,4 +71,23 @@ const AdminUsers = () => {
       year: "numeric",
     });
   };
+
+  return (
+    <div className="admin-users-container">
+      <div className="admin-users-header">
+        <div>
+          <h1 className="admin-users-title">Manage Users</h1>
+          <p className="admin-users-subtitle">
+            View, search, and delete registered member accounts.
+          </p>
+        </div>
+        <div className="admin-users-badge">
+          <Users className="admin-users-badge-icon" />
+          <span className="admin-users-badge-text">
+            {users.length} Total Users
+          </span>
+        </div>
+      </div>
+    </div>
+  );
 };
