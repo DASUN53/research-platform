@@ -51,4 +51,24 @@ const AdminUsers = () => {
       setError(err.message || "Failed to delete user");
     }
   };
+  const filteredUsers = users.filter((user) => {
+    const query = search.toLowerCase();
+    const matchesSearch =
+      user.name?.toLowerCase().includes(query) ||
+      user.email?.toLowerCase().includes(query) ||
+      user.user_id?.toString().includes(query);
+
+    const matchesRole = roleFilter === "all" || user.role === roleFilter;
+
+    return matchesSearch && matchesRole;
+  });
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    return new Date(dateString).toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  };
 };
