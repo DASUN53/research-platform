@@ -42,3 +42,47 @@
 .admin-users-badge-text {
   font-weight: 600;
 }
+
+/* ------------------- Search ----------------------- */
+
+.admin-users-filter-section {
+  display: flex;
+  gap: 15px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+}
+
+.admin-users-search-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+.admin-users-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+.admin-users-search-input,
+.admin-users-select {
+  width: 100%;
+  padding: 12px 14px 12px 42px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  outline: none;
+  font-size: 15px;
+}
+
+.admin-users-select {
+  width: 180px;
+  padding-left: 14px;
+}
+
+.admin-users-search-input:focus,
+.admin-users-select:focus {
+  border-color: #0ea5e9;
+}
