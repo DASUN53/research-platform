@@ -89,35 +89,100 @@
 
 /* ------------------------- Table ----------------------- */
 
-.admin-users-table-container{
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:18px;
-    overflow:hidden;
+.admin-users-table-container {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  overflow: hidden;
 }
 
-.admin-users-table-responsive{
-    overflow:auto;
+.admin-users-table-responsive {
+  overflow: auto;
 }
 
-.admin-users-table{
-    width:100%;
-    border-collapse:collapse;
+.admin-users-table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.admin-users-table th{
-    background:#f8fafc;
-    padding:16px;
-    text-align:left;
-    font-size:13px;
-    color:#6b7280;
+.admin-users-table th {
+  background: #f8fafc;
+  padding: 16px;
+  text-align: left;
+  font-size: 13px;
+  color: #6b7280;
 }
 
-.admin-users-table td{
-    padding:18px 16px;
-    border-top:1px solid #f3f4f6;
+.admin-users-table td {
+  padding: 18px 16px;
+  border-top: 1px solid #f3f4f6;
 }
 
-.admin-users-tr:hover{
-    background:#f9fafb;
+.admin-users-tr:hover {
+  background: #f9fafb;
+}
+
+/* User */
+
+.admin-users-details-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-users-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: bold;
+  background: linear-gradient(135deg, #38bdf8, #8b5cf6);
+}
+
+.admin-users-name {
+  font-weight: 600;
+  color: #111827;
+}
+
+.admin-users-email-line {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 3px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* Role */
+
+.admin-users-role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.admin-users-role-admin {
+  background: #f3e8ff;
+  color: #7e22ce;
+}
+
+.admin-users-role-user {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+/* Date */
+
+.admin-users-date-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #6b7280;
 }
