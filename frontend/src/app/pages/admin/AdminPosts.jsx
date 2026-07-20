@@ -7,6 +7,7 @@ import {
   User,
   Layers,
   Tag,
+  FileText,
 } from "lucide-react";
 import {
   getAdminPosts,
@@ -222,3 +223,5 @@ const AdminPosts = () => {
     </div>
   );
 };
+
+export default AdminPosts;
