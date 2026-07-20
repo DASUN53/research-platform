@@ -1,0 +1,49 @@
+.admin-posts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Header */
+
+.admin-posts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.admin-posts-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.admin-posts-subtitle {
+  color: #6b7280;
+}
+
+/* Badge */
+
+.admin-posts-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+}
+
+.admin-posts-badge-icon {
+  width: 20px;
+  height: 20px;
+  color: #0ea5e9;
+}
+
+.admin-posts-badge-text {
+  font-weight: 600;
+  color: #374151;
+}
