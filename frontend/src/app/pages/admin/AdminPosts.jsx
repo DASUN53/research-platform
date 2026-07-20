@@ -42,7 +42,55 @@ const AdminPosts = () => {
       setError(err.message || "Failed to delete post");
     }
   };
+  const handleArchive = async (id, title) => {
+    if (
+      !window.confirm(
+        `Are you sure you want to move post "${title}" to the Archive?`,
+      )
+    ) {
+      return;
+    }
 
+    try {
+      setError("");
+      setSuccess("");
+      await archiveAdminPost(id);
+      setSuccess(`Post "${title}" has been archived successfully.`);
+      setPosts(
+        posts.map((p) => (p.post_id === id ? { ...p, is_archived: 1 } : p)),
+      );
+    } catch (err) {
+      setError(err.message || "Failed to archive post");
+    }
+  };
+
+  const filteredPosts = posts.filter((post) => {
+    const query = search.toLowerCase();
+    const matchesSearch =
+      post.title?.toLowerCase().includes(query) ||
+      post.description?.toLowerCase().includes(query) ||
+      post.author_name?.toLowerCase().includes(query) ||
+      post.field_name?.toLowerCase().includes(query);
+
+    const matchesStatus =
+      statusFilter === "all" || post.status === statusFilter;
+
+    return (
+      matchesSearch &&
+      matchesStatus &&
+      post.is_archived !== 1 &&
+      post.is_archived !== true
+    );
+  });
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    return new Date(dateString).toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  };
   return (
     <div className="admin-posts-container">
       <div className="admin-posts-header">
