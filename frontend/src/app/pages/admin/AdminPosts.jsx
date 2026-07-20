@@ -106,7 +106,65 @@ const AdminPosts = () => {
               </thead>
               <tbody className="admin-posts-tbody">
                 {filteredPosts.map((post) => (
-                  <tr key={post.post_id} className="admin-posts-tr"></tr>
+                  <tr key={post.post_id} className="admin-posts-tr">
+                    <td className="admin-posts-td-id">#{post.post_id}</td>
+                    <td className="admin-posts-td-main">
+                      <div className="admin-posts-post-title">{post.title}</div>
+                      <div className="admin-posts-post-desc">
+                        {post.description}
+                      </div>
+                    </td>
+                    <td className="admin-posts-td-meta">
+                      <div className="admin-posts-meta-line">
+                        <User className="admin-posts-meta-icon" />
+                        {post.author_name || "Anonymous"}
+                      </div>
+                      <div className="admin-posts-meta-subline">
+                        <Layers className="admin-posts-meta-icon" />
+                        {post.field_name || "Uncategorized"}
+                      </div>
+                    </td>
+                    <td className="admin-posts-td-status">
+                      <span
+                        className={`admin-posts-status-badge ${
+                          post.status === "solved"
+                            ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300"
+                            : post.status === "closed"
+                              ? "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+                              : "bg-sky-100 text-sky-700 dark:bg-sky-950/40 dark:text-sky-300"
+                        }`}
+                      >
+                        <Tag className="w-3 h-3" />
+                        {post.status || "open"}
+                      </span>
+                    </td>
+                    <td className="admin-posts-td-date">
+                      <span className="admin-posts-date-line">
+                        <Calendar className="admin-posts-date-icon" />
+                        {formatDate(post.created_at)}
+                      </span>
+                    </td>
+                    <td className="admin-posts-td-actions">
+                      <div className="admin-posts-actions-wrapper">
+                        <button
+                          onClick={() =>
+                            handleArchive(post.post_id, post.title)
+                          }
+                          className="admin-posts-btn-archive"
+                          title="Archive Post"
+                        >
+                          <Archive className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(post.post_id, post.title)}
+                          className="admin-posts-btn-delete"
+                          title="Delete Post"
+                        >
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
                 ))}
               </tbody>
             </table>
