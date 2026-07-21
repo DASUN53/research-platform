@@ -56,6 +56,19 @@ const AdminComments = () => {
           </span>
         </div>
       </div>
+
+      <div className="admin-comments-filter-section">
+        <div className="admin-comments-search-wrapper">
+          <Search className="admin-comments-search-icon" />
+          <input
+            type="text"
+            placeholder="Search by comment text, author, post title..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="admin-comments-search-input"
+          />
+        </div>
+      </div>
     </div>
   );
 };
