@@ -89,6 +89,41 @@ const AdminSolutions = () => {
           />
         </div>
       </div>
+
+      <div className="admin-solutions-table-container">
+        {loading ? (
+          <div className="admin-solutions-table-info">
+            Loading solutions list...
+          </div>
+        ) : filteredSolutions.length === 0 ? (
+          <div className="admin-solutions-table-info">
+            No solution submissions found matching the filters.
+          </div>
+        ) : (
+          <div className="admin-solutions-table-responsive">
+            <table className="admin-solutions-table">
+              <thead className="admin-solutions-thead">
+                <tr>
+                  <th className="admin-solutions-th">ID</th>
+                  <th className="admin-solutions-th">
+                    Solution content / Proposal
+                  </th>
+                  <th className="admin-solutions-th">
+                    Author & Associated Post
+                  </th>
+                  <th className="admin-solutions-th">Submitted Date</th>
+                  <th className="admin-solutions-th-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="admin-solutions-tbody">
+                {filteredSolutions.map((sol) => (
+                  <tr key={sol.solution_id} className="admin-solutions-tr"></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
