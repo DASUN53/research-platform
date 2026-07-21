@@ -95,10 +95,49 @@ const AdminComments = () => {
               </thead>
               <tbody className="admin-comments-tbody">
                 {filteredComments.map((comment) => (
-                  <tr
-                    key={comment.comment_id}
-                    className="admin-comments-tr"
-                  ></tr>
+                  <tr key={comment.comment_id} className="admin-comments-tr">
+                    <td className="admin-comments-td-id">
+                      #{comment.comment_id}
+                    </td>
+                    <td className="admin-comments-td-content">
+                      <p className="admin-comments-content-text">
+                        {comment.content}
+                      </p>
+                    </td>
+                    <td className="admin-comments-td-meta">
+                      <div className="admin-comments-meta-line">
+                        <User className="admin-comments-meta-icon" />
+                        {comment.author_name || "Anonymous"}
+                      </div>
+                      <div
+                        className="admin-comments-meta-subline"
+                        title={comment.post_title}
+                      >
+                        <FileText className="admin-comments-meta-icon" />
+                        {comment.post_title || "Unknown Post"}
+                      </div>
+                    </td>
+                    <td className="admin-comments-td-date">
+                      <span className="admin-comments-date-line">
+                        <Calendar className="admin-comments-date-icon" />
+                        {formatDate(comment.created_at)}
+                      </span>
+                    </td>
+                    <td className="admin-comments-td-actions">
+                      <button
+                        onClick={() =>
+                          handleDelete(
+                            comment.comment_id,
+                            comment.author_name || "Anonymous",
+                          )
+                        }
+                        className="admin-comments-btn-delete"
+                        title="Delete Comment"
+                      >
+                        <Trash2 className="w-5 h-5" />
+                      </button>
+                    </td>
+                  </tr>
                 ))}
               </tbody>
             </table>
