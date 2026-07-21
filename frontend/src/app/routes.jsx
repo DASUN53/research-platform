@@ -26,6 +26,7 @@ import AdminLayout from "./components/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminPosts from "./pages/admin/AdminPosts";
+import AdminComments from "./pages/admin/AdminComments";
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +72,7 @@ export const router = createBrowserRouter([
       { index: true, element: <AdminDashboard /> },
       { path: "users", element: <AdminUsers /> },
       { path: "posts", element: <AdminPosts /> },
+      { path: "comments", element: <AdminComments /> },
     ],
   },
 
