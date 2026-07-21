@@ -169,3 +169,5 @@ const AdminSolutions = () => {
     </div>
   );
 };
+
+export default AdminSolutions;
