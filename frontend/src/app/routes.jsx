@@ -27,6 +27,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminPosts from "./pages/admin/AdminPosts";
 import AdminComments from "./pages/admin/AdminComments";
+import AdminSolutions from "./pages/admin/AdminSolutions";
 
 export const router = createBrowserRouter([
   {
@@ -73,6 +74,7 @@ export const router = createBrowserRouter([
       { path: "users", element: <AdminUsers /> },
       { path: "posts", element: <AdminPosts /> },
       { path: "comments", element: <AdminComments /> },
+      { path: "solutions", element: <AdminSolutions /> },
     ],
   },
 
