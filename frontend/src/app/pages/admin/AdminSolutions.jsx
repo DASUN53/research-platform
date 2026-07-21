@@ -117,7 +117,49 @@ const AdminSolutions = () => {
               </thead>
               <tbody className="admin-solutions-tbody">
                 {filteredSolutions.map((sol) => (
-                  <tr key={sol.solution_id} className="admin-solutions-tr"></tr>
+                  <tr key={sol.solution_id} className="admin-solutions-tr">
+                    <td className="admin-solutions-td-id">
+                      #{sol.solution_id}
+                    </td>
+                    <td className="admin-solutions-td-content">
+                      <p className="admin-solutions-content-text">
+                        {sol.content}
+                      </p>
+                    </td>
+                    <td className="admin-solutions-td-meta">
+                      <div className="admin-solutions-meta-line">
+                        <User className="admin-solutions-meta-icon" />
+                        {sol.author_name || "Anonymous"}
+                      </div>
+                      <div
+                        className="admin-solutions-meta-subline"
+                        title={sol.post_title}
+                      >
+                        <FileText className="admin-solutions-meta-icon" />
+                        {sol.post_title || "Unknown Post"}
+                      </div>
+                    </td>
+                    <td className="admin-solutions-td-date">
+                      <span className="admin-solutions-date-line">
+                        <Calendar className="admin-solutions-date-icon" />
+                        {formatDate(sol.created_at)}
+                      </span>
+                    </td>
+                    <td className="admin-solutions-td-actions">
+                      <button
+                        onClick={() =>
+                          handleDelete(
+                            sol.solution_id,
+                            sol.author_name || "Anonymous",
+                          )
+                        }
+                        className="admin-solutions-btn-delete"
+                        title="Delete Solution"
+                      >
+                        <Trash2 className="w-5 h-5" />
+                      </button>
+                    </td>
+                  </tr>
                 ))}
               </tbody>
             </table>
