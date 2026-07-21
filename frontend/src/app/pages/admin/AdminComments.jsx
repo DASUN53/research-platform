@@ -147,3 +147,5 @@ const AdminComments = () => {
     </div>
   );
 };
+
+export default AdminComments;
