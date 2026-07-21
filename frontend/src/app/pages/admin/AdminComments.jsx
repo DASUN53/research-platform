@@ -69,6 +69,42 @@ const AdminComments = () => {
           />
         </div>
       </div>
+
+      <div className="admin-comments-table-container">
+        {loading ? (
+          <div className="admin-comments-table-info">
+            Loading comments list...
+          </div>
+        ) : filteredComments.length === 0 ? (
+          <div className="admin-comments-table-info">
+            No comments found matching the search criteria.
+          </div>
+        ) : (
+          <div className="admin-comments-table-responsive">
+            <table className="admin-comments-table">
+              <thead className="admin-comments-thead">
+                <tr>
+                  <th className="admin-comments-th">ID</th>
+                  <th className="admin-comments-th">Comment Content</th>
+                  <th className="admin-comments-th">
+                    Author & Associated Post
+                  </th>
+                  <th className="admin-comments-th">Created At</th>
+                  <th className="admin-comments-th-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="admin-comments-tbody">
+                {filteredComments.map((comment) => (
+                  <tr
+                    key={comment.comment_id}
+                    className="admin-comments-tr"
+                  ></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
