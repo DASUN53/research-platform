@@ -193,3 +193,5 @@ const AdminArchive = () => {
     </div>
   );
 };
+
+export default AdminArchive;
