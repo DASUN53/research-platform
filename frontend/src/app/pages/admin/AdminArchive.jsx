@@ -135,7 +135,55 @@ const AdminArchive = () => {
               </thead>
               <tbody className="admin-archive-tbody">
                 {filteredArchive.map((post) => (
-                  <tr key={post.post_id} className="admin-archive-tr"></tr>
+                  <tr key={post.post_id} className="admin-archive-tr">
+                    <td className="admin-archive-td-id">#{post.post_id}</td>
+                    <td className="admin-archive-td-main">
+                      <div className="admin-archive-post-title">
+                        {post.title}
+                      </div>
+                      <div className="admin-archive-post-desc">
+                        {post.description}
+                      </div>
+                    </td>
+                    <td className="admin-archive-td-meta">
+                      <div className="admin-archive-meta-line">
+                        <User className="admin-archive-meta-icon" />
+                        {post.author_name || "Anonymous"}
+                      </div>
+                      <div className="admin-archive-meta-subline">
+                        <Layers className="admin-archive-meta-icon" />
+                        {post.field_name || "Uncategorized"}
+                      </div>
+                    </td>
+                    <td className="admin-archive-td-date">
+                      <span className="admin-archive-date-line">
+                        <Calendar className="admin-archive-date-icon" />
+                        {formatDate(post.created_at)}
+                      </span>
+                    </td>
+                    <td className="admin-archive-td-actions">
+                      <div className="admin-archive-actions-wrapper">
+                        <button
+                          onClick={() =>
+                            handleRestore(post.post_id, post.title)
+                          }
+                          className="admin-archive-btn-restore"
+                          title="Restore Post"
+                        >
+                          <RotateCcw className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() =>
+                            handleDeletePermanently(post.post_id, post.title)
+                          }
+                          className="admin-archive-btn-delete"
+                          title="Delete Permanently"
+                        >
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
                 ))}
               </tbody>
             </table>
