@@ -22,6 +22,45 @@ const AdminArchive = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  const handleRestore = async (id, title) => {
+    if (
+      !window.confirm(
+        `Are you sure you want to restore "${title}" back to active status?`,
+      )
+    ) {
+      return;
+    }
+
+    try {
+      setError("");
+      setSuccess("");
+      await restoreAdminArchivePost(id);
+      setSuccess(`Post "${title}" has been restored successfully.`);
+      setArchivedPosts(archivedPosts.filter((p) => p.post_id !== id));
+    } catch (err) {
+      setError(err.message || "Failed to restore post");
+    }
+  };
+
+  const handleDeletePermanently = async (id, title) => {
+    if (
+      !window.confirm(
+        `WARNING: Are you sure you want to PERMANENTLY delete archived post "${title}"? This will delete all comments and solutions. This action cannot be undone.`,
+      )
+    ) {
+      return;
+    }
+
+    try {
+      setError("");
+      setSuccess("");
+      await deleteAdminPost(id);
+      setSuccess(`Post "${title}" deleted permanently.`);
+      setArchivedPosts(archivedPosts.filter((p) => p.post_id !== id));
+    } catch (err) {
+      setError(err.message || "Failed to delete post permanently");
+    }
+  };
   return (
     <div className="admin-archive-container">
       <div className="admin-archive-header">
