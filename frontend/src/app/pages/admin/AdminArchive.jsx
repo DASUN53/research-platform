@@ -61,6 +61,26 @@ const AdminArchive = () => {
       setError(err.message || "Failed to delete post permanently");
     }
   };
+
+  const filteredArchive = archivedPosts.filter((post) => {
+    const query = search.toLowerCase();
+    return (
+      post.title?.toLowerCase().includes(query) ||
+      post.description?.toLowerCase().includes(query) ||
+      post.author_name?.toLowerCase().includes(query) ||
+      post.field_name?.toLowerCase().includes(query)
+    );
+  });
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    return new Date(dateString).toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  };
+
   return (
     <div className="admin-archive-container">
       <div className="admin-archive-header">
@@ -76,6 +96,19 @@ const AdminArchive = () => {
           <span className="admin-archive-badge-text">
             {archivedPosts.length} Archived Posts
           </span>
+        </div>
+      </div>
+
+      <div className="admin-archive-filter-section">
+        <div className="admin-archive-search-wrapper">
+          <Search className="admin-archive-search-icon" />
+          <input
+            type="text"
+            placeholder="Search archived posts by title, author, field..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="admin-archive-search-input"
+          />
         </div>
       </div>
     </div>
